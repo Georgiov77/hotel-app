@@ -1,25 +1,29 @@
-// src/App.jsx
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import useThemeStore from './stores/useThemeStore'
+import Layout from '@components/Layout/Layout'
+import Button from '@components/Button/Button'
+import Card from "@components/Card/Card";
 
 function App() {
-    const [theme, setTheme] = useState('light')
+    const { theme } = useThemeStore()
+    const [activePage, setActivePage] = useState('dashboard')
 
-    // Εφαρμόζει το theme στο <html> element
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme)
     }, [theme])
 
-    const toggleTheme = () => {
-        setTheme(prev => prev === 'light' ? 'dark' : 'light')
-    }
-
     return (
-        <div>
-            <button onClick={toggleTheme}>
-                {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-            </button>
-            <h1>HotelDesk</h1>
-        </div>
+        <Layout activePage={activePage} onNavigate={setActivePage}>
+            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <Card
+                    title="Κρατήσεις"
+                    actions={<Button size="sm">+ Νέα</Button>}
+                    footer={<Button variant="secondary">Προβολή όλων</Button>}
+                >
+                    <p>Περιεχόμενο εδώ</p>
+                </Card>
+            </div>
+        </Layout>
     )
 }
 
