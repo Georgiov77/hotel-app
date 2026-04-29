@@ -5,6 +5,7 @@ import Dashboard from '@pages/Dashboard/Dashboard'
 import Rooms from "@pages/Rooms/Rooms";
 import Guests from "@pages/Guests/Guests";
 import Bookings from "@pages/Bookings/Bookings";
+import NewBooking from "@pages/NewBooking/NewBooking";
 
 function App() {
     const { theme } = useThemeStore()
@@ -18,8 +19,9 @@ function App() {
         switch (activePage) {
             case 'dashboard': return <Dashboard />
             case 'rooms':     return <Rooms />
-            case 'guests': return <Guests />
-            case 'bookings': return <Bookings />
+            case 'guests':    return <Guests />
+            case 'bookings':  return <Bookings onNavigate={setActivePage} />
+            case 'new-booking': return <NewBooking onNavigate={setActivePage} />
             default:          return <div>Σύντομα...</div>
         }
     }

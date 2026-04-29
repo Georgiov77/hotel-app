@@ -10,7 +10,7 @@ import './Bookings.css'
 import BookingDetail from "@pages/Bookings/BookingDetail";
 
 
-function Bookings() {
+function Bookings({ onNavigate }) {
     const [statusFilter, setStatusFilter] = useState('all')
     const [selectedBooking, setSelectedBooking] = useState(null)
     const { search, setSearch, filtered } = useSearch(mockBookings, ['guestName', 'roomNumber'])
@@ -44,8 +44,7 @@ function Bookings() {
                         <option value="cancelled">Ακυρωμένες</option>
                     </select>
                 </div>
-                <Button>+ Νέα Κράτηση</Button>
-            </div>
+                <Button onClick={() => onNavigate('new-booking')}>+ Νέα Κράτηση</Button>            </div>
 
             <Card>
                 <Table
