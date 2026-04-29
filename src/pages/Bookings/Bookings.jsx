@@ -4,10 +4,10 @@ import Button from '@components/Button/Button'
 import Table from '@components/Table/Table'
 import Modal from '@components/Modal/Modal'
 import useSearch from '@hooks/useSearch'
-import { formatDate } from '@utils/dateUtils'
 import { mockBookings } from '@config/mockData'
 import bookingColumns from './bookings.columns'
 import './Bookings.css'
+import BookingDetail from "@pages/Bookings/BookingDetail";
 
 
 function Bookings() {
@@ -71,13 +71,7 @@ function Bookings() {
                 }
             >
                 {selectedBooking && (
-                    <div>
-                        <p><strong>Πελάτης:</strong> {selectedBooking.guestName}</p>
-                        <p><strong>Δωμάτιο:</strong> Νο. {selectedBooking.roomNumber}</p>
-                        <p><strong>Check-in:</strong> {formatDate(selectedBooking.checkIn)}</p>
-                        <p><strong>Check-out:</strong> {formatDate(selectedBooking.checkOut)}</p>
-                        <p><strong>Σύνολο:</strong> {selectedBooking.totalAmount}€</p>
-                    </div>
+                    <BookingDetail booking={selectedBooking} />
                 )}
             </Modal>
         </div>
