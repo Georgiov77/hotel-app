@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import useThemeStore from './stores/useThemeStore'
 import Layout from '@components/Layout/Layout'
-import Button from '@components/Button/Button'
-import Card from "@components/Card/Card";
+import Dashboard from '@pages/Dashboard/Dashboard'
+import Rooms from "@pages/Rooms/Rooms";
+import Guests from "@pages/Guests/Guests";
+import Bookings from "@pages/Bookings/Bookings";
 
 function App() {
     const { theme } = useThemeStore()
@@ -12,17 +14,19 @@ function App() {
         document.documentElement.setAttribute('data-theme', theme)
     }, [theme])
 
+    const renderPage = () => {
+        switch (activePage) {
+            case 'dashboard': return <Dashboard />
+            case 'rooms':     return <Rooms />
+            case 'guests': return <Guests />
+            case 'bookings': return <Bookings />
+            default:          return <div>Σύντομα...</div>
+        }
+    }
+
     return (
         <Layout activePage={activePage} onNavigate={setActivePage}>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                <Card
-                    title="Κρατήσεις"
-                    actions={<Button size="sm">+ Νέα</Button>}
-                    footer={<Button variant="secondary">Προβολή όλων</Button>}
-                >
-                    <p>Περιεχόμενο εδώ</p>
-                </Card>
-            </div>
+            {renderPage()}
         </Layout>
     )
 }
