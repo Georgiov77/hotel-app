@@ -1,11 +1,15 @@
+// src/components/Sidebar/Sidebar.jsx
 import './Sidebar.css'
 import NAV_ITEMS from '@config/navigation'
+import useSettingsStore from '@stores/useSettingsStore'
 
 function Sidebar({ activePage, onNavigate }) {
+    const { hotel } = useSettingsStore()
+
     return (
         <aside className="sidebar">
             <div className="sidebar__logo">
-                <div className="sidebar__logo-title">HotelDesk</div>
+                <div className="sidebar__logo-title">{hotel.name}</div>
                 <div className="sidebar__logo-subtitle">Διαχείριση Ξενοδοχείου</div>
             </div>
 

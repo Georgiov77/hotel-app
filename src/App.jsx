@@ -8,6 +8,7 @@ import Bookings from "@pages/Bookings/Bookings";
 import NewBooking from "@pages/NewBooking/NewBooking";
 import Calendar from "@pages/Calendar/Calendar";
 import Reports from "@pages/Reports/Reports";
+import Settings from "@pages/Settings/Settings";
 
 function App() {
     const { theme } = useThemeStore()
@@ -33,6 +34,7 @@ function App() {
             case 'new-booking': return <NewBooking onNavigate={handleNavigate} initialData={pageData} />
             case 'calendar':    return <Calendar onNavigate={handleNavigate} />
             case 'reports':     return <Reports />
+            case 'settings':    return <Settings />
             default:            return <div>Σύντομα...</div>
         }
     }

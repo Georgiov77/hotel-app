@@ -1,0 +1,42 @@
+.appearance-settings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.appearance-settings__options {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.appearance-settings__option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-6);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.appearance-settings__option:hover {
+    border-color: var(--color-primary);
+}
+
+.appearance-settings__option--active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+}
+
+.appearance-settings__option-icon {
+    font-size: 28px;
+}
+
+.appearance-settings__option-label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+}

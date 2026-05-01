@@ -1,0 +1,11 @@
+.hotel-settings {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.hotel-settings__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}

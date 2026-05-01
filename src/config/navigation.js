@@ -4,8 +4,8 @@ const NAV_ITEMS = [
     { id: 'bookings',  label: 'Κρατήσεις',  icon: '🗂️' },
     { id: 'guests',    label: 'Πελάτες',    icon: '👥' },
     { id: 'rooms',     label: 'Δωμάτια',    icon: '🚪' },
-    { id: 'invoices',  label: 'Τιμολόγια',  icon: '🧾' },
     { id: 'reports',   label: 'Αναφορές',   icon: '📈' },
+    { id: 'settings',  label: 'Ρυθμίσεις',  icon: '⚙️' },
 ]
 
 export default NAV_ITEMS
