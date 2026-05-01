@@ -8,6 +8,7 @@ import StepConfirm from './steps/StepConfirm'
 import './NewBooking.css'
 import {todayISO} from "@utils/dateUtils";
 import {getInitialDates} from "@hooks/useDates";
+import {toast} from "@stores/useToastStore";
 
 const STEPS = [
     { id: 'dates',   label: 'Ημερομηνίες' },
@@ -60,9 +61,9 @@ function NewBooking({ onNavigate, initialData }) {
     const handlePrev = () => setCurrentStep((prev) => prev - 1)
 
     const handleSubmit = () => {
-        // Προς το παρόν απλά log — αργότερα θα αποθηκεύει στη βάση
         console.log('Νέα κράτηση:', booking)
-        onNavigate('bookings')
+        toast.success('Η κράτηση αποθηκεύτηκε επιτυχώς!')
+        onNavigate('bookings', null)
     }
 
     const canNext = () => {

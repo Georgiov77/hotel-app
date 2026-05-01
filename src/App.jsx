@@ -11,6 +11,7 @@ import Calendar from "@pages/Calendar/Calendar";
 import Reports from "@pages/Reports/Reports";
 import Settings from "@pages/Settings/Settings";
 import useThemeStore from "@stores/useThemeStore";
+import Toast from "@components/Toast/Toast";
 
 function App() {
     const { theme } = useThemeStore()
@@ -47,6 +48,7 @@ function App() {
             <Layout activePage={activePage} onNavigate={setActivePage} onLock={lock}>
                 {renderPage()}
             </Layout>
+            <Toast />
         </>
     )
 }
