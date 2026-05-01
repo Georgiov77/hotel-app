@@ -1,0 +1,100 @@
+.lock-screen {
+    position: fixed;
+    inset: 0;
+    background-color: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.lock-screen__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+    padding: var(--space-10) var(--space-12);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 380px;
+}
+
+.lock-screen__icon {
+    font-size: 48px;
+}
+
+.lock-screen__title {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-text);
+}
+
+.lock-screen__subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-top: calc(-1 * var(--space-4));
+    text-align: center;
+}
+
+.lock-screen__pin {
+    display: flex;
+    gap: var(--space-3);
+}
+
+.lock-screen__pin-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-border);
+    transition: background-color var(--transition-fast);
+}
+
+.lock-screen__pin-dot--filled {
+    background-color: var(--color-primary);
+}
+
+.lock-screen__keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    width: 100%;
+}
+
+.lock-screen__key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    color: var(--color-text);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.lock-screen__key:hover {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border-strong);
+}
+
+.lock-screen__key:active {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+}
+
+.lock-screen__key--delete {
+    color: var(--color-danger);
+}
+
+.lock-screen__error {
+    font-size: var(--text-sm);
+    color: var(--color-danger);
+    text-align: center;
+}
