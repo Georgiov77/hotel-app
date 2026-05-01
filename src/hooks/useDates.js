@@ -1,5 +1,20 @@
 import { calcNights, todayISO } from '@utils/dateUtils'
 
+export const getInitialDates = (initialData = {}) => {
+    const checkIn  = initialData.checkIn || todayISO()
+    let   checkOut = initialData.checkOut || ''
+    let   nights   = 0
+
+    if (checkIn && !checkOut) {
+        const nextDay = new Date(checkIn)
+        nextDay.setDate(nextDay.getDate() + 1)
+        checkOut = nextDay.toISOString().split('T')[0]
+        nights   = 1
+    }
+
+    return { checkIn, checkOut, nights }
+}
+
 function useDates(booking, updateBooking) {
     const handleDateChange = (field, value) => {
         const updated = { ...booking, [field]: value }
@@ -17,7 +32,7 @@ function useDates(booking, updateBooking) {
     }
 
     return {
-        today:             todayISO(),
+        today: todayISO(),
         handleDateChange,
         handleGuestsChange,
     }

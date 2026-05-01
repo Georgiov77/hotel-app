@@ -1,0 +1,26 @@
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+}
+
+.calendar-header__nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.calendar-header__title {
+    font-size: var(--text-md);
+    font-weight: var(--font-bold);
+    color: var(--color-text);
+    min-width: 200px;
+    text-align: center;
+}
+
+.calendar-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}

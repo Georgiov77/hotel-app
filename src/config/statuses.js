@@ -31,7 +31,7 @@ export const PAYMENT_STATUS_VARIANT = {
 }
 
 export const PAYMENT_STATUS_LABEL = {
-    unpaid:   'Αδήλωτο',
+    unpaid:   'Ανεξόφλητο',
     deposit:  'Προκαταβολή',
     paid:     'Εξοφλημένο',
 }

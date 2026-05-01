@@ -7,6 +7,7 @@ import StepPricing from './steps/StepPricing'
 import StepConfirm from './steps/StepConfirm'
 import './NewBooking.css'
 import {todayISO} from "@utils/dateUtils";
+import {getInitialDates} from "@hooks/useDates";
 
 const STEPS = [
     { id: 'dates',   label: 'Ημερομηνίες' },
@@ -33,9 +34,23 @@ const initialState = {
     notes:         '',
 }
 
-function NewBooking({ onNavigate }) {
+function NewBooking({ onNavigate, initialData }) {
     const [currentStep, setCurrentStep] = useState(0)
-    const [booking, setBooking] = useState(initialState)
+    const [booking, setBooking] = useState(() => {
+        const data = { ...initialState, ...(initialData || {}) }
+
+        if (data.room) {
+            data.adults = data.room.capacity
+        }
+
+        const dates = getInitialDates(initialData)
+        data.checkIn  = dates.checkIn
+        data.checkOut = dates.checkOut
+        data.nights   = dates.nights
+
+        return data
+    })
+
 
     const updateBooking = (fields) => {
         setBooking((prev) => ({ ...prev, ...fields }))

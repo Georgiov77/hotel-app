@@ -6,6 +6,7 @@ import Rooms from "@pages/Rooms/Rooms";
 import Guests from "@pages/Guests/Guests";
 import Bookings from "@pages/Bookings/Bookings";
 import NewBooking from "@pages/NewBooking/NewBooking";
+import Calendar from "@pages/Calendar/Calendar";
 
 function App() {
     const { theme } = useThemeStore()
@@ -15,14 +16,22 @@ function App() {
         document.documentElement.setAttribute('data-theme', theme)
     }, [theme])
 
+    const [pageData, setPageData] = useState(null)
+
+    const handleNavigate = (page, data = null) => {
+        setActivePage(page)
+        setPageData(data)
+    }
+
     const renderPage = () => {
         switch (activePage) {
-            case 'dashboard': return <Dashboard />
-            case 'rooms':     return <Rooms />
-            case 'guests':    return <Guests />
-            case 'bookings':  return <Bookings onNavigate={setActivePage} />
-            case 'new-booking': return <NewBooking onNavigate={setActivePage} />
-            default:          return <div>Σύντομα...</div>
+            case 'dashboard':   return <Dashboard />
+            case 'rooms':       return <Rooms />
+            case 'guests':      return <Guests />
+            case 'bookings':    return <Bookings onNavigate={handleNavigate} />
+            case 'new-booking': return <NewBooking onNavigate={handleNavigate} initialData={pageData} />
+            case 'calendar':    return <Calendar onNavigate={handleNavigate} />
+            default:            return <div>Σύντομα...</div>
         }
     }
 
