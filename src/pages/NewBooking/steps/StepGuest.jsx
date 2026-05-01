@@ -1,33 +1,64 @@
-import { useState } from 'react'
-import FormField from '@components/FormField/FormField'
-import Button from '@components/Button/Button'
-import useSearch from '@hooks/useSearch'
-import { mockGuests } from '@config/mockData'
+import { useState, useEffect } from 'react'
+import FormField       from '@components/FormField/FormField'
+import Button          from '@components/Button/Button'
+import guestService    from '@services/guestService'
+import { toast }       from '@stores/useToastStore'
+import { getErrorMessage } from '@error/errorHandler'
 import './StepGuest.css'
 
 function StepGuest({ booking, updateBooking }) {
-    const [mode, setMode] = useState('search')
-    const { search, setSearch, filtered } = useSearch(mockGuests, ['firstName', 'lastName', 'email', 'phone'])
+    const [mode,    setMode]    = useState('search')
+    const [guests,  setGuests]  = useState([])
+    const [search,  setSearch]  = useState('')
+
+    useEffect(() => {
+        loadGuests()
+    }, [])
+
+    const loadGuests = async () => {
+        try {
+            const data = await guestService.getAll()
+            setGuests(data)
+        } catch (err) {
+            toast.error(getErrorMessage(err))
+        }
+    }
+
+    const handleSearch = async (q) => {
+        setSearch(q)
+        try {
+            if (!q) return loadGuests()
+            const data = await guestService.search(q)
+            setGuests(data)
+        } catch (err) {
+            toast.error(getErrorMessage(err))
+        }
+    }
 
     const handleSelectGuest = (guest) => {
         updateBooking({ guest })
     }
 
-    const handleNewGuest = (e) => {
+    const handleNewGuest = async (e) => {
         e.preventDefault()
         const form = e.target
-        const guest = {
-            id:          null,
-            firstName:   form.firstName.value,
-            lastName:    form.lastName.value,
-            email:       form.email.value,
-            phone:       form.phone.value,
-            nationality: form.nationality.value,
-            idNumber:    form.idNumber.value,
-            notes:       '',
+        try {
+            const guest = await guestService.create({
+                firstName:   form.firstName.value,
+                lastName:    form.lastName.value,
+                email:       form.email.value,
+                phone:       form.phone.value,
+                nationality: form.nationality.value,
+                idNumber:    form.idNumber.value,
+                notes:       '',
+            })
+            updateBooking({ guest })
+            setMode('search')
+            toast.success('Ο πελάτης αποθηκεύτηκε!')
+            loadGuests()
+        } catch (err) {
+            toast.error(getErrorMessage(err))
         }
-        updateBooking({ guest })
-        setMode('search')
     }
 
     return (
@@ -55,18 +86,18 @@ function StepGuest({ booking, updateBooking }) {
                             type="text"
                             placeholder="Αναζήτηση πελάτη..."
                             value={search}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) => handleSearch(e.target.value)}
                         />
                     </div>
                     <div className="step-guest__list">
-                        {filtered.map((guest) => (
+                        {guests.map((guest) => (
                             <div
                                 key={guest.id}
                                 className={`step-guest__item ${booking.guest?.id === guest.id ? 'step-guest__item--selected' : ''}`}
                                 onClick={() => handleSelectGuest(guest)}
                             >
                                 <div className="step-guest__item-name">
-                                    {guest.lastName} {guest.firstName}
+                                    {guest.last_name} {guest.first_name}
                                 </div>
                                 <div className="step-guest__item-details">
                                     {guest.email} · {guest.phone}
@@ -107,7 +138,7 @@ function StepGuest({ booking, updateBooking }) {
 
             {booking.guest && (
                 <div className="step-guest__selected">
-                    ✓ {booking.guest.lastName} {booking.guest.firstName}
+                    ✓ {booking.guest.last_name || booking.guest.lastName} {booking.guest.first_name || booking.guest.firstName}
                 </div>
             )}
         </div>

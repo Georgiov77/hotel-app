@@ -1,15 +1,15 @@
-// src/pages/NewBooking/steps/StepPricing.jsx
-import FormField from '@components/FormField/FormField'
-import Button from '@components/Button/Button'
+import FormField          from '@components/FormField/FormField'
+import Button             from '@components/Button/Button'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import { SEASONS, DEPOSIT_OPTIONS } from '@config/pricing'
-import { calcDeposit } from '@utils/pricingUtils'
-import usePricing from '@hooks/usePricing'
+import { calcDeposit }    from '@utils/pricingUtils'
+import usePricing         from '@hooks/usePricing'
+import useSettingsStore   from '@stores/useSettingsStore'
 import './StepPricing.css'
 
 function StepPricing({ booking, updateBooking }) {
+    const { pricing } = useSettingsStore()
     const {
-        basePrice,
         extrasTotal,
         grandTotal,
         handleSeasonChange,
@@ -36,9 +36,9 @@ function StepPricing({ booking, updateBooking }) {
                             onClick={() => handleSeasonChange(season)}
                         >
                             <div className="step-pricing__season-label">{season.label}</div>
-                            {season.multiplier && (
+                            {season.id !== 'custom' && (
                                 <div className="step-pricing__season-price">
-                                    {calcDeposit(basePrice, season.multiplier)}€ / νύχτα
+                                    {pricing[season.id]?.[booking.room?.type] || 0}€ / νύχτα
                                 </div>
                             )}
                         </div>

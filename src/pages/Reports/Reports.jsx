@@ -7,6 +7,7 @@ import './Reports.css'
 
 function Reports() {
     const {
+        isLoading,
         revenueByMonth,
         occupancyByRoom,
         bookingsBySource,
@@ -15,6 +16,8 @@ function Reports() {
         avgNights,
         currentMonthData,
     } = useReports()
+
+    if (isLoading) return <div>Φόρτωση...</div>
 
     return (
         <div className="reports">

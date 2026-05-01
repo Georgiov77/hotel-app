@@ -1,4 +1,4 @@
-import Badge from '@components/Badge/Badge'
+import Badge  from '@components/Badge/Badge'
 import Button from '@components/Button/Button'
 import { formatDate } from '@utils/dateUtils'
 import {
@@ -10,31 +10,33 @@ import {
 } from '@config/statuses'
 import './BookingDetail.css'
 
-function BookingDetail({ booking }) {
-    const remaining = booking.totalAmount - booking.paidAmount
+function BookingDetail({ booking, onStatusChange }) {
+    const guestName  = `${booking.last_name || ''} ${booking.first_name || ''}`.trim()
+    const roomNumber = booking.room_number
+    const remaining  = (booking.total_amount || 0) - (booking.paid_amount || 0)
 
     return (
         <div className="booking-detail">
 
-            {/* Στοιχεία πελάτη & δωματίου */}
+            {/* Στοιχεία κράτησης */}
             <div className="booking-detail__section">
                 <div className="booking-detail__section-title">Στοιχεία Κράτησης</div>
                 <div className="booking-detail__grid">
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Πελάτης</span>
-                        <span className="booking-detail__value">{booking.guestName}</span>
+                        <span className="booking-detail__value">{guestName}</span>
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Δωμάτιο</span>
-                        <span className="booking-detail__value">Νο. {booking.roomNumber}</span>
+                        <span className="booking-detail__value">Νο. {roomNumber}</span>
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Check-in</span>
-                        <span className="booking-detail__value">{formatDate(booking.checkIn)}</span>
+                        <span className="booking-detail__value">{formatDate(booking.check_in)}</span>
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Check-out</span>
-                        <span className="booking-detail__value">{formatDate(booking.checkOut)}</span>
+                        <span className="booking-detail__value">{formatDate(booking.check_out)}</span>
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Διανυκτερεύσεις</span>
@@ -65,11 +67,11 @@ function BookingDetail({ booking }) {
                 <div className="booking-detail__payment">
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Σύνολο</span>
-                        <span className="booking-detail__payment-value">{booking.totalAmount}€</span>
+                        <span className="booking-detail__payment-value">{booking.total_amount}€</span>
                     </div>
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Έχει πληρωθεί</span>
-                        <span className="booking-detail__payment-value">{booking.paidAmount}€</span>
+                        <span className="booking-detail__payment-value">{booking.paid_amount}€</span>
                     </div>
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Υπόλοιπο</span>
@@ -79,8 +81,8 @@ function BookingDetail({ booking }) {
                     </div>
                 </div>
                 <div style={{ marginTop: 'var(--space-2)' }}>
-                    <Badge variant={PAYMENT_STATUS_VARIANT[booking.paymentStatus]}>
-                        {PAYMENT_STATUS_LABEL[booking.paymentStatus]}
+                    <Badge variant={PAYMENT_STATUS_VARIANT[booking.payment_status]}>
+                        {PAYMENT_STATUS_LABEL[booking.payment_status]}
                     </Badge>
                 </div>
             </div>
@@ -88,7 +90,7 @@ function BookingDetail({ booking }) {
             {/* Extras */}
             <div className="booking-detail__section">
                 <div className="booking-detail__section-title">Extras</div>
-                {booking.extras.length ? (
+                {booking.extras?.length ? (
                     <div className="booking-detail__extras">
                         {booking.extras.map((extra) => (
                             <div key={extra.id} className="booking-detail__extra">
@@ -113,20 +115,28 @@ function BookingDetail({ booking }) {
             </div>
 
             {/* Actions */}
-            <div className="booking-detail__section">
-                <div className="booking-detail__section-title">Ενέργειες</div>
-                <div className="booking-detail__actions">
-                    {booking.status === 'confirmed' && (
-                        <Button>Check-in</Button>
-                    )}
-                    {booking.status === 'checked_in' && (
-                        <Button>Check-out</Button>
-                    )}
-                    {booking.status !== 'cancelled' && booking.status !== 'checked_out' && (
-                        <Button variant="danger">Ακύρωση</Button>
-                    )}
+            {onStatusChange && (
+                <div className="booking-detail__section">
+                    <div className="booking-detail__section-title">Ενέργειες</div>
+                    <div className="booking-detail__actions">
+                        {booking.status === 'confirmed' && (
+                            <Button onClick={() => onStatusChange(booking.id, 'checked_in')}>
+                                Check-in
+                            </Button>
+                        )}
+                        {booking.status === 'checked_in' && (
+                            <Button onClick={() => onStatusChange(booking.id, 'checked_out')}>
+                                Check-out
+                            </Button>
+                        )}
+                        {booking.status !== 'cancelled' && booking.status !== 'checked_out' && (
+                            <Button variant="danger" onClick={() => onStatusChange(booking.id, 'cancelled')}>
+                                Ακύρωση
+                            </Button>
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
 
         </div>
     )

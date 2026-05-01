@@ -1,7 +1,7 @@
 import Button from '@components/Button/Button'
 import './CalendarHeader.css'
 
-function CalendarHeader({ days, onPrev, onNext, onToday }) {
+function CalendarHeader({ days, onPrev, onNext, onToday, onNewBooking }) {
     const start = new Date(days[0])
     const end   = new Date(days[days.length - 1])
 
@@ -20,7 +20,7 @@ function CalendarHeader({ days, onPrev, onNext, onToday }) {
             </div>
             <div className="calendar-header__actions">
                 <Button variant="secondary" size="sm" onClick={onToday}>Σήμερα</Button>
-                <Button size="sm">+ Νέα Κράτηση</Button>
+                <Button size="sm" onClick={onNewBooking}>+ Νέα Κράτηση</Button>
             </div>
         </div>
     )

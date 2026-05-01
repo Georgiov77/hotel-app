@@ -1,14 +1,21 @@
-import Card from '@components/Card/Card'
-import Button from '@components/Button/Button'
-import Table from '@components/Table/Table'
-import useSearch from '@hooks/useSearch'
-import guestColumns from './guests.columns'
-import { mockGuests } from '@config/mockData'
+import { useState }    from 'react'
+import Card            from '@components/Card/Card'
+import Button          from '@components/Button/Button'
+import Table           from '@components/Table/Table'
+import useGuests       from '@hooks/useGuests'
+import guestColumns    from './guests.columns'
 import './Guests.css'
 
-
 function Guests() {
-    const { search, setSearch, filtered } = useSearch(mockGuests, ['firstName', 'lastName', 'email', 'phone'])
+    const { guests, isLoading, search } = useGuests()
+    const [query, setQuery] = useState('')
+
+    const handleSearch = (e) => {
+        setQuery(e.target.value)
+        search(e.target.value)
+    }
+
+    if (isLoading) return <div>Φόρτωση...</div>
 
     return (
         <div className="guests">
@@ -18,8 +25,8 @@ function Guests() {
                     <input
                         type="text"
                         placeholder="Αναζήτηση πελάτη..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
+                        value={query}
+                        onChange={handleSearch}
                     />
                 </div>
                 <Button>+ Νέος Πελάτης</Button>
@@ -27,7 +34,7 @@ function Guests() {
             <Card>
                 <Table
                     columns={guestColumns}
-                    data={filtered}
+                    data={guests}
                     emptyMessage="Δεν βρέθηκαν πελάτες"
                 />
             </Card>

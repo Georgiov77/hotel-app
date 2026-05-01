@@ -1,7 +1,7 @@
 import Button from '@components/Button/Button'
 import './Wizard.css'
 
-function Wizard({ steps, currentStep, onNext, onPrev, onSubmit, children, canNext }) {
+function Wizard({ steps, currentStep, onNext, onPrev, onSubmit, children, canNext, isSubmitting= false }) {
     const isFirst = currentStep === 0
     const isLast  = currentStep === steps.length - 1
 
@@ -55,8 +55,8 @@ function Wizard({ steps, currentStep, onNext, onPrev, onSubmit, children, canNex
                 </Button>
 
                 {isLast ? (
-                    <Button onClick={onSubmit}>
-                        ✓ Αποθήκευση Κράτησης
+                    <Button onClick={onSubmit} disabled={isSubmitting}>
+                        {isSubmitting ? 'Αποθήκευση...' : '✓ Αποθήκευση Κράτησης'}
                     </Button>
                 ) : (
                     <Button onClick={onNext} disabled={!canNext}>

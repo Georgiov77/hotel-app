@@ -1,61 +1,40 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+// src/stores/useSettingsStore.js
+import { create }    from 'zustand'
+import settingsService from '../services/settingsService'
 
-const useSettingsStore = create(
-    persist(
-        (set) => ({
-            // Ξενοδοχείο
-            hotel: {
-                name:    'HotelDesk',
-                address: '',
-                phone:   '',
-                email:   '',
-                afm:     '',
-            },
+const useSettingsStore = create((set, get) => ({
+    hotel:    { name: 'HotelDesk', address: '', phone: '', email: '', afm: '' },
+    pricing:  {},
+    security: { pin: '1234', idleTimeout: 10 },
+    loaded:   false,
 
-            // Τιμές ανά σεζόν και τύπο δωματίου
-            pricing: {
-                low: {
-                    'Μονόκλινο':    40,
-                    'Δίκλινο':      60,
-                    'Τρίκλινο':     75,
-                    'Οικογενειακό': 100,
-                },
-                mid: {
-                    'Μονόκλινο':    50,
-                    'Δίκλινο':      70,
-                    'Τρίκλινο':     90,
-                    'Οικογενειακό': 120,
-                },
-                high: {
-                    'Μονόκλινο':    65,
-                    'Δίκλινο':      90,
-                    'Τρίκλινο':     115,
-                    'Οικογενειακό': 155,
-                },
-            },
+    // Φορτώνει από SQLite
+    load: async () => {
+        const settings = await settingsService.getAll()
+        set({ ...settings, loaded: true })
+    },
 
-            // Ασφάλεια
-            security: {
-                pin:         '1234',
-                idleTimeout: 10,
-            },
+    // Αποθηκεύει στο SQLite
+    updateHotel: async (fields) => {
+        const hotel = { ...get().hotel, ...fields }
+        await settingsService.set('hotel', hotel)
+        set({ hotel })
+    },
 
-            // Actions
-            updateHotel:    (fields) => set((s) => ({ hotel:    { ...s.hotel,    ...fields } })),
-            updatePricing:  (season, type, value) => set((s) => ({
-                pricing: {
-                    ...s.pricing,
-                    [season]: {
-                        ...s.pricing[season],
-                        [type]: value,
-                    }
-                }
-            })),
-            updateSecurity: (fields) => set((s) => ({ security: { ...s.security, ...fields } })),
-        }),
-        { name: 'hotel-settings' }
-    )
-)
+    updatePricing: async (season, type, value) => {
+        const pricing = {
+            ...get().pricing,
+            [season]: { ...get().pricing[season], [type]: value },
+        }
+        await settingsService.set('pricing', pricing)
+        set({ pricing })
+    },
+
+    updateSecurity: async (fields) => {
+        const security = { ...get().security, ...fields }
+        await settingsService.set('security', security)
+        set({ security })
+    },
+}))
 
 export default useSettingsStore

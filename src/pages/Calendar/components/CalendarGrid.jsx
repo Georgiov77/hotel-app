@@ -16,12 +16,12 @@ function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellCl
     }
 
     const getBookingsForRoom = (roomId) => {
-        return bookings.filter((b) => b.roomId === roomId && b.status !== 'cancelled')
+        return bookings.filter((b) => b.room_id === roomId && b.status !== 'cancelled')
     }
 
     const calcBarPosition = (booking) => {
-        const cinDate  = booking.checkIn
-        const coutDate = booking.checkOut
+        const cinDate  = booking.check_in
+        const coutDate = booking.check_out
 
         let startIdx = days.findIndex((d) => d >= cinDate && d < coutDate)
         if (startIdx < 0) return null

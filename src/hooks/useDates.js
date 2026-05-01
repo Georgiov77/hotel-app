@@ -1,8 +1,11 @@
 import { calcNights, todayISO } from '@utils/dateUtils'
 
 export const getInitialDates = (initialData = {}) => {
-    const checkIn  = initialData.checkIn || todayISO()
-    let   checkOut = initialData.checkOut || ''
+    // Guard για null
+    const data = initialData || {}
+
+    const checkIn  = data.checkIn || todayISO()
+    let   checkOut = data.checkOut || ''
     let   nights   = 0
 
     if (checkIn && !checkOut) {

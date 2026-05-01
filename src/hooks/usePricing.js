@@ -1,7 +1,9 @@
-import { calcBasePrice, calcExtrasTotal, calcGrandTotal, calcDeposit } from '@utils/pricingUtils'
+import useSettingsStore from '@stores/useSettingsStore'
+import { calcExtrasTotal, calcGrandTotal, calcDeposit } from '@utils/pricingUtils'
 
 function usePricing(booking, updateBooking) {
-    const basePrice   = calcBasePrice(booking.room?.type)
+    const { pricing } = useSettingsStore()
+
     const extrasTotal = calcExtrasTotal(booking.extras)
     const grandTotal  = calcGrandTotal(booking.totalAmount, extrasTotal)
 
@@ -10,7 +12,7 @@ function usePricing(booking, updateBooking) {
             updateBooking({ season: season.id, pricePerNight: 0, totalAmount: 0 })
             return
         }
-        const price = calcDeposit(basePrice, season.multiplier)
+        const price = pricing[season.id]?.[booking.room?.type] || 0
         const total = price * booking.nights
         updateBooking({ season: season.id, pricePerNight: price, totalAmount: total })
     }
@@ -76,7 +78,6 @@ function usePricing(booking, updateBooking) {
     }
 
     return {
-        basePrice,
         extrasTotal,
         grandTotal,
         handleSeasonChange,

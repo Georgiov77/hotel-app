@@ -1,5 +1,8 @@
-import RoomCard from '@components/RoomCard/RoomCard'
-import { mockRooms } from '@config/mockData'
+import { useState, useEffect } from 'react'
+import RoomCard    from '@components/RoomCard/RoomCard'
+import roomService from '@services/roomService'
+import { toast }   from '@stores/useToastStore'
+import { getErrorMessage } from '@error/errorHandler'
 import './StepRoom.css'
 
 const floorLabels = {
@@ -9,36 +12,63 @@ const floorLabels = {
 }
 
 function StepRoom({ booking, updateBooking }) {
-    const availableRooms = mockRooms.filter((r) => r.status === 'available')
-    const floors = [0, 1, 2]
+    const [rooms,     setRooms]     = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        loadAvailable()
+    }, [booking.checkIn, booking.checkOut])
+
+    const loadAvailable = async () => {
+        try {
+            setIsLoading(true)
+            const data = await roomService.getAvailable(booking.checkIn, booking.checkOut)
+            setRooms(data)
+        } catch (err) {
+            toast.error(getErrorMessage(err))
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const handleSelectRoom = (room) => {
         updateBooking({ room, pricePerNight: 0 })
     }
 
+    if (isLoading) return <div>Φόρτωση δωματίων...</div>
+
     return (
         <div className="step-room">
-            {floors.map((floor) => {
-                const rooms = availableRooms.filter((r) => r.floor === floor)
-                if (!rooms.length) return null
+            {[0, 1, 2].map((floor) => {
+                const floorRooms = rooms.filter((r) => r.floor === floor)
+                if (!floorRooms.length) return null
 
                 return (
                     <div key={floor} className="step-room__floor">
                         <div className="step-room__floor-title">{floorLabels[floor]}</div>
                         <div className="step-room__grid">
-                            {rooms.map((room) => (
+                            {floorRooms.map((room) => (
                                 <div
                                     key={room.id}
                                     className={`step-room__card ${booking.room?.id === room.id ? 'step-room__card--selected' : ''}`}
                                     onClick={() => handleSelectRoom(room)}
                                 >
-                                    <RoomCard room={room} />
+                                    <RoomCard room={{
+                                        ...room,
+                                        hasKitchen: room.has_kitchen === 1,
+                                    }} />
                                 </div>
                             ))}
                         </div>
                     </div>
                 )
             })}
+
+            {!rooms.length && (
+                <div className="step-room__empty">
+                    Δεν υπάρχουν διαθέσιμα δωμάτια για αυτές τις ημερομηνίες
+                </div>
+            )}
 
             {booking.room && (
                 <div className="step-room__selected">

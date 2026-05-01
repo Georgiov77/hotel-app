@@ -12,23 +12,23 @@ import './Bookings.css'
 const bookingColumns = [
     { key: 'id', label: '#', render: (row) => `#${row.id}` },
     {
-        key: 'guestName',
+        key: 'last_name',
         label: 'Πελάτης',
         render: (row) => (
             <div className="bookings__guest">
-                <span className="bookings__guest-name">{row.guestName}</span>
+                <span className="bookings__guest-name">{row.last_name} {row.first_name}</span>
                 <span className="bookings__guest-source">{BOOKING_SOURCE_LABEL[row.source]}</span>
             </div>
         ),
     },
-    { key: 'roomNumber', label: 'Δωμάτιο', render: (row) => `Νο. ${row.roomNumber}` },
+    { key: 'room_number', label: 'Δωμάτιο', render: (row) => `Νο. ${row.room_number}` },
     {
-        key: 'checkIn',
+        key: 'check_in',
         label: 'Ημερομηνίες',
         render: (row) => (
             <div className="bookings__dates">
         <span className="bookings__dates-range">
-          {formatDate(row.checkIn)} → {formatDate(row.checkOut)}
+          {formatDate(row.check_in)} → {formatDate(row.check_out)}
         </span>
                 <span className="bookings__dates-nights">{row.nights} νύχτες</span>
             </div>
@@ -44,23 +44,23 @@ const bookingColumns = [
         ),
     },
     {
-        key: 'paymentStatus',
+        key: 'payment_status',
         label: 'Πληρωμή',
         render: (row) => (
-            <Badge variant={PAYMENT_STATUS_VARIANT[row.paymentStatus]}>
-                {PAYMENT_STATUS_LABEL[row.paymentStatus]}
+            <Badge variant={PAYMENT_STATUS_VARIANT[row.payment_status]}>
+                {PAYMENT_STATUS_LABEL[row.payment_status]}
             </Badge>
         ),
     },
     {
-        key: 'totalAmount',
+        key: 'total_amount',
         label: 'Σύνολο',
         render: (row) => (
             <div className="bookings__amount">
-                <span className="bookings__amount-total">{row.totalAmount}€</span>
-                {row.totalAmount - row.paidAmount > 0 && (
+                <span className="bookings__amount-total">{row.total_amount}€</span>
+                {row.total_amount - row.paid_amount > 0 && (
                     <span className="bookings__amount-remaining">
-            Υπόλοιπο: {row.totalAmount - row.paidAmount}€
+            Υπόλοιπο: {row.total_amount - row.paid_amount}€
           </span>
                 )}
             </div>

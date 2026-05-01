@@ -24,6 +24,7 @@
     "cross-env": "^7.0.3",
     "electron": "^29.0.0",
     "electron-builder": "^24.13.0",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^9.0.0",
     "eslint-plugin-react": "^7.37.0",
     "eslint-plugin-react-hooks": "^5.0.0",

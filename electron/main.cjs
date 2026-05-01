@@ -1,5 +1,13 @@
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const path     = require('path')
+const database = require('./database.cjs')
+const seeder   = require('./seeder.cjs')
+
+// IPC Handlers
+require('./ipc/roomHandlers.cjs')
+require('./ipc/guestHandlers.cjs')
+require('./ipc/bookingHandlers.cjs')
+require('./ipc/settingsHandlers.cjs')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -25,6 +33,8 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+    database.init()
+    seeder.seed()
     createWindow()
 
     app.on('activate', () => {

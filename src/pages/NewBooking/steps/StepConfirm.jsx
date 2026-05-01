@@ -18,8 +18,9 @@ function StepConfirm({ booking }) {
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Πελάτης</span>
                         <span className="step-confirm__value">
-              {booking.guest?.lastName} {booking.guest?.firstName}
-            </span>
+                            {booking.guest?.last_name || booking.guest?.lastName}{' '}
+                            {booking.guest?.first_name || booking.guest?.firstName}
+                        </span>
                     </div>
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Δωμάτιο</span>
