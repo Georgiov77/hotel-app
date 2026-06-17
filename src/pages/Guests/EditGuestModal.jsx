@@ -1,6 +1,5 @@
-import { useState }        from 'react'
-import { useToast, Button }        from '@georgevlachos/ui'
-import FormField           from '@components/FormField/FormField'
+import { useState }                          from 'react'
+import { useToast, Button, Input, Textarea } from '@georgevlachos/ui'
 import guestService        from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './EditGuestModal.css'
@@ -64,68 +63,58 @@ function EditGuestModal({ guest, onSave, onClose }) {
     return (
         <div className="edit-guest">
             <div className="edit-guest__grid">
-                <FormField label="Επώνυμο *">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.last_name}
-                        onChange={(e) => handleChange('last_name', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Όνομα *">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.first_name}
-                        onChange={(e) => handleChange('first_name', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Email">
-                    <input
-                        type="email"
-                        className="form-field__input"
-                        value={form.email}
-                        onChange={(e) => handleChange('email', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Τηλέφωνο">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Υπηκοότητα">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.nationality}
-                        onChange={(e) => handleChange('nationality', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="ΑΔΤ / Διαβατήριο">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.id_number}
-                        onChange={(e) => handleChange('id_number', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Σημειώσεις" style={{ gridColumn: '1 / -1' }}>
-                    <textarea
-                        className="form-field__input"
+                <Input
+                    label="Επώνυμο *"
+                    value={form.last_name}
+                    onChange={(e) => handleChange('last_name', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Όνομα *"
+                    value={form.first_name}
+                    onChange={(e) => handleChange('first_name', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Τηλέφωνο"
+                    value={form.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Υπηκοότητα"
+                    value={form.nationality}
+                    onChange={(e) => handleChange('nationality', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="ΑΔΤ / Διαβατήριο"
+                    value={form.id_number}
+                    onChange={(e) => handleChange('id_number', e.target.value)}
+                    fullWidth
+                />
+                <div style={{ gridColumn: '1 / -1' }}>
+                    <Textarea
+                        label="Σημειώσεις"
                         rows={3}
                         value={form.notes}
                         onChange={(e) => handleChange('notes', e.target.value)}
+                        fullWidth
                     />
-                </FormField>
+                </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)', marginTop: '1rem' }}>
                 <Button variant="secondary" onClick={onClose}>Άκυρο</Button>
-                <Button onClick={handleSave} disabled={isLoading}>
-                    {isLoading ? 'Αποθήκευση...' : 'Αποθήκευση'}
+                <Button onClick={handleSave} loading={isLoading}>
+                    Αποθήκευση
                 </Button>
             </div>
         </div>

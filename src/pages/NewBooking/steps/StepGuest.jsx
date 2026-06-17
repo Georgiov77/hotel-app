@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useToast, Button }        from '@georgevlachos/ui'
-import FormField           from '@components/FormField/FormField'
+import { useState, useEffect }            from 'react'
+import { useToast, Button, Input }        from '@georgevlachos/ui'
 import guestService        from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepGuest.css'
@@ -112,24 +111,12 @@ function StepGuest({ booking, updateBooking }) {
             {mode === 'new' && (
                 <form className="step-guest__form" onSubmit={handleNewGuest}>
                     <div className="step-guest__grid">
-                        <FormField label="Επώνυμο *">
-                            <input name="lastName" type="text" className="form-field__input" required />
-                        </FormField>
-                        <FormField label="Όνομα *">
-                            <input name="firstName" type="text" className="form-field__input" required />
-                        </FormField>
-                        <FormField label="Email">
-                            <input name="email" type="email" className="form-field__input" />
-                        </FormField>
-                        <FormField label="Τηλέφωνο">
-                            <input name="phone" type="text" className="form-field__input" />
-                        </FormField>
-                        <FormField label="Υπηκοότητα">
-                            <input name="nationality" type="text" className="form-field__input" defaultValue="GR" />
-                        </FormField>
-                        <FormField label="ΑΔΤ / Διαβατήριο">
-                            <input name="idNumber" type="text" className="form-field__input" />
-                        </FormField>
+                        <Input name="lastName"    label="Επώνυμο *"         required fullWidth />
+                        <Input name="firstName"   label="Όνομα *"           required fullWidth />
+                        <Input name="email"       label="Email" type="email"          fullWidth />
+                        <Input name="phone"       label="Τηλέφωνο"                    fullWidth />
+                        <Input name="nationality" label="Υπηκοότητα" defaultValue="GR" fullWidth />
+                        <Input name="idNumber"    label="ΑΔΤ / Διαβατήριο"            fullWidth />
                     </div>
                     <div className="step-guest__form-actions">
                         <Button type="submit">✓ Προσθήκη Πελάτη</Button>

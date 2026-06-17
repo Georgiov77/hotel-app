@@ -1,6 +1,5 @@
-import { useState }        from 'react'
-import { useToast, Button }        from '@georgevlachos/ui'
-import FormField           from '@components/FormField/FormField'
+import { useState }                               from 'react'
+import { useToast, Button, Input, Textarea, Select } from '@georgevlachos/ui'
 import bookingService      from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 import { calcNights }      from '@georgevlachos/utils'
@@ -75,132 +74,127 @@ function EditBookingModal({ booking, onSave, onClose }) {
         }
     }
 
+    const paymentOptions = [
+        { value: 'unpaid',  label: 'Αδήλωτο' },
+        { value: 'deposit', label: 'Προκαταβολή' },
+        { value: 'paid',    label: 'Εξοφλημένο' },
+    ]
+
+    const sourceOptions = Object.entries(BOOKING_SOURCE_LABEL).map(([key, label]) => ({
+        value: key,
+        label,
+    }))
+
     return (
         <div className="edit-booking">
 
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Ημερομηνίες</div>
                 <div className="edit-booking__grid">
-                    <FormField label="Check-in">
-                        <input
-                            type="date"
-                            className="form-field__input"
-                            value={form.check_in}
-                            onChange={(e) => handleChange('check_in', e.target.value)}
-                        />
-                    </FormField>
-                    <FormField label="Check-out">
-                        <input
-                            type="date"
-                            className="form-field__input"
-                            value={form.check_out}
-                            min={form.check_in}
-                            onChange={(e) => handleChange('check_out', e.target.value)}
-                        />
-                    </FormField>
+                    <Input
+                        label="Check-in"
+                        type="date"
+                        value={form.check_in}
+                        onChange={(e) => handleChange('check_in', e.target.value)}
+                        fullWidth
+                    />
+                    <Input
+                        label="Check-out"
+                        type="date"
+                        value={form.check_out}
+                        min={form.check_in}
+                        onChange={(e) => handleChange('check_out', e.target.value)}
+                        fullWidth
+                    />
                 </div>
             </div>
 
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Άτομα</div>
                 <div className="edit-booking__grid">
-                    <FormField label="Ενήλικες">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            min={1}
-                            max={6}
-                            value={form.adults}
-                            onChange={(e) => handleChange('adults', e.target.value)}
-                        />
-                    </FormField>
-                    <FormField label="Παιδιά">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            min={0}
-                            max={6}
-                            value={form.children}
-                            onChange={(e) => handleChange('children', e.target.value)}
-                        />
-                    </FormField>
+                    <Input
+                        label="Ενήλικες"
+                        type="number"
+                        min={1}
+                        max={6}
+                        value={form.adults}
+                        onChange={(e) => handleChange('adults', e.target.value)}
+                        fullWidth
+                    />
+                    <Input
+                        label="Παιδιά"
+                        type="number"
+                        min={0}
+                        max={6}
+                        value={form.children}
+                        onChange={(e) => handleChange('children', e.target.value)}
+                        fullWidth
+                    />
                 </div>
             </div>
 
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Τιμολόγηση</div>
                 <div className="edit-booking__grid">
-                    <FormField label="Τιμή/νύχτα (€)">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            value={form.price_per_night}
-                            onChange={(e) => handleChange('price_per_night', e.target.value)}
-                        />
-                    </FormField>
-                    <FormField label="Σύνολο (€)">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            value={form.total_amount}
-                            onChange={(e) => handleChange('total_amount', e.target.value)}
-                        />
-                    </FormField>
-                    <FormField label="Προκαταβολή (€)">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            value={form.deposit_amount}
-                            onChange={(e) => handleChange('deposit_amount', e.target.value)}
-                        />
-                    </FormField>
-                    <FormField label="Πληρωμένο (€)">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            value={form.paid_amount}
-                            onChange={(e) => handleChange('paid_amount', e.target.value)}
-                        />
-                    </FormField>
-                    <FormField label="Κατάσταση Πληρωμής">
-                        <select
-                            className="form-field__input"
-                            value={form.payment_status}
-                            onChange={(e) => handleChange('payment_status', e.target.value)}
-                        >
-                            <option value="unpaid">Αδήλωτο</option>
-                            <option value="deposit">Προκαταβολή</option>
-                            <option value="paid">Εξοφλημένο</option>
-                        </select>
-                    </FormField>
-                    <FormField label="Προέλευση">
-                        <select
-                            className="form-field__input"
-                            value={form.source}
-                            onChange={(e) => handleChange('source', e.target.value)}
-                        >
-                            {Object.entries(BOOKING_SOURCE_LABEL).map(([key, label]) => (
-                                <option key={key} value={key}>{label}</option>
-                            ))}
-                        </select>
-                    </FormField>
+                    <Input
+                        label="Τιμή/νύχτα (€)"
+                        type="number"
+                        value={form.price_per_night}
+                        onChange={(e) => handleChange('price_per_night', e.target.value)}
+                        fullWidth
+                    />
+                    <Input
+                        label="Σύνολο (€)"
+                        type="number"
+                        value={form.total_amount}
+                        onChange={(e) => handleChange('total_amount', e.target.value)}
+                        fullWidth
+                    />
+                    <Input
+                        label="Προκαταβολή (€)"
+                        type="number"
+                        value={form.deposit_amount}
+                        onChange={(e) => handleChange('deposit_amount', e.target.value)}
+                        fullWidth
+                    />
+                    <Input
+                        label="Πληρωμένο (€)"
+                        type="number"
+                        value={form.paid_amount}
+                        onChange={(e) => handleChange('paid_amount', e.target.value)}
+                        fullWidth
+                    />
+                    <Select
+                        label="Κατάσταση Πληρωμής"
+                        value={form.payment_status}
+                        options={paymentOptions}
+                        onChange={(e) => handleChange('payment_status', e.target.value)}
+                        fullWidth
+                    />
+                    <Select
+                        label="Προέλευση"
+                        value={form.source}
+                        options={sourceOptions}
+                        onChange={(e) => handleChange('source', e.target.value)}
+                        fullWidth
+                    />
                 </div>
             </div>
 
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Σημειώσεις</div>
-                <textarea
-                    className="form-field__input"
+                <Textarea
                     rows={3}
                     value={form.notes}
                     onChange={(e) => handleChange('notes', e.target.value)}
+                    fullWidth
                 />
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)' }}>
                 <Button variant="secondary" onClick={onClose}>Άκυρο</Button>
-                <Button onClick={handleSave} disabled={isLoading}>
-                    {isLoading ? 'Αποθήκευση...' : 'Αποθήκευση'}
+                <Button onClick={handleSave} loading={isLoading}>
+                    Αποθήκευση
                 </Button>
             </div>
 

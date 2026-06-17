@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import FormField from '@components/FormField/FormField'
-import { Button } from '@georgevlachos/ui'
+import { Input, Button } from '@georgevlachos/ui'
 import useSettingsStore from '@stores/useSettingsStore'
 import './HotelSettings.css'
 
@@ -19,46 +18,37 @@ function HotelSettings() {
     return (
         <div className="hotel-settings">
             <div className="hotel-settings__grid">
-                <FormField label="Όνομα Ξενοδοχείου">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.name}
-                        onChange={(e) => handleChange('name', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="ΑΦΜ">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.afm}
-                        onChange={(e) => handleChange('afm', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Τηλέφωνο">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Email">
-                    <input
-                        type="email"
-                        className="form-field__input"
-                        value={form.email}
-                        onChange={(e) => handleChange('email', e.target.value)}
-                    />
-                </FormField>
-                <FormField label="Διεύθυνση">
-                    <input
-                        type="text"
-                        className="form-field__input"
-                        value={form.address}
-                        onChange={(e) => handleChange('address', e.target.value)}
-                    />
-                </FormField>
+                <Input
+                    label="Όνομα Ξενοδοχείου"
+                    value={form.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="ΑΦΜ"
+                    value={form.afm}
+                    onChange={(e) => handleChange('afm', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Τηλέφωνο"
+                    value={form.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Email"
+                    type="email"
+                    value={form.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                    fullWidth
+                />
+                <Input
+                    label="Διεύθυνση"
+                    value={form.address}
+                    onChange={(e) => handleChange('address', e.target.value)}
+                    fullWidth
+                />
             </div>
             <div>
                 <Button onClick={handleSave}>Αποθήκευση</Button>

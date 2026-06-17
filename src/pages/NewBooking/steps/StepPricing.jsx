@@ -1,5 +1,4 @@
-import FormField          from '@components/FormField/FormField'
-import { Button }             from '@georgevlachos/ui'
+import { Button, Input } from '@georgevlachos/ui'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import { SEASONS, DEPOSIT_OPTIONS } from '@config/pricing'
 import { calcDeposit }    from '@utils/pricingUtils'
@@ -25,7 +24,6 @@ function StepPricing({ booking, updateBooking }) {
     return (
         <div className="step-pricing">
 
-            {/* Σεζόν */}
             <div className="step-pricing__section">
                 <div className="step-pricing__section-title">Τιμή Δωματίου</div>
                 <div className="step-pricing__seasons">
@@ -45,18 +43,16 @@ function StepPricing({ booking, updateBooking }) {
                     ))}
                 </div>
                 {booking.season === 'custom' && (
-                    <FormField label="Custom Τιμή ανά νύχτα (€)">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            value={booking.pricePerNight || ''}
-                            onChange={(e) => handleCustomPrice(e.target.value)}
-                        />
-                    </FormField>
+                    <Input
+                        label="Custom Τιμή ανά νύχτα (€)"
+                        type="number"
+                        value={booking.pricePerNight || ''}
+                        onChange={(e) => handleCustomPrice(e.target.value)}
+                        fullWidth
+                    />
                 )}
             </div>
 
-            {/* Προέλευση */}
             <div className="step-pricing__section">
                 <div className="step-pricing__section-title">Προέλευση Κράτησης</div>
                 <div className="step-pricing__sources">
@@ -72,44 +68,38 @@ function StepPricing({ booking, updateBooking }) {
                 </div>
             </div>
 
-            {/* Extras */}
             <div className="step-pricing__section">
                 <div className="step-pricing__section-title">Extras</div>
                 {booking.extras.map((extra) => (
                     <div key={extra.id} className="step-pricing__extra">
-                        <FormField label="Περιγραφή">
-                            <input
-                                type="text"
-                                className="form-field__input"
-                                value={extra.description}
-                                placeholder="π.χ. Πρωινό"
-                                onChange={(e) => handleExtraChange(extra.id, 'description', e.target.value)}
-                            />
-                        </FormField>
-                        <FormField label="Τιμή/μέρα (€)">
-                            <input
-                                type="number"
-                                className="form-field__input"
-                                value={extra.pricePerDay}
-                                onChange={(e) => handleExtraChange(extra.id, 'pricePerDay', parseFloat(e.target.value) || 0)}
-                            />
-                        </FormField>
-                        <FormField label="Μέρες">
-                            <input
-                                type="number"
-                                className="form-field__input"
-                                value={extra.days}
-                                onChange={(e) => handleExtraChange(extra.id, 'days', parseInt(e.target.value) || 0)}
-                            />
-                        </FormField>
-                        <FormField label="Σύνολο">
-                            <input
-                                type="number"
-                                className="form-field__input"
-                                value={extra.total}
-                                readOnly
-                            />
-                        </FormField>
+                        <Input
+                            label="Περιγραφή"
+                            value={extra.description}
+                            placeholder="π.χ. Πρωινό"
+                            onChange={(e) => handleExtraChange(extra.id, 'description', e.target.value)}
+                            fullWidth
+                        />
+                        <Input
+                            label="Τιμή/μέρα (€)"
+                            type="number"
+                            value={extra.pricePerDay}
+                            onChange={(e) => handleExtraChange(extra.id, 'pricePerDay', parseFloat(e.target.value) || 0)}
+                            fullWidth
+                        />
+                        <Input
+                            label="Μέρες"
+                            type="number"
+                            value={extra.days}
+                            onChange={(e) => handleExtraChange(extra.id, 'days', parseInt(e.target.value) || 0)}
+                            fullWidth
+                        />
+                        <Input
+                            label="Σύνολο"
+                            type="number"
+                            value={extra.total}
+                            readOnly
+                            fullWidth
+                        />
                         <button
                             className="step-pricing__extra-remove"
                             onClick={() => handleRemoveExtra(extra.id)}
@@ -121,7 +111,6 @@ function StepPricing({ booking, updateBooking }) {
                 </Button>
             </div>
 
-            {/* Πληρωμή */}
             <div className="step-pricing__section">
                 <div className="step-pricing__section-title">Πληρωμή</div>
                 <div className="step-pricing__payment-options">
@@ -139,20 +128,18 @@ function StepPricing({ booking, updateBooking }) {
                     ))}
                 </div>
                 {booking._customDeposit && (
-                    <FormField label="Ποσό Προκαταβολής (€)">
-                        <input
-                            type="number"
-                            className="form-field__input"
-                            min={0}
-                            max={grandTotal}
-                            value={booking.depositAmount || ''}
-                            onChange={(e) => handleCustomDeposit(e.target.value)}
-                        />
-                    </FormField>
+                    <Input
+                        label="Ποσό Προκαταβολής (€)"
+                        type="number"
+                        min={0}
+                        max={grandTotal}
+                        value={booking.depositAmount || ''}
+                        onChange={(e) => handleCustomDeposit(e.target.value)}
+                        fullWidth
+                    />
                 )}
             </div>
 
-            {/* Σύνοψη */}
             <div className="step-pricing__summary">
                 <div className="step-pricing__summary-row">
                     <span>Δωμάτιο ({booking.nights} νύχτες × {booking.pricePerNight}€)</span>
