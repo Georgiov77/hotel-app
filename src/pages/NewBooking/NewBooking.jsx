@@ -9,7 +9,7 @@ import bookingService      from '@services/bookingService'
 import { toast }           from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 import { getInitialDates } from '@hooks/useDates'
-import { todayISO }        from '@utils/dateUtils'
+import { todayISO }        from '@georgevlachos/utils'
 import './NewBooking.css'
 
 const STEPS = [

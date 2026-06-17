@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { todayISO } from '@utils/dateUtils'
+import { todayISO } from '@georgevlachos/utils'
 
 const DAYS_TO_SHOW = 7
 

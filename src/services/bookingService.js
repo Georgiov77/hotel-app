@@ -1,7 +1,7 @@
 import { withErrorHandling } from '@error/errorHandler'
 import { ERROR_CODES }       from '@error/AppError'
 import { stripUIFields }     from '@utils/pricingUtils'
-import { todayISO }          from '@utils/dateUtils'
+import { todayISO }          from '@georgevlachos/utils'
 
 const bookingService = {
     getAll: () =>

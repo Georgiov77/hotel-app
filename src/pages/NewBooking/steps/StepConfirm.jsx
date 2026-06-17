@@ -1,5 +1,5 @@
 import Badge from '@components/Badge/Badge'
-import { formatDate } from '@utils/dateUtils'
+import { formatDate } from '@georgevlachos/utils'
 import { BOOKING_SOURCE_LABEL, PAYMENT_STATUS_LABEL, PAYMENT_STATUS_VARIANT } from '@config/statuses'
 import './StepConfirm.css'
 

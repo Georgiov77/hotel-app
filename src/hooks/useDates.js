@@ -1,4 +1,4 @@
-import { calcNights, todayISO } from '@utils/dateUtils'
+import { calcNights, todayISO } from '@georgevlachos/utils'
 
 export const getInitialDates = (initialData = {}) => {
     // Guard για null

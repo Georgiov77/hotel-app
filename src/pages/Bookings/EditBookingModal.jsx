@@ -4,7 +4,7 @@ import Button              from '@components/Button/Button'
 import bookingService      from '@services/bookingService'
 import { toast }           from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
-import { calcNights }      from '@utils/dateUtils'
+import { calcNights }      from '@georgevlachos/utils'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import './EditBookingModal.css'
 

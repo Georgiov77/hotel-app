@@ -1,6 +1,6 @@
 import Badge  from '@components/Badge/Badge'
 import Button from '@components/Button/Button'
-import { formatDate } from '@utils/dateUtils'
+import { formatDate } from '@georgevlachos/utils'
 import {
     BOOKING_STATUS_VARIANT,
     BOOKING_STATUS_LABEL,
