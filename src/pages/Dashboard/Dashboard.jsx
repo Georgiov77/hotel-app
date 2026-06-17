@@ -1,6 +1,4 @@
-import { useToast, Badge } from '@georgevlachos/ui'
-import Card            from '@components/Card/Card'
-import Button          from '@components/Button/Button'
+import { useToast, Badge, Card, Button } from '@georgevlachos/ui'
 import useDashboard    from '@hooks/useDashboard'
 import bookingService  from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useToast }        from '@georgevlachos/ui'
+import { useToast, Button }        from '@georgevlachos/ui'
 import FormField           from '@components/FormField/FormField'
-import Button              from '@components/Button/Button'
 import guestService        from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepGuest.css'

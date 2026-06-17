@@ -1,7 +1,6 @@
 import { useState }        from 'react'
-import { useToast }        from '@georgevlachos/ui'
+import { useToast, Button }        from '@georgevlachos/ui'
 import FormField           from '@components/FormField/FormField'
-import Button              from '@components/Button/Button'
 import bookingService      from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 import { calcNights }      from '@georgevlachos/utils'

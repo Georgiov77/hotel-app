@@ -1,5 +1,5 @@
 import FormField          from '@components/FormField/FormField'
-import Button             from '@components/Button/Button'
+import { Button }             from '@georgevlachos/ui'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import { SEASONS, DEPOSIT_OPTIONS } from '@config/pricing'
 import { calcDeposit }    from '@utils/pricingUtils'

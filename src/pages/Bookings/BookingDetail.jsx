@@ -1,5 +1,4 @@
-import { Badge }  from '@georgevlachos/ui'
-import Button      from '@components/Button/Button'
+import { Badge, Button }  from '@georgevlachos/ui'
 import { formatDate } from '@georgevlachos/utils'
 import {
     BOOKING_STATUS_VARIANT,
