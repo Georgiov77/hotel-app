@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
-import FormField       from '@components/FormField/FormField'
-import Button          from '@components/Button/Button'
-import guestService    from '@services/guestService'
-import { toast }       from '@stores/useToastStore'
+import { useToast }        from '@georgevlachos/ui'
+import FormField           from '@components/FormField/FormField'
+import Button              from '@components/Button/Button'
+import guestService        from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepGuest.css'
 
 function StepGuest({ booking, updateBooking }) {
-    const [mode,    setMode]    = useState('search')
-    const [guests,  setGuests]  = useState([])
-    const [search,  setSearch]  = useState('')
+    const { showToast } = useToast()
+
+    const [mode,   setMode]   = useState('search')
+    const [guests, setGuests] = useState([])
+    const [search, setSearch] = useState('')
 
     useEffect(() => {
         loadGuests()
@@ -20,7 +22,7 @@ function StepGuest({ booking, updateBooking }) {
             const data = await guestService.getAll()
             setGuests(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
@@ -31,7 +33,7 @@ function StepGuest({ booking, updateBooking }) {
             const data = await guestService.search(q)
             setGuests(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
@@ -54,10 +56,10 @@ function StepGuest({ booking, updateBooking }) {
             })
             updateBooking({ guest })
             setMode('search')
-            toast.success('Ο πελάτης αποθηκεύτηκε!')
+            showToast({ message: 'Ο πελάτης αποθηκεύτηκε!', variant: 'success' })
             loadGuests()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 

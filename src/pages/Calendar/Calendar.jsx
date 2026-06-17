@@ -1,4 +1,5 @@
 import { useState }      from 'react'
+import { useToast }      from '@georgevlachos/ui'
 import CalendarHeader    from './components/CalendarHeader'
 import CalendarGrid      from './components/CalendarGrid'
 import Modal             from '@components/Modal/Modal'
@@ -7,11 +8,11 @@ import BookingDetail     from '@pages/Bookings/BookingDetail'
 import useCalendar       from '@hooks/useCalendar'
 import useCalendarData   from '@hooks/useCalendarData'
 import bookingService    from '@services/bookingService'
-import { toast }         from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 import './Calendar.css'
 
 function Calendar({ onNavigate }) {
+    const { showToast } = useToast()
     const { days, goNext, goPrev, goToday, isToday } = useCalendar()
     const { rooms, bookings, isLoading, reload }      = useCalendarData(days[0], days[days.length - 1])
     const [selectedBooking, setSelectedBooking]       = useState(null)
@@ -23,11 +24,11 @@ function Calendar({ onNavigate }) {
     const handleStatusChange = async (id, status) => {
         try {
             await bookingService.updateStatus(id, status)
-            toast.success('Η κατάσταση ενημερώθηκε!')
+            showToast({ message: 'Η κατάσταση ενημερώθηκε!', variant: 'success' })
             setSelectedBooking(null)
             reload()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 

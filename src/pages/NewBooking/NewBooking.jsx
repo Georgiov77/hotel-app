@@ -1,4 +1,5 @@
 import { useState }        from 'react'
+import { useToast }        from '@georgevlachos/ui'
 import Wizard              from '@components/Wizard/Wizard'
 import StepDates           from './steps/StepDates'
 import StepRoom            from './steps/StepRoom'
@@ -6,7 +7,6 @@ import StepGuest           from './steps/StepGuest'
 import StepPricing         from './steps/StepPricing'
 import StepConfirm         from './steps/StepConfirm'
 import bookingService      from '@services/bookingService'
-import { toast }           from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 import { getInitialDates } from '@hooks/useDates'
 import { todayISO }        from '@georgevlachos/utils'
@@ -38,9 +38,11 @@ const initialState = {
 }
 
 function NewBooking({ onNavigate, initialData }) {
-    const [currentStep, setCurrentStep] = useState(0)
+    const { showToast } = useToast()
+
+    const [currentStep,  setCurrentStep]  = useState(0)
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [booking, setBooking] = useState(() => {
+    const [booking,      setBooking]      = useState(() => {
         const data = { ...initialState, ...(initialData || {}) }
 
         if (data.room) {
@@ -66,10 +68,10 @@ function NewBooking({ onNavigate, initialData }) {
         try {
             setIsSubmitting(true)
             await bookingService.create(booking)
-            toast.success('Η κράτηση αποθηκεύτηκε επιτυχώς!')
+            showToast({ message: 'Η κράτηση αποθηκεύτηκε επιτυχώς!', variant: 'success' })
             onNavigate('bookings', null)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsSubmitting(false)
         }

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import RoomCard    from '@components/RoomCard/RoomCard'
-import roomService from '@services/roomService'
-import { toast }   from '@stores/useToastStore'
+import { useToast }        from '@georgevlachos/ui'
+import RoomCard            from '@components/RoomCard/RoomCard'
+import roomService         from '@services/roomService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepRoom.css'
 
@@ -12,6 +12,8 @@ const floorLabels = {
 }
 
 function StepRoom({ booking, updateBooking }) {
+    const { showToast } = useToast()
+
     const [rooms,     setRooms]     = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -25,7 +27,7 @@ function StepRoom({ booking, updateBooking }) {
             const data = await roomService.getAvailable(booking.checkIn, booking.checkOut)
             setRooms(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }

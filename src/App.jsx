@@ -3,7 +3,6 @@ import useThemeStore     from '@stores/useThemeStore'
 import useSettingsStore  from '@stores/useSettingsStore'
 import useIdleLock       from '@features/auth/useIdleLock'
 import Layout            from '@components/Layout/Layout'
-import Toast             from '@components/Toast/Toast'
 import LockScreen        from '@features/auth/LockScreen'
 import Dashboard         from '@pages/Dashboard/Dashboard'
 import Rooms             from '@pages/Rooms/Rooms'
@@ -56,7 +55,6 @@ function App() {
             <Layout activePage={activePage} onNavigate={setActivePage} onLock={lock}>
                 {renderPage()}
             </Layout>
-            <Toast />
         </>
     )
 }

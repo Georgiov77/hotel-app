@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useToast }        from '@georgevlachos/ui'
 import roomService         from '@services/roomService'
 import bookingService      from '@services/bookingService'
-import { toast }           from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useCalendarData(startDate, endDate) {
+    const { showToast } = useToast()
+
     const [rooms,     setRooms]     = useState([])
     const [bookings,  setBookings]  = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -19,7 +21,7 @@ function useCalendarData(startDate, endDate) {
             setRooms(roomData)
             setBookings(bookingData)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }

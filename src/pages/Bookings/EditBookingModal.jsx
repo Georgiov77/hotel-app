@@ -1,26 +1,28 @@
 import { useState }        from 'react'
+import { useToast }        from '@georgevlachos/ui'
 import FormField           from '@components/FormField/FormField'
 import Button              from '@components/Button/Button'
 import bookingService      from '@services/bookingService'
-import { toast }           from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 import { calcNights }      from '@georgevlachos/utils'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import './EditBookingModal.css'
 
 function EditBookingModal({ booking, onSave, onClose }) {
+    const { showToast } = useToast()
+
     const [form, setForm]         = useState({
-        check_in:       booking.check_in,
-        check_out:      booking.check_out,
-        adults:         booking.adults,
-        children:       booking.children,
+        check_in:        booking.check_in,
+        check_out:       booking.check_out,
+        adults:          booking.adults,
+        children:        booking.children,
         price_per_night: booking.price_per_night,
-        total_amount:   booking.total_amount,
-        deposit_amount: booking.deposit_amount,
-        paid_amount:    booking.paid_amount,
-        payment_status: booking.payment_status,
-        source:         booking.source,
-        notes:          booking.notes || '',
+        total_amount:    booking.total_amount,
+        deposit_amount:  booking.deposit_amount,
+        paid_amount:     booking.paid_amount,
+        payment_status:  booking.payment_status,
+        source:          booking.source,
+        notes:           booking.notes || '',
     })
     const [isLoading, setIsLoading] = useState(false)
 
@@ -28,7 +30,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
         setForm((prev) => {
             const updated = { ...prev, [field]: value }
 
-            // Αν αλλάξουν ημερομηνίες → ενημέρωσε το total
             if (field === 'check_in' || field === 'check_out') {
                 if (updated.check_in && updated.check_out) {
                     const nights = calcNights(updated.check_in, updated.check_out)
@@ -37,7 +38,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
                 }
             }
 
-            // Αν αλλάξει τιμή → ενημέρωσε το total
             if (field === 'price_per_night') {
                 const nights = calcNights(updated.check_in, updated.check_out)
                 updated.total_amount = nights * parseFloat(value)
@@ -67,10 +67,10 @@ function EditBookingModal({ booking, onSave, onClose }) {
                 paymentStatus: form.payment_status,
                 notes:         form.notes,
             })
-            toast.success('Η κράτηση ενημερώθηκε!')
+            showToast({ message: 'Η κράτηση ενημερώθηκε!', variant: 'success' })
             onSave()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }
@@ -79,7 +79,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
     return (
         <div className="edit-booking">
 
-            {/* Ημερομηνίες */}
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Ημερομηνίες</div>
                 <div className="edit-booking__grid">
@@ -103,7 +102,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
                 </div>
             </div>
 
-            {/* Άτομα */}
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Άτομα</div>
                 <div className="edit-booking__grid">
@@ -130,7 +128,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
                 </div>
             </div>
 
-            {/* Τιμολόγηση */}
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Τιμολόγηση</div>
                 <div className="edit-booking__grid">
@@ -191,7 +188,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
                 </div>
             </div>
 
-            {/* Σημειώσεις */}
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Σημειώσεις</div>
                 <textarea

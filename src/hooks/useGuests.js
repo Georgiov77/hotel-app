@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useToast }        from '@georgevlachos/ui'
 import guestService        from '@services/guestService'
-import { toast }           from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useGuests() {
+    const { showToast } = useToast()
+
     const [guests,    setGuests]    = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -13,7 +15,7 @@ function useGuests() {
             const data = await guestService.getAll()
             setGuests(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }
@@ -25,37 +27,37 @@ function useGuests() {
             const data = await guestService.search(query)
             setGuests(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
     const create = async (guest) => {
         try {
             await guestService.create(guest)
-            toast.success('Ο πελάτης αποθηκεύτηκε!')
+            showToast({ message: 'Ο πελάτης αποθηκεύτηκε!', variant: 'success' })
             await load()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
     const update = async (id, guest) => {
         try {
             await guestService.update(id, guest)
-            toast.success('Ο πελάτης ενημερώθηκε!')
+            showToast({ message: 'Ο πελάτης ενημερώθηκε!', variant: 'success' })
             await load()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
     const remove = async (id) => {
         try {
             await guestService.delete(id)
-            toast.success('Ο πελάτης διαγράφηκε!')
+            showToast({ message: 'Ο πελάτης διαγράφηκε!', variant: 'success' })
             await load()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 

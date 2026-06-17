@@ -1,33 +1,34 @@
+import { useToast }     from '@georgevlachos/ui'
 import Card            from '@components/Card/Card'
 import Button          from '@components/Button/Button'
 import Badge           from '@components/Badge/Badge'
 import useDashboard    from '@hooks/useDashboard'
 import bookingService  from '@services/bookingService'
-import { toast }       from '@stores/useToastStore'
 import { getErrorMessage } from '@error/errorHandler'
 import { BOOKING_STATUS_VARIANT, BOOKING_STATUS_LABEL } from '@config/statuses'
 import './Dashboard.css'
 
 function Dashboard({ onNavigate }) {
+    const { showToast } = useToast()
     const { checkIns, checkOuts, isLoading, stats, reload } = useDashboard()
 
     const handleCheckIn = async (id) => {
         try {
             await bookingService.updateStatus(id, 'checked_in')
-            toast.success('Check-in ολοκληρώθηκε!')
+            showToast({ message: 'Check-in ολοκληρώθηκε!', variant: 'success' })
             reload()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
     const handleCheckOut = async (id) => {
         try {
             await bookingService.updateStatus(id, 'checked_out')
-            toast.success('Check-out ολοκληρώθηκε!')
+            showToast({ message: 'Check-out ολοκληρώθηκε!', variant: 'success' })
             reload()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
@@ -62,8 +63,8 @@ function Dashboard({ onNavigate }) {
                         <span className="dashboard__stat-value">{stats.monthRevenue}€</span>
                         <span className="dashboard__stat-label">Έσοδα μήνα</span>
                         <span className="dashboard__stat-sub">
-              {new Date().toLocaleDateString('el-GR', { month: 'long', year: 'numeric' })}
-            </span>
+                            {new Date().toLocaleDateString('el-GR', { month: 'long', year: 'numeric' })}
+                        </span>
                     </div>
                 </Card>
             </div>

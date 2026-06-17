@@ -1,10 +1,12 @@
 // src/hooks/useDashboard.js
 import { useState, useEffect } from 'react'
-import bookingService from '@services/bookingService'
+import { useToast }        from '@georgevlachos/ui'
+import bookingService      from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
-import { toast } from '@stores/useToastStore'
 
 function useDashboard() {
+    const { showToast } = useToast()
+
     const [checkIns,   setCheckIns]   = useState([])
     const [checkOuts,  setCheckOuts]  = useState([])
     const [isLoading,  setIsLoading]  = useState(true)
@@ -19,7 +21,7 @@ function useDashboard() {
             setCheckIns(ins)
             setCheckOuts(outs)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }
@@ -27,8 +29,8 @@ function useDashboard() {
 
     useEffect(() => { load() }, [])
 
-    const totalRooms  = 13
-    const occupied    = checkIns.filter((b) => b.status === 'checked_in').length
+    const totalRooms   = 13
+    const occupied     = checkIns.filter((b) => b.status === 'checked_in').length
     const occupancyPct = Math.round((occupied / totalRooms) * 100)
     const monthRevenue = checkIns.reduce((sum, b) => sum + b.total_amount, 0)
 

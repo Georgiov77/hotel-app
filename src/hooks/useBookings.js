@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import bookingService      from '@services/bookingService'
-import { toast }           from '@stores/useToastStore'
-import { getErrorMessage } from '@error/errorHandler'
+import { useToast }            from '@georgevlachos/ui'
+import bookingService          from '@services/bookingService'
+import { getErrorMessage }     from '@error/errorHandler'
 
 function useBookings() {
+    const { showToast } = useToast()
+
     const [bookings,  setBookings]  = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -13,7 +15,7 @@ function useBookings() {
             const data = await bookingService.getAll()
             setBookings(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }
@@ -22,20 +24,20 @@ function useBookings() {
     const updateStatus = async (id, status) => {
         try {
             await bookingService.updateStatus(id, status)
-            toast.success('Η κατάσταση ενημερώθηκε!')
+            showToast({ message: 'Η κατάσταση ενημερώθηκε!', variant: 'success' })
             await load()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
     const remove = async (id) => {
         try {
             await bookingService.delete(id)
-            toast.success('Η κράτηση ακυρώθηκε!')
+            showToast({ message: 'Η κράτηση ακυρώθηκε!', variant: 'success' })
             await load()
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 

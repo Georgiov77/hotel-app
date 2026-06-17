@@ -1,11 +1,13 @@
 // src/hooks/useReports.js
 import { useState, useEffect } from 'react'
-import bookingService      from '@services/bookingService'
-import { toast }           from '@stores/useToastStore'
-import { getErrorMessage } from '@error/errorHandler'
+import { useToast }            from '@georgevlachos/ui'
+import bookingService          from '@services/bookingService'
+import { getErrorMessage }     from '@error/errorHandler'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 
 function useReports() {
+    const { showToast } = useToast()
+
     const [bookings,  setBookings]  = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -15,7 +17,7 @@ function useReports() {
                 const data = await bookingService.getAll()
                 setBookings(data.filter((b) => b.status !== 'cancelled'))
             } catch (err) {
-                toast.error(getErrorMessage(err))
+                showToast({ message: getErrorMessage(err), variant: 'danger' })
             } finally {
                 setIsLoading(false)
             }

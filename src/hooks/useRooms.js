@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
-import roomService     from '@services/roomService'
-import { toast }       from '@stores/useToastStore'
+import { useToast }        from '@georgevlachos/ui'
+import roomService         from '@services/roomService'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useRooms() {
+    const { showToast } = useToast()
+
     const [rooms,     setRooms]     = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
@@ -13,7 +15,7 @@ function useRooms() {
             const data = await roomService.getAll()
             setRooms(data)
         } catch (err) {
-            toast.error(getErrorMessage(err))
+            showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {
             setIsLoading(false)
         }
