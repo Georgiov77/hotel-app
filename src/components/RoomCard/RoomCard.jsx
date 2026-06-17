@@ -1,5 +1,5 @@
 import { Badge } from '@georgevlachos/ui'
-import Card from '@components/Card/Card'
+import { Card } from '@georgevlachos/ui'
 import { ROOM_STATUS_VARIANT, ROOM_STATUS_LABEL } from '@config/statuses'
 import './RoomCard.css'
 

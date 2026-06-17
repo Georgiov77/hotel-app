@@ -1,4 +1,4 @@
-import Card from '@components/Card/Card'
+import { Card } from '@georgevlachos/ui'
 import RevenueChart from './components/RevenueChart'
 import OccupancyChart from './components/OccupancyChart'
 import SourceChart from './components/SourceChart'

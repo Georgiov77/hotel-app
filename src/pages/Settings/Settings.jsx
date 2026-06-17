@@ -1,4 +1,4 @@
-import Card from '@components/Card/Card'
+import { Card } from '@georgevlachos/ui'
 import HotelSettings from './components/HotelSettings'
 import PricingSettings from './components/PricingSettings'
 import SecuritySettings from './components/SecuritySettings'
