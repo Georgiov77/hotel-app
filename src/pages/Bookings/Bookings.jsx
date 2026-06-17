@@ -1,11 +1,19 @@
 import { useState }          from 'react'
-import { Card, Button, Modal, Table } from '@georgevlachos/ui'
+import { Card, Button, Modal, Table, Input, Stack, Row, Spinner, Select } from '@georgevlachos/ui'
 import BookingDetail         from './BookingDetail'
 import EditBookingModal      from './EditBookingModal'
 import useBookings           from '@hooks/useBookings'
 import useSearch             from '@hooks/useSearch'
 import bookingColumns        from './bookings.columns'
 import './Bookings.css'
+
+const statusOptions = [
+    { value: 'all',        label: 'Όλες οι κρατήσεις' },
+    { value: 'confirmed',  label: 'Επιβεβαιωμένες'    },
+    { value: 'checked_in', label: 'Check-in'           },
+    { value: 'checked_out',label: 'Check-out'          },
+    { value: 'cancelled',  label: 'Ακυρωμένες'        },
+]
 
 function Bookings({ onNavigate }) {
     const { bookings, isLoading, updateStatus, remove, reload } = useBookings()
@@ -18,37 +26,33 @@ function Bookings({ onNavigate }) {
         ? filtered
         : filtered.filter((b) => b.status === statusFilter)
 
-    if (isLoading) return <div>Φόρτωση...</div>
+    if (isLoading) return (
+        <Stack align="center" style={{ padding: '2rem' }}>
+            <Spinner size="lg" />
+        </Stack>
+    )
 
     return (
-        <div className="bookings">
-            <div className="bookings__toolbar">
-                <div className="bookings__filters">
-                    <div className="bookings__search">
-                        🔍
-                        <input
-                            type="text"
-                            placeholder="Αναζήτηση κράτησης..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </div>
-                    <select
-                        className="bookings__filter-select"
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                        <option value="all">Όλες οι κρατήσεις</option>
-                        <option value="confirmed">Επιβεβαιωμένες</option>
-                        <option value="checked_in">Check-in</option>
-                        <option value="checked_out">Check-out</option>
-                        <option value="cancelled">Ακυρωμένες</option>
-                    </select>
-                </div>
-                <Button onClick={() => onNavigate('new-booking')}>+ Νέα Κράτηση</Button>
-            </div>
+        <Stack gap="md" className="bookings">
 
-            <Card>
+            <Row justify="between" align="center" gap="md">
+                <Row gap="sm" align="center">
+                    <Input
+                        iconLeft={<span>🔍</span>}
+                        placeholder="Αναζήτηση κράτησης..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <Select
+                        value={statusFilter}
+                        options={statusOptions}
+                        onChange={(e) => setStatusFilter(e.target.value)}
+                    />
+                </Row>
+                <Button onClick={() => onNavigate('new-booking')}>+ Νέα Κράτηση</Button>
+            </Row>
+
+            <Card padding="none">
                 <Table
                     columns={bookingColumns}
                     data={filteredByStatus}
@@ -64,7 +68,7 @@ function Bookings({ onNavigate }) {
                 title={selectedBooking ? `Κράτηση #${selectedBooking.id}` : ''}
                 size="lg"
                 footer={
-                    <>
+                    <Row gap="sm">
                         <Button variant="secondary" onClick={() => setSelectedBooking(null)}>
                             Κλείσιμο
                         </Button>
@@ -80,7 +84,7 @@ function Bookings({ onNavigate }) {
                         }}>
                             Επεξεργασία
                         </Button>
-                    </>
+                    </Row>
                 }
             >
                 {selectedBooking && (
@@ -113,7 +117,8 @@ function Bookings({ onNavigate }) {
                     />
                 )}
             </Modal>
-        </div>
+
+        </Stack>
     )
 }
 

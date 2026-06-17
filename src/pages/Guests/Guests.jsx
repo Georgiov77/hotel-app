@@ -1,5 +1,5 @@
 import { useState }      from 'react'
-import { Card, Button, Modal, Table } from '@georgevlachos/ui'
+import { Card, Button, Modal, Table, Input, Stack, Row, Spinner } from '@georgevlachos/ui'
 import EditGuestModal    from './EditGuestModal'
 import useGuests         from '@hooks/useGuests'
 import guestColumns      from './guests.columns'
@@ -16,24 +16,26 @@ function Guests() {
         search(e.target.value)
     }
 
-    if (isLoading) return <div>Φόρτωση...</div>
+    if (isLoading) return (
+        <Stack align="center" style={{ padding: '2rem' }}>
+            <Spinner size="lg" />
+        </Stack>
+    )
 
     return (
-        <div className="guests">
-            <div className="guests__toolbar">
-                <div className="guests__search">
-                    🔍
-                    <input
-                        type="text"
-                        placeholder="Αναζήτηση πελάτη..."
-                        value={query}
-                        onChange={handleSearch}
-                    />
-                </div>
-                <Button onClick={() => setEditingGuest({})}>+ Νέος Πελάτης</Button>
-            </div>
+        <Stack gap="md" className="guests">
 
-            <Card>
+            <Row justify="between" align="center">
+                <Input
+                    iconLeft={<span>🔍</span>}
+                    placeholder="Αναζήτηση πελάτη..."
+                    value={query}
+                    onChange={handleSearch}
+                />
+                <Button onClick={() => setEditingGuest({})}>+ Νέος Πελάτης</Button>
+            </Row>
+
+            <Card padding="none">
                 <Table
                     columns={guestColumns}
                     data={guests}
@@ -49,7 +51,7 @@ function Guests() {
                 title={selectedGuest ? `${selectedGuest.last_name} ${selectedGuest.first_name}` : ''}
                 size="md"
                 footer={
-                    <>
+                    <Row gap="sm">
                         <Button variant="secondary" onClick={() => setSelectedGuest(null)}>
                             Κλείσιμο
                         </Button>
@@ -65,17 +67,17 @@ function Guests() {
                         }}>
                             Επεξεργασία
                         </Button>
-                    </>
+                    </Row>
                 }
             >
                 {selectedGuest && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                    <Stack gap="sm">
                         <div><strong>Email:</strong> {selectedGuest.email || '—'}</div>
                         <div><strong>Τηλέφωνο:</strong> {selectedGuest.phone || '—'}</div>
                         <div><strong>Υπηκοότητα:</strong> {selectedGuest.nationality}</div>
                         <div><strong>ΑΔΤ/Διαβατήριο:</strong> {selectedGuest.id_number || '—'}</div>
                         <div><strong>Σημειώσεις:</strong> {selectedGuest.notes || '—'}</div>
-                    </div>
+                    </Stack>
                 )}
             </Modal>
 
@@ -97,7 +99,8 @@ function Guests() {
                     />
                 )}
             </Modal>
-        </div>
+
+        </Stack>
     )
 }
 
