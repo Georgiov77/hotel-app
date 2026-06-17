@@ -1,4 +1,4 @@
-import Badge from '@components/Badge/Badge'
+import { Badge } from '@georgevlachos/ui'
 import { formatDate } from '@georgevlachos/utils'
 import { BOOKING_SOURCE_LABEL, PAYMENT_STATUS_LABEL, PAYMENT_STATUS_VARIANT } from '@config/statuses'
 import './StepConfirm.css'
@@ -11,7 +11,6 @@ function StepConfirm({ booking }) {
     return (
         <div className="step-confirm">
 
-            {/* Στοιχεία κράτησης */}
             <div className="step-confirm__section">
                 <div className="step-confirm__section-title">Στοιχεία Κράτησης</div>
                 <div className="step-confirm__grid">
@@ -25,8 +24,8 @@ function StepConfirm({ booking }) {
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Δωμάτιο</span>
                         <span className="step-confirm__value">
-              Νο. {booking.room?.number} — {booking.room?.type}
-            </span>
+                            Νο. {booking.room?.number} — {booking.room?.type}
+                        </span>
                     </div>
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Check-in</span>
@@ -43,8 +42,8 @@ function StepConfirm({ booking }) {
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Άτομα</span>
                         <span className="step-confirm__value">
-              {booking.adults} ενήλικες {booking.children > 0 ? `/ ${booking.children} παιδιά` : ''}
-            </span>
+                            {booking.adults} ενήλικες {booking.children > 0 ? `/ ${booking.children} παιδιά` : ''}
+                        </span>
                     </div>
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Προέλευση</span>
@@ -53,7 +52,6 @@ function StepConfirm({ booking }) {
                 </div>
             </div>
 
-            {/* Extras */}
             {booking.extras.length > 0 && (
                 <div className="step-confirm__section">
                     <div className="step-confirm__section-title">Extras</div>
@@ -66,7 +64,6 @@ function StepConfirm({ booking }) {
                 </div>
             )}
 
-            {/* Σύνοψη πληρωμής */}
             <div className="step-confirm__section">
                 <div className="step-confirm__section-title">Πληρωμή</div>
                 <div className="step-confirm__payment">
@@ -97,9 +94,10 @@ function StepConfirm({ booking }) {
                         </>
                     )}
                     <div style={{ marginTop: 'var(--space-2)' }}>
-                        <Badge variant={PAYMENT_STATUS_VARIANT[booking.paymentStatus]}>
-                            {PAYMENT_STATUS_LABEL[booking.paymentStatus]}
-                        </Badge>
+                        <Badge
+                            label={PAYMENT_STATUS_LABEL[booking.paymentStatus]}
+                            variant={PAYMENT_STATUS_VARIANT[booking.paymentStatus]}
+                        />
                     </div>
                 </div>
             </div>

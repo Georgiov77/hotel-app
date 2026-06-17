@@ -1,5 +1,5 @@
-import Badge  from '@components/Badge/Badge'
-import Button from '@components/Button/Button'
+import { Badge }  from '@georgevlachos/ui'
+import Button      from '@components/Button/Button'
 import { formatDate } from '@georgevlachos/utils'
 import {
     BOOKING_STATUS_VARIANT,
@@ -18,7 +18,6 @@ function BookingDetail({ booking, onStatusChange }) {
     return (
         <div className="booking-detail">
 
-            {/* Στοιχεία κράτησης */}
             <div className="booking-detail__section">
                 <div className="booking-detail__section-title">Στοιχεία Κράτησης</div>
                 <div className="booking-detail__grid">
@@ -45,8 +44,8 @@ function BookingDetail({ booking, onStatusChange }) {
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Άτομα</span>
                         <span className="booking-detail__value">
-              {booking.adults} ενήλικες {booking.children > 0 ? `/ ${booking.children} παιδιά` : ''}
-            </span>
+                            {booking.adults} ενήλικες {booking.children > 0 ? `/ ${booking.children} παιδιά` : ''}
+                        </span>
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Προέλευση</span>
@@ -54,14 +53,14 @@ function BookingDetail({ booking, onStatusChange }) {
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Κατάσταση</span>
-                        <Badge variant={BOOKING_STATUS_VARIANT[booking.status]}>
-                            {BOOKING_STATUS_LABEL[booking.status]}
-                        </Badge>
+                        <Badge
+                            label={BOOKING_STATUS_LABEL[booking.status]}
+                            variant={BOOKING_STATUS_VARIANT[booking.status]}
+                        />
                     </div>
                 </div>
             </div>
 
-            {/* Πληρωμή */}
             <div className="booking-detail__section">
                 <div className="booking-detail__section-title">Πληρωμή</div>
                 <div className="booking-detail__payment">
@@ -76,18 +75,18 @@ function BookingDetail({ booking, onStatusChange }) {
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Υπόλοιπο</span>
                         <span className={`booking-detail__payment-value ${remaining > 0 ? 'booking-detail__payment-value--remaining' : ''}`}>
-              {remaining}€
-            </span>
+                            {remaining}€
+                        </span>
                     </div>
                 </div>
                 <div style={{ marginTop: 'var(--space-2)' }}>
-                    <Badge variant={PAYMENT_STATUS_VARIANT[booking.payment_status]}>
-                        {PAYMENT_STATUS_LABEL[booking.payment_status]}
-                    </Badge>
+                    <Badge
+                        label={PAYMENT_STATUS_LABEL[booking.payment_status]}
+                        variant={PAYMENT_STATUS_VARIANT[booking.payment_status]}
+                    />
                 </div>
             </div>
 
-            {/* Extras */}
             <div className="booking-detail__section">
                 <div className="booking-detail__section-title">Extras</div>
                 {booking.extras?.length ? (
@@ -104,7 +103,6 @@ function BookingDetail({ booking, onStatusChange }) {
                 )}
             </div>
 
-            {/* Σημειώσεις */}
             <div className="booking-detail__section">
                 <div className="booking-detail__section-title">Σημειώσεις</div>
                 {booking.notes ? (
@@ -114,7 +112,6 @@ function BookingDetail({ booking, onStatusChange }) {
                 )}
             </div>
 
-            {/* Actions */}
             {onStatusChange && (
                 <div className="booking-detail__section">
                     <div className="booking-detail__section-title">Ενέργειες</div>

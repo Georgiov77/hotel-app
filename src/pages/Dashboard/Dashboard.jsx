@@ -1,7 +1,6 @@
-import { useToast }     from '@georgevlachos/ui'
+import { useToast, Badge } from '@georgevlachos/ui'
 import Card            from '@components/Card/Card'
 import Button          from '@components/Button/Button'
-import Badge           from '@components/Badge/Badge'
 import useDashboard    from '@hooks/useDashboard'
 import bookingService  from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
@@ -91,9 +90,10 @@ function Dashboard({ onNavigate }) {
                                 <td>Νο. {b.room_number}</td>
                                 <td>{b.nights}</td>
                                 <td>
-                                    <Badge variant={BOOKING_STATUS_VARIANT[b.status]}>
-                                        {BOOKING_STATUS_LABEL[b.status]}
-                                    </Badge>
+                                    <Badge
+                                        label={BOOKING_STATUS_LABEL[b.status]}
+                                        variant={BOOKING_STATUS_VARIANT[b.status]}
+                                    />
                                 </td>
                                 <td>
                                     {b.status === 'confirmed' && (
@@ -132,9 +132,10 @@ function Dashboard({ onNavigate }) {
                                 <td>Νο. {b.room_number}</td>
                                 <td>{b.total_amount}€</td>
                                 <td>
-                                    <Badge variant={BOOKING_STATUS_VARIANT[b.status]}>
-                                        {BOOKING_STATUS_LABEL[b.status]}
-                                    </Badge>
+                                    <Badge
+                                        label={BOOKING_STATUS_LABEL[b.status]}
+                                        variant={BOOKING_STATUS_VARIANT[b.status]}
+                                    />
                                 </td>
                                 <td>
                                     {b.status === 'checked_in' && (

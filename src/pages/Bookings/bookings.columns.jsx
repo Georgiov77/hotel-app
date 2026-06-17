@@ -1,4 +1,4 @@
-import Badge from '@components/Badge/Badge'
+import { Badge } from '@georgevlachos/ui'
 import { formatDate } from '@georgevlachos/utils'
 import {
     BOOKING_STATUS_VARIANT,
@@ -27,9 +27,9 @@ const bookingColumns = [
         label: 'Ημερομηνίες',
         render: (row) => (
             <div className="bookings__dates">
-        <span className="bookings__dates-range">
-          {formatDate(row.check_in)} → {formatDate(row.check_out)}
-        </span>
+                <span className="bookings__dates-range">
+                    {formatDate(row.check_in)} → {formatDate(row.check_out)}
+                </span>
                 <span className="bookings__dates-nights">{row.nights} νύχτες</span>
             </div>
         ),
@@ -38,18 +38,20 @@ const bookingColumns = [
         key: 'status',
         label: 'Κατάσταση',
         render: (row) => (
-            <Badge variant={BOOKING_STATUS_VARIANT[row.status]}>
-                {BOOKING_STATUS_LABEL[row.status]}
-            </Badge>
+            <Badge
+                label={BOOKING_STATUS_LABEL[row.status]}
+                variant={BOOKING_STATUS_VARIANT[row.status]}
+            />
         ),
     },
     {
         key: 'payment_status',
         label: 'Πληρωμή',
         render: (row) => (
-            <Badge variant={PAYMENT_STATUS_VARIANT[row.payment_status]}>
-                {PAYMENT_STATUS_LABEL[row.payment_status]}
-            </Badge>
+            <Badge
+                label={PAYMENT_STATUS_LABEL[row.payment_status]}
+                variant={PAYMENT_STATUS_VARIANT[row.payment_status]}
+            />
         ),
     },
     {
@@ -60,8 +62,8 @@ const bookingColumns = [
                 <span className="bookings__amount-total">{row.total_amount}€</span>
                 {row.total_amount - row.paid_amount > 0 && (
                     <span className="bookings__amount-remaining">
-            Υπόλοιπο: {row.total_amount - row.paid_amount}€
-          </span>
+                        Υπόλοιπο: {row.total_amount - row.paid_amount}€
+                    </span>
                 )}
             </div>
         ),
