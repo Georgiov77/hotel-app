@@ -1,6 +1,5 @@
 import { useState }      from 'react'
-import { Card, Button, Modal } from '@georgevlachos/ui'
-import Table             from '@components/Table/Table'
+import { Card, Button, Modal, Table } from '@georgevlachos/ui'
 import EditGuestModal    from './EditGuestModal'
 import useGuests         from '@hooks/useGuests'
 import guestColumns      from './guests.columns'
