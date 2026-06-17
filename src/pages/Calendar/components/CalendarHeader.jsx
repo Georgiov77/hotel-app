@@ -1,4 +1,4 @@
-import Button from '@components/Button/Button'
+import { Button } from '@georgevlachos/ui'
 import './CalendarHeader.css'
 
 function CalendarHeader({ days, onPrev, onNext, onToday, onNewBooking }) {

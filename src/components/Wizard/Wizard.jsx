@@ -1,4 +1,4 @@
-import Button from '@components/Button/Button'
+import { Button } from '@georgevlachos/ui'
 import './Wizard.css'
 
 function Wizard({ steps, currentStep, onNext, onPrev, onSubmit, children, canNext, isSubmitting= false }) {

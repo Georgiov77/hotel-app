@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import FormField from '@components/FormField/FormField'
-import Button from '@components/Button/Button'
+import { Button } from '@georgevlachos/ui'
 import useSettingsStore from '@stores/useSettingsStore'
 import './HotelSettings.css'
 
