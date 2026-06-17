@@ -1,4 +1,4 @@
-import { Button } from '@georgevlachos/ui'
+import {Button, Grid, Row} from '@georgevlachos/ui'
 import './CalendarHeader.css'
 
 function CalendarHeader({ days, onPrev, onNext, onToday, onNewBooking }) {
@@ -12,17 +12,17 @@ function CalendarHeader({ days, onPrev, onNext, onToday, onNewBooking }) {
     }
 
     return (
-        <div className="calendar-header">
-            <div className="calendar-header__nav">
+        <Grid columns='2' className="calendar-header">
+            <Row gap="sm" align="center" justify="center">
                 <Button variant="secondary" size="sm" onClick={onPrev}>←</Button>
                 <span className="calendar-header__title">{formatTitle()}</span>
                 <Button variant="secondary" size="sm" onClick={onNext}>→</Button>
-            </div>
-            <div className="calendar-header__actions">
+            </Row>
+            <Row gap="sm" align="center" justify="end">
                 <Button variant="secondary" size="sm" onClick={onToday}>Σήμερα</Button>
                 <Button size="sm" onClick={onNewBooking}>+ Νέα Κράτηση</Button>
-            </div>
-        </div>
+            </Row>
+        </Grid>
     )
 }
 

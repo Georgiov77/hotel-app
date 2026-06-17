@@ -1,4 +1,4 @@
-import { Input } from '@georgevlachos/ui'
+import { Input, Stack, Grid } from '@georgevlachos/ui'
 import useDates from '@hooks/useDates'
 import './StepDates.css'
 
@@ -6,8 +6,8 @@ function StepDates({ booking, updateBooking }) {
     const { today, handleDateChange, handleGuestsChange } = useDates(booking, updateBooking)
 
     return (
-        <div className="step-dates">
-            <div className="step-dates__grid">
+        <Stack gap="lg" className="step-dates">
+            <Grid columns="2" gap="md">
                 <Input
                     label="Ημερομηνία Άφιξης"
                     type="date"
@@ -42,14 +42,14 @@ function StepDates({ booking, updateBooking }) {
                     onChange={(e) => handleGuestsChange('children', e.target.value)}
                     fullWidth
                 />
-            </div>
+            </Grid>
 
             {booking.nights > 0 && (
                 <div className="step-dates__summary">
                     🌙 {booking.nights} διανυκτερεύσεις
                 </div>
             )}
-        </div>
+        </Stack>
     )
 }
 

@@ -1,5 +1,5 @@
 import { useState }      from 'react'
-import { useToast, Button, Modal }      from '@georgevlachos/ui'
+import {useToast, Button, Modal, Stack, Spinner} from '@georgevlachos/ui'
 import CalendarHeader    from './components/CalendarHeader'
 import CalendarGrid      from './components/CalendarGrid'
 import BookingDetail     from '@pages/Bookings/BookingDetail'
@@ -30,7 +30,11 @@ function Calendar({ onNavigate }) {
         }
     }
 
-    if (isLoading) return <div>Φόρτωση...</div>
+    if (isLoading) return (
+        <Stack align="center" style={{ padding: '2rem' }}>
+            <Spinner size="lg" />
+        </Stack>
+    )
 
     return (
         <div className="calendar">

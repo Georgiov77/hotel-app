@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useToast }        from '@georgevlachos/ui'
+import {Spinner, Stack, useToast} from '@georgevlachos/ui'
 import RoomCard            from '@components/RoomCard/RoomCard'
 import roomService         from '@services/roomService'
 import { getErrorMessage } from '@error/errorHandler'
@@ -37,8 +37,11 @@ function StepRoom({ booking, updateBooking }) {
         updateBooking({ room, pricePerNight: 0 })
     }
 
-    if (isLoading) return <div>Φόρτωση δωματίων...</div>
-
+    if (isLoading) return (
+        <Stack align="center" style={{ padding: '2rem' }}>
+            <Spinner size="lg" />
+        </Stack>
+    )
     return (
         <div className="step-room">
             {[0, 1, 2].map((floor) => {

@@ -1,4 +1,4 @@
-import { Badge } from '@georgevlachos/ui'
+import { Badge, Stack, Grid } from '@georgevlachos/ui'
 import { formatDate } from '@georgevlachos/utils'
 import { BOOKING_SOURCE_LABEL, PAYMENT_STATUS_LABEL, PAYMENT_STATUS_VARIANT } from '@config/statuses'
 import './StepConfirm.css'
@@ -9,11 +9,11 @@ function StepConfirm({ booking }) {
     const remaining   = grandTotal - booking.depositAmount
 
     return (
-        <div className="step-confirm">
+        <Stack gap="lg" className="step-confirm">
 
-            <div className="step-confirm__section">
+            <Stack gap="sm" className="step-confirm__section">
                 <div className="step-confirm__section-title">Στοιχεία Κράτησης</div>
-                <div className="step-confirm__grid">
+                <Grid columns="2" gap="md" className="step-confirm__grid">
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Πελάτης</span>
                         <span className="step-confirm__value">
@@ -49,11 +49,11 @@ function StepConfirm({ booking }) {
                         <span className="step-confirm__label">Προέλευση</span>
                         <span className="step-confirm__value">{BOOKING_SOURCE_LABEL[booking.source]}</span>
                     </div>
-                </div>
-            </div>
+                </Grid>
+            </Stack>
 
             {booking.extras.length > 0 && (
-                <div className="step-confirm__section">
+                <Stack gap="sm" className="step-confirm__section">
                     <div className="step-confirm__section-title">Extras</div>
                     {booking.extras.map((extra) => (
                         <div key={extra.id} className="step-confirm__extra">
@@ -61,10 +61,10 @@ function StepConfirm({ booking }) {
                             <span>{extra.total}€</span>
                         </div>
                     ))}
-                </div>
+                </Stack>
             )}
 
-            <div className="step-confirm__section">
+            <Stack gap="sm" className="step-confirm__section">
                 <div className="step-confirm__section-title">Πληρωμή</div>
                 <div className="step-confirm__payment">
                     <div className="step-confirm__payment-row">
@@ -100,9 +100,9 @@ function StepConfirm({ booking }) {
                         />
                     </div>
                 </div>
-            </div>
+            </Stack>
 
-        </div>
+        </Stack>
     )
 }
 

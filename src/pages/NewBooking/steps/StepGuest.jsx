@@ -1,5 +1,5 @@
 import { useState, useEffect }            from 'react'
-import { useToast, Button, Input }        from '@georgevlachos/ui'
+import { useToast, Button, Input, Grid, Stack } from '@georgevlachos/ui'
 import guestService        from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepGuest.css'
@@ -62,7 +62,7 @@ function StepGuest({ booking, updateBooking }) {
     }
 
     return (
-        <div className="step-guest">
+        <Stack gap="md" className="step-guest">
             <div className="step-guest__tabs">
                 <button
                     className={`step-guest__tab ${mode === 'search' ? 'step-guest__tab--active' : ''}`}
@@ -79,16 +79,14 @@ function StepGuest({ booking, updateBooking }) {
             </div>
 
             {mode === 'search' && (
-                <div className="step-guest__search-mode">
-                    <div className="step-guest__search">
-                        🔍
-                        <input
-                            type="text"
-                            placeholder="Αναζήτηση πελάτη..."
-                            value={search}
-                            onChange={(e) => handleSearch(e.target.value)}
-                        />
-                    </div>
+                <Stack gap="sm" className="step-guest__search-mode">
+                    <Input
+                        iconLeft={<span>🔍</span>}
+                        placeholder="Αναζήτηση πελάτη..."
+                        value={search}
+                        onChange={(e) => handleSearch(e.target.value)}
+                        fullWidth
+                    />
                     <div className="step-guest__list">
                         {guests.map((guest) => (
                             <div
@@ -105,19 +103,19 @@ function StepGuest({ booking, updateBooking }) {
                             </div>
                         ))}
                     </div>
-                </div>
+                </Stack>
             )}
 
             {mode === 'new' && (
                 <form className="step-guest__form" onSubmit={handleNewGuest}>
-                    <div className="step-guest__grid">
-                        <Input name="lastName"    label="Επώνυμο *"         required fullWidth />
-                        <Input name="firstName"   label="Όνομα *"           required fullWidth />
-                        <Input name="email"       label="Email" type="email"          fullWidth />
-                        <Input name="phone"       label="Τηλέφωνο"                    fullWidth />
+                    <Grid columns="2" gap="md">
+                        <Input name="lastName"    label="Επώνυμο *"          required fullWidth />
+                        <Input name="firstName"   label="Όνομα *"            required fullWidth />
+                        <Input name="email"       label="Email" type="email"           fullWidth />
+                        <Input name="phone"       label="Τηλέφωνο"                     fullWidth />
                         <Input name="nationality" label="Υπηκοότητα" defaultValue="GR" fullWidth />
-                        <Input name="idNumber"    label="ΑΔΤ / Διαβατήριο"            fullWidth />
-                    </div>
+                        <Input name="idNumber"    label="ΑΔΤ / Διαβατήριο"             fullWidth />
+                    </Grid>
                     <div className="step-guest__form-actions">
                         <Button type="submit">✓ Προσθήκη Πελάτη</Button>
                     </div>
@@ -129,7 +127,7 @@ function StepGuest({ booking, updateBooking }) {
                     ✓ {booking.guest.last_name || booking.guest.lastName} {booking.guest.first_name || booking.guest.firstName}
                 </div>
             )}
-        </div>
+        </Stack>
     )
 }
 

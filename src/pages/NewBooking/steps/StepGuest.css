@@ -1,9 +1,3 @@
-.step-guest {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-}
-
 .step-guest__tabs {
     display: flex;
     gap: var(--space-2);
@@ -30,16 +24,6 @@
     background-color: var(--color-primary-light);
     color: var(--color-primary);
     font-weight: var(--font-medium);
-}
-
-.step-guest__search {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
 }
 
 .step-guest__search input {
@@ -94,11 +78,6 @@
     color: var(--color-text-muted);
 }
 
-.step-guest__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-4);
-}
 
 .step-guest__form-actions {
     margin-top: var(--space-4);
