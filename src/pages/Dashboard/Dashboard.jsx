@@ -1,4 +1,4 @@
-import { useToast, Badge, Card, Button } from '@georgevlachos/ui'
+import { useToast, Badge, Card, Button, Grid, Stack, Table } from '@georgevlachos/ui'
 import useDashboard    from '@hooks/useDashboard'
 import bookingService  from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
@@ -29,11 +29,37 @@ function Dashboard({ onNavigate }) {
         }
     }
 
+    const checkInColumns = [
+        { key: 'guest',    label: 'Πελάτης',    render: (b) => `${b.last_name} ${b.first_name}` },
+        { key: 'room',     label: 'Δωμάτιο',    render: (b) => `Νο. ${b.room_number}` },
+        { key: 'nights',   label: 'Νύχτες' },
+        { key: 'status',   label: 'Κατάσταση',  render: (b) => (
+                <Badge label={BOOKING_STATUS_LABEL[b.status]} variant={BOOKING_STATUS_VARIANT[b.status]} />
+            )},
+        { key: 'action',   label: '',            render: (b) => b.status === 'confirmed' ? (
+                <Button size="sm" onClick={() => handleCheckIn(b.id)}>Check-in</Button>
+            ) : null },
+    ]
+
+    const checkOutColumns = [
+        { key: 'guest',    label: 'Πελάτης',    render: (b) => `${b.last_name} ${b.first_name}` },
+        { key: 'room',     label: 'Δωμάτιο',    render: (b) => `Νο. ${b.room_number}` },
+        { key: 'total',    label: 'Σύνολο',      render: (b) => `${b.total_amount}€` },
+        { key: 'status',   label: 'Κατάσταση',  render: (b) => (
+                <Badge label={BOOKING_STATUS_LABEL[b.status]} variant={BOOKING_STATUS_VARIANT[b.status]} />
+            )},
+        { key: 'action',   label: '',            render: (b) => b.status === 'checked_in' ? (
+                <Button size="sm" variant="secondary" onClick={() => handleCheckOut(b.id)}>Check-out</Button>
+            ) : null },
+    ]
+
     if (isLoading) return <div className="dashboard__loading">Φόρτωση...</div>
 
     return (
-        <div className="dashboard">
-            <div className="dashboard__stats">
+        <Stack gap="lg" className="dashboard">
+
+            {/* Stats */}
+            <Grid columns={4} gap="md">
                 <Card>
                     <div className="dashboard__stat">
                         <span className="dashboard__stat-value">{stats.checkInsToday}</span>
@@ -64,97 +90,32 @@ function Dashboard({ onNavigate }) {
                         </span>
                     </div>
                 </Card>
-            </div>
+            </Grid>
 
-            <div className="dashboard__lists">
+            {/* Lists */}
+            <Grid columns={2} gap="md">
                 <Card
                     title="Check-in σήμερα"
+                    padding="sm"
                     actions={<Button size="sm" onClick={() => onNavigate('new-booking')}>+ Νέα</Button>}
                 >
-                    <table className="dashboard__table">
-                        <thead>
-                        <tr>
-                            <th>Πελάτης</th>
-                            <th>Δωμάτιο</th>
-                            <th>Νύχτες</th>
-                            <th>Κατάσταση</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {checkIns.length ? checkIns.map((b) => (
-                            <tr key={b.id}>
-                                <td>{b.last_name} {b.first_name}</td>
-                                <td>Νο. {b.room_number}</td>
-                                <td>{b.nights}</td>
-                                <td>
-                                    <Badge
-                                        label={BOOKING_STATUS_LABEL[b.status]}
-                                        variant={BOOKING_STATUS_VARIANT[b.status]}
-                                    />
-                                </td>
-                                <td>
-                                    {b.status === 'confirmed' && (
-                                        <Button size="sm" onClick={() => handleCheckIn(b.id)}>
-                                            Check-in
-                                        </Button>
-                                    )}
-                                </td>
-                            </tr>
-                        )) : (
-                            <tr>
-                                <td colSpan={5} className="dashboard__empty">
-                                    Δεν υπάρχουν check-in σήμερα
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
+                    <Table
+                        columns={checkInColumns}
+                        data={checkIns}
+                        emptyMessage="Δεν υπάρχουν check-in σήμερα"
+                    />
                 </Card>
 
-                <Card title="Check-out σήμερα">
-                    <table className="dashboard__table">
-                        <thead>
-                        <tr>
-                            <th>Πελάτης</th>
-                            <th>Δωμάτιο</th>
-                            <th>Σύνολο</th>
-                            <th>Κατάσταση</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {checkOuts.length ? checkOuts.map((b) => (
-                            <tr key={b.id}>
-                                <td>{b.last_name} {b.first_name}</td>
-                                <td>Νο. {b.room_number}</td>
-                                <td>{b.total_amount}€</td>
-                                <td>
-                                    <Badge
-                                        label={BOOKING_STATUS_LABEL[b.status]}
-                                        variant={BOOKING_STATUS_VARIANT[b.status]}
-                                    />
-                                </td>
-                                <td>
-                                    {b.status === 'checked_in' && (
-                                        <Button size="sm" variant="secondary" onClick={() => handleCheckOut(b.id)}>
-                                            Check-out
-                                        </Button>
-                                    )}
-                                </td>
-                            </tr>
-                        )) : (
-                            <tr>
-                                <td colSpan={5} className="dashboard__empty">
-                                    Δεν υπάρχουν check-out σήμερα
-                                </td>
-                            </tr>
-                        )}
-                        </tbody>
-                    </table>
+                <Card title="Check-out σήμερα" padding="sm">
+                    <Table
+                        columns={checkOutColumns}
+                        data={checkOuts}
+                        emptyMessage="Δεν υπάρχουν check-out σήμερα"
+                    />
                 </Card>
-            </div>
-        </div>
+            </Grid>
+
+        </Stack>
     )
 }
 
