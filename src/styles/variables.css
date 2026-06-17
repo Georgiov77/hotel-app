@@ -114,3 +114,67 @@
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
+
+/* ── Map --gv-* to project tokens ── */
+:root {
+    /* Colors */
+    --gv-color-primary:       var(--color-primary);
+    --gv-color-primary-hover: var(--color-primary-hover);
+    --gv-color-primary-muted: var(--color-primary-light);
+
+    --gv-color-danger:        var(--color-danger);
+    --gv-color-danger-hover:  #b91c1c;
+    --gv-color-danger-muted:  var(--color-danger-bg);
+
+    --gv-color-success:       var(--color-success);
+    --gv-color-success-hover: #15803d;
+    --gv-color-success-muted: var(--color-success-bg);
+
+    --gv-color-warning:       var(--color-warning);
+    --gv-color-warning-hover: #b45309;
+    --gv-color-warning-muted: var(--color-warning-bg);
+
+    --gv-color-bg:            var(--color-bg);
+    --gv-color-bg-subtle:     var(--color-bg-secondary);
+    --gv-color-bg-muted:      var(--color-bg-tertiary);
+
+    --gv-color-text:          var(--color-text);
+    --gv-color-text-muted:    var(--color-text-secondary);
+    --gv-color-text-subtle:   var(--color-text-muted);
+
+    --gv-color-border:        var(--color-border);
+    --gv-color-border-strong: var(--color-border-strong);
+
+    /* Spacing */
+    --gv-spacing-xs:  var(--space-1);
+    --gv-spacing-sm:  var(--space-2);
+    --gv-spacing-md:  var(--space-4);
+    --gv-spacing-lg:  var(--space-6);
+    --gv-spacing-xl:  var(--space-8);
+    --gv-spacing-2xl: var(--space-12);
+
+    /* Typography */
+    --gv-font-family:       var(--font-sans);
+    --gv-font-size-xs:      var(--text-xs);
+    --gv-font-size-sm:      var(--text-sm);
+    --gv-font-size-base:    var(--text-base);
+    --gv-font-size-lg:      var(--text-lg);
+    --gv-font-weight-normal:   var(--font-normal);
+    --gv-font-weight-medium:   var(--font-medium);
+    --gv-font-weight-semibold: var(--font-bold);
+
+    /* Radius */
+    --gv-radius-sm:   var(--radius-sm);
+    --gv-radius-md:   var(--radius-md);
+    --gv-radius-lg:   var(--radius-lg);
+    --gv-radius-full: var(--radius-full);
+
+    /* Shadows */
+    --gv-shadow-sm: var(--shadow-sm);
+    --gv-shadow-md: var(--shadow-md);
+    --gv-shadow-lg: var(--shadow-lg);
+
+    /* Transitions */
+    --gv-transition-fast: var(--transition-fast);
+    --gv-transition-base: var(--transition-normal);
+}
