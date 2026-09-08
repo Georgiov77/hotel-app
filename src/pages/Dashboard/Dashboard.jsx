@@ -106,7 +106,7 @@ function Dashboard({ onNavigate }) {
                         <span className="dashboard__stat-value">{stats.occupancyPct}%</span>
                         <span className="dashboard__stat-label">Πληρότητα</span>
                         <span className="dashboard__stat-sub">
-                            {stats.checkInsToday} / 13 δωμάτια
+                            {stats.checkInsToday} / {stats.totalRooms} δωμάτια
                         </span>
                     </div>
                 </Card>
