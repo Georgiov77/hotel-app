@@ -1,31 +1,22 @@
-import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@georgevlachos/ui'
+import useAsyncResource from './useAsyncResource'
 import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useBookings() {
     const { showToast } = useToast()
 
-    const [bookings, setBookings] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    const load = useCallback(async () => {
-        try {
-            setIsLoading(true)
-            const data = await bookingService.getAll()
-            setBookings(data)
-        } catch (err) {
-            showToast({ message: getErrorMessage(err), variant: 'danger' })
-        } finally {
-            setIsLoading(false)
-        }
-    }, [showToast])
+    const {
+        data: bookings,
+        isLoading,
+        reload,
+    } = useAsyncResource(() => bookingService.getAll(), [], [])
 
     const updateStatus = async (id, status) => {
         try {
             await bookingService.updateStatus(id, status)
             showToast({ message: 'Η κατάσταση ενημερώθηκε!', variant: 'success' })
-            await load()
+            await reload()
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
@@ -35,17 +26,13 @@ function useBookings() {
         try {
             await bookingService.delete(id)
             showToast({ message: 'Η κράτηση ακυρώθηκε!', variant: 'success' })
-            await load()
+            await reload()
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
-    useEffect(() => {
-        load()
-    }, [load])
-
-    return { bookings, isLoading, updateStatus, remove, reload: load }
+    return { bookings, isLoading, updateStatus, remove, reload }
 }
 
 export default useBookings

@@ -1,31 +1,10 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useToast } from '@georgevlachos/ui'
+import useAsyncResource from './useAsyncResource'
 import roomService from '@services/roomService'
-import { getErrorMessage } from '@error/errorHandler'
 
 function useRooms() {
-    const { showToast } = useToast()
+    const { data: rooms, isLoading, reload } = useAsyncResource(() => roomService.getAll(), [], [])
 
-    const [rooms, setRooms] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    const load = useCallback(async () => {
-        try {
-            setIsLoading(true)
-            const data = await roomService.getAll()
-            setRooms(data)
-        } catch (err) {
-            showToast({ message: getErrorMessage(err), variant: 'danger' })
-        } finally {
-            setIsLoading(false)
-        }
-    }, [showToast])
-
-    useEffect(() => {
-        load()
-    }, [load])
-
-    return { rooms, isLoading, reload: load }
+    return { rooms, isLoading, reload }
 }
 
 export default useRooms

@@ -1,37 +1,22 @@
-import { useState, useEffect, useCallback } from 'react'
-import { useToast } from '@georgevlachos/ui'
+import useAsyncResource from './useAsyncResource'
 import roomService from '@services/roomService'
 import bookingService from '@services/bookingService'
-import { getErrorMessage } from '@error/errorHandler'
 
 function useCalendarData(startDate, endDate) {
-    const { showToast } = useToast()
-
-    const [rooms, setRooms] = useState([])
-    const [bookings, setBookings] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    const load = useCallback(async () => {
-        try {
-            setIsLoading(true)
-            const [roomData, bookingData] = await Promise.all([
+    const { data, isLoading, reload } = useAsyncResource(
+        async () => {
+            const [rooms, bookings] = await Promise.all([
                 roomService.getAll(),
                 bookingService.getByDateRange(startDate, endDate),
             ])
-            setRooms(roomData)
-            setBookings(bookingData)
-        } catch (err) {
-            showToast({ message: getErrorMessage(err), variant: 'danger' })
-        } finally {
-            setIsLoading(false)
-        }
-    }, [startDate, endDate, showToast])
+            return { rooms, bookings }
+        },
+        [startDate, endDate],
+        { rooms: [], bookings: [] },
+        { enabled: Boolean(startDate && endDate) }
+    )
 
-    useEffect(() => {
-        if (startDate && endDate) load()
-    }, [startDate, endDate, load])
-
-    return { rooms, bookings, isLoading, reload: load }
+    return { rooms: data.rooms, bookings: data.bookings, isLoading, reload }
 }
 
 export default useCalendarData

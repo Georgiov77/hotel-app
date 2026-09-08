@@ -1,29 +1,14 @@
 // src/hooks/useReports.js
-import { useState, useEffect } from 'react'
-import { useToast } from '@georgevlachos/ui'
+import useAsyncResource from './useAsyncResource'
 import bookingService from '@services/bookingService'
-import { getErrorMessage } from '@error/errorHandler'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 
 function useReports() {
-    const { showToast } = useToast()
-
-    const [bookings, setBookings] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    useEffect(() => {
-        const load = async () => {
-            try {
-                const data = await bookingService.getAll()
-                setBookings(data.filter((b) => b.status !== 'cancelled'))
-            } catch (err) {
-                showToast({ message: getErrorMessage(err), variant: 'danger' })
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        load()
-    }, [showToast])
+    const { data: bookings, isLoading } = useAsyncResource(
+        async () => (await bookingService.getAll()).filter((b) => b.status !== 'cancelled'),
+        [],
+        []
+    )
 
     const currentYear = new Date().getFullYear()
     const currentMonth = new Date().getMonth()

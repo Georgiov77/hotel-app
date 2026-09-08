@@ -1,31 +1,22 @@
-import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@georgevlachos/ui'
+import useAsyncResource from './useAsyncResource'
 import guestService from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useGuests() {
     const { showToast } = useToast()
 
-    const [guests, setGuests] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-
-    const load = useCallback(async () => {
-        try {
-            setIsLoading(true)
-            const data = await guestService.getAll()
-            setGuests(data)
-        } catch (err) {
-            showToast({ message: getErrorMessage(err), variant: 'danger' })
-        } finally {
-            setIsLoading(false)
-        }
-    }, [showToast])
+    const {
+        data: guests,
+        isLoading,
+        reload,
+        setData: setGuests,
+    } = useAsyncResource(() => guestService.getAll(), [], [])
 
     const search = async (query) => {
         try {
-            if (!query) return load()
-            const data = await guestService.search(query)
-            setGuests(data)
+            if (!query) return reload()
+            setGuests(await guestService.search(query))
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
@@ -35,7 +26,7 @@ function useGuests() {
         try {
             await guestService.create(guest)
             showToast({ message: 'Ο πελάτης αποθηκεύτηκε!', variant: 'success' })
-            await load()
+            await reload()
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
@@ -45,7 +36,7 @@ function useGuests() {
         try {
             await guestService.update(id, guest)
             showToast({ message: 'Ο πελάτης ενημερώθηκε!', variant: 'success' })
-            await load()
+            await reload()
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
@@ -55,17 +46,13 @@ function useGuests() {
         try {
             await guestService.delete(id)
             showToast({ message: 'Ο πελάτης διαγράφηκε!', variant: 'success' })
-            await load()
+            await reload()
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         }
     }
 
-    useEffect(() => {
-        load()
-    }, [load])
-
-    return { guests, isLoading, search, create, update, remove, reload: load }
+    return { guests, isLoading, search, create, update, remove, reload }
 }
 
 export default useGuests
