@@ -14,7 +14,6 @@ export default defineConfig({
             '@utils':      resolve(__dirname, 'src/utils'),
             '@config':     resolve(__dirname, 'src/config'),
             '@stores':     resolve(__dirname, 'src/stores'),
-            '@i18n':       resolve(__dirname, 'src/i18n'),
             '@error':      resolve(__dirname, 'src/error'),
             '@styles':     resolve(__dirname, 'src/styles'),
             '@features':   resolve(__dirname, 'src/features'),

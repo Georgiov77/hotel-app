@@ -1,9 +1,10 @@
 // src/components/Sidebar/Sidebar.jsx
+import { NavLink } from 'react-router-dom'
 import './Sidebar.css'
-import NAV_ITEMS from '@config/navigation'
+import ROUTES from '@config/routes'
 import useSettingsStore from '@stores/useSettingsStore'
 
-function Sidebar({ activePage, onNavigate }) {
+function Sidebar() {
     const { hotel } = useSettingsStore()
 
     return (
@@ -14,15 +15,17 @@ function Sidebar({ activePage, onNavigate }) {
             </div>
 
             <nav className="sidebar__nav">
-                {NAV_ITEMS.map((item) => (
-                    <div
-                        key={item.id}
-                        className={`sidebar__item ${activePage === item.id ? 'sidebar__item--active' : ''}`}
-                        onClick={() => onNavigate(item.id)}
+                {ROUTES.filter((route) => route.inNav).map((route) => (
+                    <NavLink
+                        key={route.id}
+                        to={route.path}
+                        className={({ isActive }) =>
+                            `sidebar__item ${isActive ? 'sidebar__item--active' : ''}`
+                        }
                     >
-                        <span className="sidebar__item-icon">{item.icon}</span>
-                        {item.label}
-                    </div>
+                        <span className="sidebar__item-icon">{route.icon}</span>
+                        {route.label}
+                    </NavLink>
                 ))}
             </nav>
         </aside>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useToast, Button, Modal, Stack, Spinner } from '@georgevlachos/ui'
 import CalendarHeader from './components/CalendarHeader'
 import CalendarGrid from './components/CalendarGrid'
@@ -9,14 +10,15 @@ import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 import './Calendar.css'
 
-function Calendar({ onNavigate }) {
+function Calendar() {
+    const navigate = useNavigate()
     const { showToast } = useToast()
     const { days, goNext, goPrev, goToday, isToday } = useCalendar()
     const { rooms, bookings, isLoading, reload } = useCalendarData(days[0], days[days.length - 1])
     const [selectedBooking, setSelectedBooking] = useState(null)
 
     const handleCellClick = (day, room) => {
-        onNavigate('new-booking', { checkIn: day, room })
+        navigate('/bookings/new', { state: { checkIn: day, room } })
     }
 
     const handleStatusChange = async (id, status) => {
@@ -44,7 +46,7 @@ function Calendar({ onNavigate }) {
                 onPrev={goPrev}
                 onNext={goNext}
                 onToday={goToday}
-                onNewBooking={() => onNavigate('new-booking', null)}
+                onNewBooking={() => navigate('/bookings/new')}
             />
 
             <CalendarGrid

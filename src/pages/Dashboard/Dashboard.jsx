@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { useToast, Badge, Card, Button, Grid, Stack, Table } from '@georgevlachos/ui'
 import useDashboard from '@hooks/useDashboard'
 import bookingService from '@services/bookingService'
@@ -5,7 +6,8 @@ import { getErrorMessage } from '@error/errorHandler'
 import { BOOKING_STATUS_VARIANT, BOOKING_STATUS_LABEL } from '@config/statuses'
 import './Dashboard.css'
 
-function Dashboard({ onNavigate }) {
+function Dashboard() {
+    const navigate = useNavigate()
     const { showToast } = useToast()
     const { checkIns, checkOuts, isLoading, stats, reload } = useDashboard()
 
@@ -130,7 +132,7 @@ function Dashboard({ onNavigate }) {
                     title="Check-in σήμερα"
                     padding="sm"
                     actions={
-                        <Button size="sm" onClick={() => onNavigate('new-booking')}>
+                        <Button size="sm" onClick={() => navigate('/bookings/new')}>
                             + Νέα
                         </Button>
                     }

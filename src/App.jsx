@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import useThemeStore from '@stores/useThemeStore'
 import useSettingsStore from '@stores/useSettingsStore'
 import useIdleLock from '@features/auth/useIdleLock'
@@ -17,8 +18,6 @@ function App() {
     const { theme } = useThemeStore()
     const { load, loaded } = useSettingsStore()
     const { isLocked, lock, unlock } = useIdleLock()
-    const [activePage, setActivePage] = useState('dashboard')
-    const pageDataRef = useRef(null)
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme)
@@ -28,41 +27,24 @@ function App() {
         load()
     }, [])
 
-    const handleNavigate = (page, data = null) => {
-        pageDataRef.current = data
-        setActivePage(page)
-    }
-
-    const renderPage = () => {
-        switch (activePage) {
-            case 'dashboard':
-                return <Dashboard onNavigate={handleNavigate} />
-            case 'rooms':
-                return <Rooms />
-            case 'guests':
-                return <Guests />
-            case 'bookings':
-                return <Bookings onNavigate={handleNavigate} />
-            case 'new-booking':
-                return <NewBooking onNavigate={handleNavigate} initialData={pageDataRef.current} />
-            case 'calendar':
-                return <Calendar onNavigate={handleNavigate} />
-            case 'reports':
-                return <Reports />
-            case 'settings':
-                return <Settings />
-            default:
-                return <div>Σύντομα...</div>
-        }
-    }
-
     if (!loaded) return null
 
     return (
         <>
             {isLocked && <LockScreen onUnlock={unlock} />}
-            <Layout activePage={activePage} onNavigate={setActivePage} onLock={lock}>
-                {renderPage()}
+            <Layout onLock={lock}>
+                <Routes>
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/rooms" element={<Rooms />} />
+                    <Route path="/guests" element={<Guests />} />
+                    <Route path="/bookings" element={<Bookings />} />
+                    <Route path="/bookings/new" element={<NewBooking />} />
+                    <Route path="/calendar" element={<Calendar />} />
+                    <Route path="/reports" element={<Reports />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                </Routes>
             </Layout>
         </>
     )

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Card, Button, Modal, Table, Input, Stack, Row, Spinner, Select } from '@georgevlachos/ui'
 import BookingDetail from './BookingDetail'
 import EditBookingModal from './EditBookingModal'
@@ -15,15 +16,16 @@ const statusOptions = [
     { value: 'cancelled', label: 'Ακυρωμένες' },
 ]
 
-function Bookings({ onNavigate }) {
+function Bookings() {
+    const navigate = useNavigate()
     const { bookings, isLoading, updateStatus, remove, reload } = useBookings()
     const [statusFilter, setStatusFilter] = useState('all')
     const [selectedBooking, setSelectedBooking] = useState(null)
     const [editingBooking, setEditingBooking] = useState(null)
     const { search, setSearch, filtered } = useSearch(bookings, [
-        'last_name',
-        'first_name',
-        'room_number',
+        'guestLastName',
+        'guestFirstName',
+        'roomNumber',
     ])
 
     const filteredByStatus =
@@ -52,7 +54,7 @@ function Bookings({ onNavigate }) {
                         onChange={(e) => setStatusFilter(e.target.value)}
                     />
                 </Row>
-                <Button onClick={() => onNavigate('new-booking')}>+ Νέα Κράτηση</Button>
+                <Button onClick={() => navigate('/bookings/new')}>+ Νέα Κράτηση</Button>
             </Row>
 
             <Card padding="none">

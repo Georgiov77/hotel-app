@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useToast } from '@georgevlachos/ui'
 import Wizard from '@components/Wizard/Wizard'
 import StepDates from './steps/StepDates'
@@ -37,7 +38,9 @@ const initialState = {
     notes: '',
 }
 
-function NewBooking({ onNavigate, initialData }) {
+function NewBooking() {
+    const navigate = useNavigate()
+    const { state: initialData } = useLocation()
     const { showToast } = useToast()
 
     const [currentStep, setCurrentStep] = useState(0)
@@ -69,7 +72,7 @@ function NewBooking({ onNavigate, initialData }) {
             setIsSubmitting(true)
             await bookingService.create(booking)
             showToast({ message: 'Η κράτηση αποθηκεύτηκε επιτυχώς!', variant: 'success' })
-            onNavigate('bookings', null)
+            navigate('/bookings')
         } catch (err) {
             showToast({ message: getErrorMessage(err), variant: 'danger' })
         } finally {

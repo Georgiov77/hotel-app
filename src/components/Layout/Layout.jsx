@@ -2,12 +2,12 @@ import Sidebar from '@components/Sidebar/Sidebar'
 import Topbar from '@components/Topbar/Topbar'
 import './Layout.css'
 
-function Layout({ children, activePage, onNavigate, onLock }) {
+function Layout({ children, onLock }) {
     return (
         <div className="layout">
-            <Topbar activePage={activePage} onLock={onLock} />
+            <Topbar onLock={onLock} />
             <div className="layout__body">
-                <Sidebar activePage={activePage} onNavigate={onNavigate} />
+                <Sidebar />
                 <main className="layout__content">{children}</main>
             </div>
         </div>
