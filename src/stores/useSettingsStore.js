@@ -1,12 +1,12 @@
 // src/stores/useSettingsStore.js
-import { create }    from 'zustand'
+import { create } from 'zustand'
 import settingsService from '../services/settingsService'
 
 const useSettingsStore = create((set, get) => ({
-    hotel:    { name: 'HotelDesk', address: '', phone: '', email: '', afm: '' },
-    pricing:  {},
+    hotel: { name: 'HotelDesk', address: '', phone: '', email: '', afm: '' },
+    pricing: {},
     security: { pin: '1234', idleTimeout: 10 },
-    loaded:   false,
+    loaded: false,
 
     // Φορτώνει από SQLite
     load: async () => {

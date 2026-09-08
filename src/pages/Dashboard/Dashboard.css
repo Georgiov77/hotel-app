@@ -1,23 +1,23 @@
 .dashboard__stat {
-    display:        flex;
+    display: flex;
     flex-direction: column;
-    gap:            var(--gv-spacing-xs);
+    gap: var(--gv-spacing-xs);
 }
 
 .dashboard__stat-value {
-    font-size:   var(--gv-font-size-2xl);
+    font-size: var(--gv-font-size-2xl);
     font-weight: var(--gv-font-weight-bold);
-    color:       var(--gv-color-text);
+    color: var(--gv-color-text);
 }
 
 .dashboard__stat-label {
     font-size: var(--gv-font-size-sm);
-    color:     var(--gv-color-text-muted);
+    color: var(--gv-color-text-muted);
 }
 
 .dashboard__stat-sub {
     font-size: var(--gv-font-size-xs);
-    color:     var(--gv-color-text-subtle);
+    color: var(--gv-color-text-subtle);
 }
 
 .dashboard__loading {

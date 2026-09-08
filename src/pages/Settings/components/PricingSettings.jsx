@@ -3,9 +3,9 @@ import useSettingsStore from '@stores/useSettingsStore'
 import './PricingSettings.css'
 
 const SEASONS = [
-    { id: 'low',  label: 'Χαμηλή Σεζόν' },
-    { id: 'mid',  label: 'Μεσαία Σεζόν' },
-    { id: 'high', label: 'Υψηλή Σεζόν'  },
+    { id: 'low', label: 'Χαμηλή Σεζόν' },
+    { id: 'mid', label: 'Μεσαία Σεζόν' },
+    { id: 'high', label: 'Υψηλή Σεζόν' },
 ]
 
 const ROOM_TYPES = ['Μονόκλινο', 'Δίκλινο', 'Τρίκλινο', 'Οικογενειακό']

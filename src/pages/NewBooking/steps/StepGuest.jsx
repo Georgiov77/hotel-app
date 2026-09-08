@@ -1,13 +1,13 @@
-import { useState, useEffect }            from 'react'
+import { useState, useEffect } from 'react'
 import { useToast, Button, Input, Grid, Stack } from '@georgevlachos/ui'
-import guestService        from '@services/guestService'
+import guestService from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepGuest.css'
 
 function StepGuest({ booking, updateBooking }) {
     const { showToast } = useToast()
 
-    const [mode,   setMode]   = useState('search')
+    const [mode, setMode] = useState('search')
     const [guests, setGuests] = useState([])
     const [search, setSearch] = useState('')
 
@@ -44,13 +44,13 @@ function StepGuest({ booking, updateBooking }) {
         const form = e.target
         try {
             const guest = await guestService.create({
-                firstName:   form.firstName.value,
-                lastName:    form.lastName.value,
-                email:       form.email.value,
-                phone:       form.phone.value,
+                firstName: form.firstName.value,
+                lastName: form.lastName.value,
+                email: form.email.value,
+                phone: form.phone.value,
                 nationality: form.nationality.value,
-                idNumber:    form.idNumber.value,
-                notes:       '',
+                idNumber: form.idNumber.value,
+                notes: '',
             })
             updateBooking({ guest })
             setMode('search')
@@ -109,12 +109,12 @@ function StepGuest({ booking, updateBooking }) {
             {mode === 'new' && (
                 <form className="step-guest__form" onSubmit={handleNewGuest}>
                     <Grid columns="2" gap="md">
-                        <Input name="lastName"    label="Επώνυμο *"          required fullWidth />
-                        <Input name="firstName"   label="Όνομα *"            required fullWidth />
-                        <Input name="email"       label="Email" type="email"           fullWidth />
-                        <Input name="phone"       label="Τηλέφωνο"                     fullWidth />
+                        <Input name="lastName" label="Επώνυμο *" required fullWidth />
+                        <Input name="firstName" label="Όνομα *" required fullWidth />
+                        <Input name="email" label="Email" type="email" fullWidth />
+                        <Input name="phone" label="Τηλέφωνο" fullWidth />
                         <Input name="nationality" label="Υπηκοότητα" defaultValue="GR" fullWidth />
-                        <Input name="idNumber"    label="ΑΔΤ / Διαβατήριο"             fullWidth />
+                        <Input name="idNumber" label="ΑΔΤ / Διαβατήριο" fullWidth />
                     </Grid>
                     <div className="step-guest__form-actions">
                         <Button type="submit">✓ Προσθήκη Πελάτη</Button>
@@ -124,7 +124,8 @@ function StepGuest({ booking, updateBooking }) {
 
             {booking.guest && (
                 <div className="step-guest__selected">
-                    ✓ {booking.guest.last_name || booking.guest.lastName} {booking.guest.first_name || booking.guest.firstName}
+                    ✓ {booking.guest.last_name || booking.guest.lastName}{' '}
+                    {booking.guest.first_name || booking.guest.firstName}
                 </div>
             )}
         </Stack>

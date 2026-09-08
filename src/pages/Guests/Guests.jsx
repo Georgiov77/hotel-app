@@ -1,14 +1,14 @@
-import { useState }      from 'react'
+import { useState } from 'react'
 import { Card, Button, Modal, Table, Input, Stack, Row, Spinner } from '@georgevlachos/ui'
-import EditGuestModal    from './EditGuestModal'
-import useGuests         from '@hooks/useGuests'
-import guestColumns      from './guests.columns'
+import EditGuestModal from './EditGuestModal'
+import useGuests from '@hooks/useGuests'
+import guestColumns from './guests.columns'
 import './Guests.css'
 
 function Guests() {
     const { guests, isLoading, search, remove, reload } = useGuests()
-    const [query,         setQuery]         = useState('')
-    const [editingGuest,  setEditingGuest]  = useState(null)
+    const [query, setQuery] = useState('')
+    const [editingGuest, setEditingGuest] = useState(null)
     const [selectedGuest, setSelectedGuest] = useState(null)
 
     const handleSearch = (e) => {
@@ -16,15 +16,15 @@ function Guests() {
         search(e.target.value)
     }
 
-    if (isLoading) return (
-        <Stack align="center" style={{ padding: '2rem' }}>
-            <Spinner size="lg" />
-        </Stack>
-    )
+    if (isLoading)
+        return (
+            <Stack align="center" style={{ padding: '2rem' }}>
+                <Spinner size="lg" />
+            </Stack>
+        )
 
     return (
         <Stack gap="md" className="guests">
-
             <Row justify="between" align="center">
                 <Input
                     iconLeft={<span>🔍</span>}
@@ -48,23 +48,30 @@ function Guests() {
             <Modal
                 isOpen={!!selectedGuest}
                 onClose={() => setSelectedGuest(null)}
-                title={selectedGuest ? `${selectedGuest.last_name} ${selectedGuest.first_name}` : ''}
+                title={
+                    selectedGuest ? `${selectedGuest.last_name} ${selectedGuest.first_name}` : ''
+                }
                 size="md"
                 footer={
                     <Row gap="sm">
                         <Button variant="secondary" onClick={() => setSelectedGuest(null)}>
                             Κλείσιμο
                         </Button>
-                        <Button variant="danger" onClick={() => {
-                            remove(selectedGuest.id)
-                            setSelectedGuest(null)
-                        }}>
+                        <Button
+                            variant="danger"
+                            onClick={() => {
+                                remove(selectedGuest.id)
+                                setSelectedGuest(null)
+                            }}
+                        >
                             Διαγραφή
                         </Button>
-                        <Button onClick={() => {
-                            setEditingGuest(selectedGuest)
-                            setSelectedGuest(null)
-                        }}>
+                        <Button
+                            onClick={() => {
+                                setEditingGuest(selectedGuest)
+                                setSelectedGuest(null)
+                            }}
+                        >
                             Επεξεργασία
                         </Button>
                     </Row>
@@ -72,11 +79,21 @@ function Guests() {
             >
                 {selectedGuest && (
                     <Stack gap="sm">
-                        <div><strong>Email:</strong> {selectedGuest.email || '—'}</div>
-                        <div><strong>Τηλέφωνο:</strong> {selectedGuest.phone || '—'}</div>
-                        <div><strong>Υπηκοότητα:</strong> {selectedGuest.nationality}</div>
-                        <div><strong>ΑΔΤ/Διαβατήριο:</strong> {selectedGuest.id_number || '—'}</div>
-                        <div><strong>Σημειώσεις:</strong> {selectedGuest.notes || '—'}</div>
+                        <div>
+                            <strong>Email:</strong> {selectedGuest.email || '—'}
+                        </div>
+                        <div>
+                            <strong>Τηλέφωνο:</strong> {selectedGuest.phone || '—'}
+                        </div>
+                        <div>
+                            <strong>Υπηκοότητα:</strong> {selectedGuest.nationality}
+                        </div>
+                        <div>
+                            <strong>ΑΔΤ/Διαβατήριο:</strong> {selectedGuest.id_number || '—'}
+                        </div>
+                        <div>
+                            <strong>Σημειώσεις:</strong> {selectedGuest.notes || '—'}
+                        </div>
                     </Stack>
                 )}
             </Modal>
@@ -99,7 +116,6 @@ function Guests() {
                     />
                 )}
             </Modal>
-
         </Stack>
     )
 }

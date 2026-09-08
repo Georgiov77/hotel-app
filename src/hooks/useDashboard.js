@@ -1,15 +1,15 @@
 // src/hooks/useDashboard.js
 import { useState, useEffect } from 'react'
-import { useToast }        from '@georgevlachos/ui'
-import bookingService      from '@services/bookingService'
+import { useToast } from '@georgevlachos/ui'
+import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useDashboard() {
     const { showToast } = useToast()
 
-    const [checkIns,   setCheckIns]   = useState([])
-    const [checkOuts,  setCheckOuts]  = useState([])
-    const [isLoading,  setIsLoading]  = useState(true)
+    const [checkIns, setCheckIns] = useState([])
+    const [checkOuts, setCheckOuts] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     const load = async () => {
         try {
@@ -27,10 +27,12 @@ function useDashboard() {
         }
     }
 
-    useEffect(() => { load() }, [])
+    useEffect(() => {
+        load()
+    }, [])
 
-    const totalRooms   = 13
-    const occupied     = checkIns.filter((b) => b.status === 'checked_in').length
+    const totalRooms = 13
+    const occupied = checkIns.filter((b) => b.status === 'checked_in').length
     const occupancyPct = Math.round((occupied / totalRooms) * 100)
     const monthRevenue = checkIns.reduce((sum, b) => sum + b.total_amount, 0)
 
@@ -39,7 +41,7 @@ function useDashboard() {
         checkOuts,
         isLoading,
         stats: {
-            checkInsToday:  checkIns.length,
+            checkInsToday: checkIns.length,
             checkOutsToday: checkOuts.length,
             occupancyPct,
             monthRevenue,

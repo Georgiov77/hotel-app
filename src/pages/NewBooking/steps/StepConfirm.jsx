@@ -1,16 +1,19 @@
 import { Badge, Stack, Grid } from '@georgevlachos/ui'
 import { formatDate } from '@georgevlachos/utils'
-import { BOOKING_SOURCE_LABEL, PAYMENT_STATUS_LABEL, PAYMENT_STATUS_VARIANT } from '@config/statuses'
+import {
+    BOOKING_SOURCE_LABEL,
+    PAYMENT_STATUS_LABEL,
+    PAYMENT_STATUS_VARIANT,
+} from '@config/statuses'
 import './StepConfirm.css'
 
 function StepConfirm({ booking }) {
     const extrasTotal = booking.extras.reduce((sum, e) => sum + e.total, 0)
-    const grandTotal  = booking.totalAmount + extrasTotal
-    const remaining   = grandTotal - booking.depositAmount
+    const grandTotal = booking.totalAmount + extrasTotal
+    const remaining = grandTotal - booking.depositAmount
 
     return (
         <Stack gap="lg" className="step-confirm">
-
             <Stack gap="sm" className="step-confirm__section">
                 <div className="step-confirm__section-title">Στοιχεία Κράτησης</div>
                 <Grid columns="2" gap="md" className="step-confirm__grid">
@@ -42,12 +45,15 @@ function StepConfirm({ booking }) {
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Άτομα</span>
                         <span className="step-confirm__value">
-                            {booking.adults} ενήλικες {booking.children > 0 ? `/ ${booking.children} παιδιά` : ''}
+                            {booking.adults} ενήλικες{' '}
+                            {booking.children > 0 ? `/ ${booking.children} παιδιά` : ''}
                         </span>
                     </div>
                     <div className="step-confirm__field">
                         <span className="step-confirm__label">Προέλευση</span>
-                        <span className="step-confirm__value">{BOOKING_SOURCE_LABEL[booking.source]}</span>
+                        <span className="step-confirm__value">
+                            {BOOKING_SOURCE_LABEL[booking.source]}
+                        </span>
                     </div>
                 </Grid>
             </Stack>
@@ -68,7 +74,9 @@ function StepConfirm({ booking }) {
                 <div className="step-confirm__section-title">Πληρωμή</div>
                 <div className="step-confirm__payment">
                     <div className="step-confirm__payment-row">
-                        <span>Δωμάτιο ({booking.nights} νύχτες × {booking.pricePerNight}€)</span>
+                        <span>
+                            Δωμάτιο ({booking.nights} νύχτες × {booking.pricePerNight}€)
+                        </span>
                         <span>{booking.totalAmount}€</span>
                     </div>
                     {extrasTotal > 0 && (
@@ -101,7 +109,6 @@ function StepConfirm({ booking }) {
                     </div>
                 </div>
             </Stack>
-
         </Stack>
     )
 }

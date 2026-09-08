@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useToast }            from '@georgevlachos/ui'
-import bookingService          from '@services/bookingService'
-import { getErrorMessage }     from '@error/errorHandler'
+import { useToast } from '@georgevlachos/ui'
+import bookingService from '@services/bookingService'
+import { getErrorMessage } from '@error/errorHandler'
 
 function useBookings() {
     const { showToast } = useToast()
 
-    const [bookings,  setBookings]  = useState([])
+    const [bookings, setBookings] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     const load = async () => {
@@ -41,7 +41,9 @@ function useBookings() {
         }
     }
 
-    useEffect(() => { load() }, [])
+    useEffect(() => {
+        load()
+    }, [])
 
     return { bookings, isLoading, updateStatus, remove, reload: load }
 }

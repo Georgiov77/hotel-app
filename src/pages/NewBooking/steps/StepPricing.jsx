@@ -1,9 +1,9 @@
 import { Button, Input } from '@georgevlachos/ui'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import { SEASONS, DEPOSIT_OPTIONS } from '@config/pricing'
-import { calcDeposit }    from '@utils/pricingUtils'
-import usePricing         from '@hooks/usePricing'
-import useSettingsStore   from '@stores/useSettingsStore'
+import { calcDeposit } from '@utils/pricingUtils'
+import usePricing from '@hooks/usePricing'
+import useSettingsStore from '@stores/useSettingsStore'
 import './StepPricing.css'
 
 function StepPricing({ booking, updateBooking }) {
@@ -23,7 +23,6 @@ function StepPricing({ booking, updateBooking }) {
 
     return (
         <div className="step-pricing">
-
             <div className="step-pricing__section">
                 <div className="step-pricing__section-title">Τιμή Δωματίου</div>
                 <div className="step-pricing__seasons">
@@ -76,21 +75,31 @@ function StepPricing({ booking, updateBooking }) {
                             label="Περιγραφή"
                             value={extra.description}
                             placeholder="π.χ. Πρωινό"
-                            onChange={(e) => handleExtraChange(extra.id, 'description', e.target.value)}
+                            onChange={(e) =>
+                                handleExtraChange(extra.id, 'description', e.target.value)
+                            }
                             fullWidth
                         />
                         <Input
                             label="Τιμή/μέρα (€)"
                             type="number"
                             value={extra.pricePerDay}
-                            onChange={(e) => handleExtraChange(extra.id, 'pricePerDay', parseFloat(e.target.value) || 0)}
+                            onChange={(e) =>
+                                handleExtraChange(
+                                    extra.id,
+                                    'pricePerDay',
+                                    parseFloat(e.target.value) || 0
+                                )
+                            }
                             fullWidth
                         />
                         <Input
                             label="Μέρες"
                             type="number"
                             value={extra.days}
-                            onChange={(e) => handleExtraChange(extra.id, 'days', parseInt(e.target.value) || 0)}
+                            onChange={(e) =>
+                                handleExtraChange(extra.id, 'days', parseInt(e.target.value) || 0)
+                            }
                             fullWidth
                         />
                         <Input
@@ -103,7 +112,9 @@ function StepPricing({ booking, updateBooking }) {
                         <button
                             className="step-pricing__extra-remove"
                             onClick={() => handleRemoveExtra(extra.id)}
-                        >✕</button>
+                        >
+                            ✕
+                        </button>
                     </div>
                 ))}
                 <Button variant="secondary" onClick={handleAddExtra}>
@@ -122,7 +133,9 @@ function StepPricing({ booking, updateBooking }) {
                         >
                             <div className="step-pricing__payment-option-label">{option.label}</div>
                             <div className="step-pricing__payment-option-sub">
-                                {option.pct !== null ? `${calcDeposit(grandTotal, option.pct)}€` : 'Ορίστε ποσό'}
+                                {option.pct !== null
+                                    ? `${calcDeposit(grandTotal, option.pct)}€`
+                                    : 'Ορίστε ποσό'}
                             </div>
                         </div>
                     ))}
@@ -142,7 +155,9 @@ function StepPricing({ booking, updateBooking }) {
 
             <div className="step-pricing__summary">
                 <div className="step-pricing__summary-row">
-                    <span>Δωμάτιο ({booking.nights} νύχτες × {booking.pricePerNight}€)</span>
+                    <span>
+                        Δωμάτιο ({booking.nights} νύχτες × {booking.pricePerNight}€)
+                    </span>
                     <span>{booking.totalAmount}€</span>
                 </div>
                 {extrasTotal > 0 && (
@@ -162,7 +177,6 @@ function StepPricing({ booking, updateBooking }) {
                     </div>
                 )}
             </div>
-
         </div>
     )
 }

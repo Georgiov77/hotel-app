@@ -1,20 +1,20 @@
-import { useState }                          from 'react'
+import { useState } from 'react'
 import { useToast, Button, Input, Textarea } from '@georgevlachos/ui'
-import guestService        from '@services/guestService'
+import guestService from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 import './EditGuestModal.css'
 
 function EditGuestModal({ guest, onSave, onClose }) {
     const { showToast } = useToast()
 
-    const [form, setForm]         = useState({
-        first_name:  guest?.first_name  || '',
-        last_name:   guest?.last_name   || '',
-        email:       guest?.email       || '',
-        phone:       guest?.phone       || '',
+    const [form, setForm] = useState({
+        first_name: guest?.first_name || '',
+        last_name: guest?.last_name || '',
+        email: guest?.email || '',
+        phone: guest?.phone || '',
         nationality: guest?.nationality || 'GR',
-        id_number:   guest?.id_number   || '',
-        notes:       guest?.notes       || '',
+        id_number: guest?.id_number || '',
+        notes: guest?.notes || '',
     })
     const [isLoading, setIsLoading] = useState(false)
 
@@ -31,24 +31,24 @@ function EditGuestModal({ guest, onSave, onClose }) {
             setIsLoading(true)
             if (guest?.id) {
                 await guestService.update(guest.id, {
-                    firstName:   form.first_name,
-                    lastName:    form.last_name,
-                    email:       form.email,
-                    phone:       form.phone,
+                    firstName: form.first_name,
+                    lastName: form.last_name,
+                    email: form.email,
+                    phone: form.phone,
                     nationality: form.nationality,
-                    idNumber:    form.id_number,
-                    notes:       form.notes,
+                    idNumber: form.id_number,
+                    notes: form.notes,
                 })
                 showToast({ message: 'Ο πελάτης ενημερώθηκε!', variant: 'success' })
             } else {
                 await guestService.create({
-                    firstName:   form.first_name,
-                    lastName:    form.last_name,
-                    email:       form.email,
-                    phone:       form.phone,
+                    firstName: form.first_name,
+                    lastName: form.last_name,
+                    email: form.email,
+                    phone: form.phone,
                     nationality: form.nationality,
-                    idNumber:    form.id_number,
-                    notes:       form.notes,
+                    idNumber: form.id_number,
+                    notes: form.notes,
                 })
                 showToast({ message: 'Ο πελάτης αποθηκεύτηκε!', variant: 'success' })
             }
@@ -111,8 +111,17 @@ function EditGuestModal({ guest, onSave, onClose }) {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)', marginTop: '1rem' }}>
-                <Button variant="secondary" onClick={onClose}>Άκυρο</Button>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    gap: 'var(--space-3)',
+                    marginTop: '1rem',
+                }}
+            >
+                <Button variant="secondary" onClick={onClose}>
+                    Άκυρο
+                </Button>
                 <Button onClick={handleSave} loading={isLoading}>
                     Αποθήκευση
                 </Button>

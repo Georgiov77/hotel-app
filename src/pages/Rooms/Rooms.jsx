@@ -1,5 +1,5 @@
-import RoomCard  from '@components/RoomCard/RoomCard'
-import useRooms  from '@hooks/useRooms'
+import RoomCard from '@components/RoomCard/RoomCard'
+import useRooms from '@hooks/useRooms'
 import './Rooms.css'
 
 const floorLabels = {
@@ -24,10 +24,13 @@ function Rooms() {
                         <div className="rooms__floor-title">{floorLabels[floor]}</div>
                         <div className="rooms__grid">
                             {floorRooms.map((room) => (
-                                <RoomCard key={room.id} room={{
-                                    ...room,
-                                    hasKitchen: room.has_kitchen === 1,
-                                }} />
+                                <RoomCard
+                                    key={room.id}
+                                    room={{
+                                        ...room,
+                                        hasKitchen: room.has_kitchen === 1,
+                                    }}
+                                />
                             ))}
                         </div>
                     </div>

@@ -45,9 +45,7 @@ function StepDates({ booking, updateBooking }) {
             </Grid>
 
             {booking.nights > 0 && (
-                <div className="step-dates__summary">
-                    🌙 {booking.nights} διανυκτερεύσεις
-                </div>
+                <div className="step-dates__summary">🌙 {booking.nights} διανυκτερεύσεις</div>
             )}
         </Stack>
     )

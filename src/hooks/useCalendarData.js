@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useToast }        from '@georgevlachos/ui'
-import roomService         from '@services/roomService'
-import bookingService      from '@services/bookingService'
+import { useToast } from '@georgevlachos/ui'
+import roomService from '@services/roomService'
+import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useCalendarData(startDate, endDate) {
     const { showToast } = useToast()
 
-    const [rooms,     setRooms]     = useState([])
-    const [bookings,  setBookings]  = useState([])
+    const [rooms, setRooms] = useState([])
+    const [bookings, setBookings] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     const load = async () => {

@@ -8,9 +8,7 @@ function Layout({ children, activePage, onNavigate, onLock }) {
             <Topbar activePage={activePage} onLock={onLock} />
             <div className="layout__body">
                 <Sidebar activePage={activePage} onNavigate={onNavigate} />
-                <main className="layout__content">
-                    {children}
-                </main>
+                <main className="layout__content">{children}</main>
             </div>
         </div>
     )

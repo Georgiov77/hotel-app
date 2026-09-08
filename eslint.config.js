@@ -2,6 +2,7 @@ const js = require('@eslint/js')
 const react = require('eslint-plugin-react')
 const reactHooks = require('eslint-plugin-react-hooks')
 const globals = require('globals')
+const prettier = require('eslint-config-prettier')
 
 module.exports = [
     {
@@ -27,4 +28,5 @@ module.exports = [
             'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
         },
     },
+    prettier,
 ]

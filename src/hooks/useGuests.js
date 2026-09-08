@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useToast }        from '@georgevlachos/ui'
-import guestService        from '@services/guestService'
+import { useToast } from '@georgevlachos/ui'
+import guestService from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
 
 function useGuests() {
     const { showToast } = useToast()
 
-    const [guests,    setGuests]    = useState([])
+    const [guests, setGuests] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     const load = async () => {
@@ -61,7 +61,9 @@ function useGuests() {
         }
     }
 
-    useEffect(() => { load() }, [])
+    useEffect(() => {
+        load()
+    }, [])
 
     return { guests, isLoading, search, create, update, remove, reload: load }
 }

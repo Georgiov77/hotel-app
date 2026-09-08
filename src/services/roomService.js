@@ -1,12 +1,8 @@
 import { withErrorHandling } from '@error/errorHandler'
-import { ERROR_CODES }       from '@error/AppError'
+import { ERROR_CODES } from '@error/AppError'
 
 const roomService = {
-    getAll: () =>
-        withErrorHandling(
-            () => window.api.rooms.getAll(),
-            ERROR_CODES.DB_ERROR
-        ),
+    getAll: () => withErrorHandling(() => window.api.rooms.getAll(), ERROR_CODES.DB_ERROR),
 
     getAvailable: (checkIn, checkOut) =>
         withErrorHandling(
@@ -15,10 +11,7 @@ const roomService = {
         ),
 
     updateStatus: (id, status) =>
-        withErrorHandling(
-            () => window.api.rooms.updateStatus(id, status),
-            ERROR_CODES.DB_ERROR
-        ),
+        withErrorHandling(() => window.api.rooms.updateStatus(id, status), ERROR_CODES.DB_ERROR),
 }
 
 export default roomService

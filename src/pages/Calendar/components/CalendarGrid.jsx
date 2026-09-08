@@ -5,12 +5,12 @@ const ROOM_COL_WIDTH = '100px'
 
 function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellClick }) {
     const totalDays = days.length
-    const gridCols  = `${ROOM_COL_WIDTH} repeat(${totalDays}, 1fr)`
+    const gridCols = `${ROOM_COL_WIDTH} repeat(${totalDays}, 1fr)`
 
     const getDayLabel = (dateStr) => {
         const d = new Date(dateStr)
         return {
-            name:   d.toLocaleDateString('el-GR', { weekday: 'short' }),
+            name: d.toLocaleDateString('el-GR', { weekday: 'short' }),
             number: d.getDate(),
         }
     }
@@ -20,7 +20,7 @@ function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellCl
     }
 
     const calcBarPosition = (booking) => {
-        const cinDate  = booking.check_in
+        const cinDate = booking.check_in
         const coutDate = booking.check_out
 
         let startIdx = days.findIndex((d) => d >= cinDate && d < coutDate)
@@ -38,7 +38,6 @@ function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellCl
 
     return (
         <div className="calendar-grid">
-
             {/* Header με τις μέρες */}
             <div className="calendar-grid__header" style={{ gridTemplateColumns: gridCols }}>
                 <div className="calendar-grid__corner">Δωμάτιο</div>
@@ -61,7 +60,11 @@ function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellCl
                 const roomBookings = getBookingsForRoom(room.id)
 
                 return (
-                    <div key={room.id} className="calendar-grid__row" style={{ gridTemplateColumns: gridCols }}>
+                    <div
+                        key={room.id}
+                        className="calendar-grid__row"
+                        style={{ gridTemplateColumns: gridCols }}
+                    >
                         <div className="calendar-grid__room">
                             <span className="calendar-grid__room-number">Νο. {room.number}</span>
                             <span className="calendar-grid__room-type">{room.type}</span>
@@ -69,7 +72,11 @@ function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellCl
 
                         <div
                             className="calendar-grid__cells"
-                            style={{ gridColumn: `2 / -1`, display: 'grid', gridTemplateColumns: `repeat(${totalDays}, 1fr)` }}
+                            style={{
+                                gridColumn: `2 / -1`,
+                                display: 'grid',
+                                gridTemplateColumns: `repeat(${totalDays}, 1fr)`,
+                            }}
                         >
                             {/* Κελιά */}
                             {days.map((day) => (
@@ -99,7 +106,6 @@ function CalendarGrid({ days, rooms, bookings, isToday, onBookingClick, onCellCl
                     </div>
                 )
             })}
-
         </div>
     )
 }

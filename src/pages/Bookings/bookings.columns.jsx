@@ -16,7 +16,9 @@ const bookingColumns = [
         label: 'Πελάτης',
         render: (row) => (
             <div className="bookings__guest">
-                <span className="bookings__guest-name">{row.last_name} {row.first_name}</span>
+                <span className="bookings__guest-name">
+                    {row.last_name} {row.first_name}
+                </span>
                 <span className="bookings__guest-source">{BOOKING_SOURCE_LABEL[row.source]}</span>
             </div>
         ),

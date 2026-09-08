@@ -6,7 +6,7 @@ function useIdleLock() {
     const { security } = useSettingsStore()
     const [isLocked, setIsLocked] = useState(false)
 
-    const lock   = useCallback(() => setIsLocked(true), [])
+    const lock = useCallback(() => setIsLocked(true), [])
     const unlock = useCallback(() => setIsLocked(false), [])
 
     useEffect(() => {

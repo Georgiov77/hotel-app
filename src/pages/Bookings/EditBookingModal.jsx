@@ -1,26 +1,26 @@
-import { useState }                               from 'react'
+import { useState } from 'react'
 import { useToast, Button, Input, Textarea, Select } from '@georgevlachos/ui'
-import bookingService      from '@services/bookingService'
+import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
-import { calcNights }      from '@georgevlachos/utils'
+import { calcNights } from '@georgevlachos/utils'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 import './EditBookingModal.css'
 
 function EditBookingModal({ booking, onSave, onClose }) {
     const { showToast } = useToast()
 
-    const [form, setForm]         = useState({
-        check_in:        booking.check_in,
-        check_out:       booking.check_out,
-        adults:          booking.adults,
-        children:        booking.children,
+    const [form, setForm] = useState({
+        check_in: booking.check_in,
+        check_out: booking.check_out,
+        adults: booking.adults,
+        children: booking.children,
         price_per_night: booking.price_per_night,
-        total_amount:    booking.total_amount,
-        deposit_amount:  booking.deposit_amount,
-        paid_amount:     booking.paid_amount,
-        payment_status:  booking.payment_status,
-        source:          booking.source,
-        notes:           booking.notes || '',
+        total_amount: booking.total_amount,
+        deposit_amount: booking.deposit_amount,
+        paid_amount: booking.paid_amount,
+        payment_status: booking.payment_status,
+        source: booking.source,
+        notes: booking.notes || '',
     })
     const [isLoading, setIsLoading] = useState(false)
 
@@ -31,7 +31,7 @@ function EditBookingModal({ booking, onSave, onClose }) {
             if (field === 'check_in' || field === 'check_out') {
                 if (updated.check_in && updated.check_out) {
                     const nights = calcNights(updated.check_in, updated.check_out)
-                    updated.nights       = nights > 0 ? nights : 1
+                    updated.nights = nights > 0 ? nights : 1
                     updated.total_amount = nights * updated.price_per_night
                 }
             }
@@ -49,21 +49,21 @@ function EditBookingModal({ booking, onSave, onClose }) {
         try {
             setIsLoading(true)
             await bookingService.update(booking.id, {
-                roomId:        booking.room_id,
-                guestId:       booking.guest_id,
-                checkIn:       form.check_in,
-                checkOut:      form.check_out,
-                nights:        calcNights(form.check_in, form.check_out),
-                adults:        parseInt(form.adults),
-                children:      parseInt(form.children),
-                status:        booking.status,
-                source:        form.source,
+                roomId: booking.room_id,
+                guestId: booking.guest_id,
+                checkIn: form.check_in,
+                checkOut: form.check_out,
+                nights: calcNights(form.check_in, form.check_out),
+                adults: parseInt(form.adults),
+                children: parseInt(form.children),
+                status: booking.status,
+                source: form.source,
                 pricePerNight: parseFloat(form.price_per_night),
-                totalAmount:   parseFloat(form.total_amount),
+                totalAmount: parseFloat(form.total_amount),
                 depositAmount: parseFloat(form.deposit_amount),
-                paidAmount:    parseFloat(form.paid_amount),
+                paidAmount: parseFloat(form.paid_amount),
                 paymentStatus: form.payment_status,
-                notes:         form.notes,
+                notes: form.notes,
             })
             showToast({ message: 'Η κράτηση ενημερώθηκε!', variant: 'success' })
             onSave()
@@ -75,9 +75,9 @@ function EditBookingModal({ booking, onSave, onClose }) {
     }
 
     const paymentOptions = [
-        { value: 'unpaid',  label: 'Αδήλωτο' },
+        { value: 'unpaid', label: 'Αδήλωτο' },
         { value: 'deposit', label: 'Προκαταβολή' },
-        { value: 'paid',    label: 'Εξοφλημένο' },
+        { value: 'paid', label: 'Εξοφλημένο' },
     ]
 
     const sourceOptions = Object.entries(BOOKING_SOURCE_LABEL).map(([key, label]) => ({
@@ -87,7 +87,6 @@ function EditBookingModal({ booking, onSave, onClose }) {
 
     return (
         <div className="edit-booking">
-
             <div className="edit-booking__section">
                 <div className="edit-booking__section-title">Ημερομηνίες</div>
                 <div className="edit-booking__grid">
@@ -192,12 +191,13 @@ function EditBookingModal({ booking, onSave, onClose }) {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)' }}>
-                <Button variant="secondary" onClick={onClose}>Άκυρο</Button>
+                <Button variant="secondary" onClick={onClose}>
+                    Άκυρο
+                </Button>
                 <Button onClick={handleSave} loading={isLoading}>
                     Αποθήκευση
                 </Button>
             </div>
-
         </div>
     )
 }

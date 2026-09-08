@@ -21,7 +21,6 @@ function Reports() {
 
     return (
         <div className="reports">
-
             {/* Σύνοψη */}
             <div className="reports__stats">
                 <Card>
@@ -47,11 +46,16 @@ function Reports() {
                 </Card>
                 <Card>
                     <div className="reports__stat">
-                        <span className="reports__stat-value">{currentMonthData?.revenue || 0}€</span>
+                        <span className="reports__stat-value">
+                            {currentMonthData?.revenue || 0}€
+                        </span>
                         <span className="reports__stat-label">Έσοδα Μήνα</span>
                         <span className="reports__stat-sub">
-              {new Date().toLocaleDateString('el-GR', { month: 'long', year: 'numeric' })}
-            </span>
+                            {new Date().toLocaleDateString('el-GR', {
+                                month: 'long',
+                                year: 'numeric',
+                            })}
+                        </span>
                     </div>
                 </Card>
             </div>
@@ -70,7 +74,6 @@ function Reports() {
                     <SourceChart data={bookingsBySource} />
                 </Card>
             </div>
-
         </div>
     )
 }

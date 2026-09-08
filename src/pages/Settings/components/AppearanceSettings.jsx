@@ -3,7 +3,7 @@ import './AppearanceSettings.css'
 
 const THEMES = [
     { id: 'light', label: 'Light', icon: '☀️' },
-    { id: 'dark',  label: 'Dark',  icon: '🌙' },
+    { id: 'dark', label: 'Dark', icon: '🌙' },
 ]
 
 function AppearanceSettings() {

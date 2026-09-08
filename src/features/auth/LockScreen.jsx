@@ -6,8 +6,8 @@ const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫']
 
 function LockScreen({ onUnlock }) {
     const { security, hotel } = useSettingsStore()
-    const [pin, setPin]       = useState('')
-    const [error, setError]   = useState('')
+    const [pin, setPin] = useState('')
+    const [error, setError] = useState('')
 
     const handleKey = (key) => {
         if (key === '') return

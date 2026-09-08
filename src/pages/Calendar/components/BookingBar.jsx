@@ -2,9 +2,9 @@
 import './BookingBar.css'
 
 function BookingBar({ booking, startIdx, span, totalDays, onClick }) {
-    const left  = `${(startIdx / totalDays) * 100}%`
+    const left = `${(startIdx / totalDays) * 100}%`
     const width = `calc(${(span / totalDays) * 100}% - 4px)`
-    const name  = `${booking.last_name} ${booking.first_name}`
+    const name = `${booking.last_name} ${booking.first_name}`
 
     return (
         <div

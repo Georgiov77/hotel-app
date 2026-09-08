@@ -1,14 +1,14 @@
 // src/hooks/useReports.js
 import { useState, useEffect } from 'react'
-import { useToast }            from '@georgevlachos/ui'
-import bookingService          from '@services/bookingService'
-import { getErrorMessage }     from '@error/errorHandler'
+import { useToast } from '@georgevlachos/ui'
+import bookingService from '@services/bookingService'
+import { getErrorMessage } from '@error/errorHandler'
 import { BOOKING_SOURCE_LABEL } from '@config/statuses'
 
 function useReports() {
     const { showToast } = useToast()
 
-    const [bookings,  setBookings]  = useState([])
+    const [bookings, setBookings] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function useReports() {
         load()
     }, [])
 
-    const currentYear  = new Date().getFullYear()
+    const currentYear = new Date().getFullYear()
     const currentMonth = new Date().getMonth()
 
     const revenueByMonth = Array.from({ length: 12 }, (_, i) => {
@@ -34,8 +34,8 @@ function useReports() {
             return date.getFullYear() === currentYear && date.getMonth() === i
         })
         return {
-            month:    new Date(currentYear, i).toLocaleDateString('el-GR', { month: 'short' }),
-            revenue:  monthBookings.reduce((sum, b) => sum + b.total_amount, 0),
+            month: new Date(currentYear, i).toLocaleDateString('el-GR', { month: 'short' }),
+            revenue: monthBookings.reduce((sum, b) => sum + b.total_amount, 0),
             bookings: monthBookings.length,
         }
     })
@@ -45,7 +45,7 @@ function useReports() {
         bookings.forEach((b) => {
             const key = `Νο. ${b.room_number}`
             if (!roomMap[key]) roomMap[key] = { room: key, nights: 0, revenue: 0 }
-            roomMap[key].nights  += b.nights
+            roomMap[key].nights += b.nights
             roomMap[key].revenue += b.total_amount
         })
         return Object.values(roomMap).sort((a, b) => a.room.localeCompare(b.room))
@@ -63,9 +63,9 @@ function useReports() {
     })()
 
     const currentMonthData = revenueByMonth[currentMonth]
-    const totalRevenue     = bookings.reduce((sum, b) => sum + b.total_amount, 0)
-    const totalBookings    = bookings.length
-    const avgNights        = totalBookings
+    const totalRevenue = bookings.reduce((sum, b) => sum + b.total_amount, 0)
+    const totalBookings = bookings.length
+    const avgNights = totalBookings
         ? (bookings.reduce((sum, b) => sum + b.nights, 0) / totalBookings).toFixed(1)
         : 0
 

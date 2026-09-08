@@ -5,9 +5,7 @@ function useSearch(data, keys) {
 
     const filtered = data.filter((item) => {
         const q = search.toLowerCase()
-        return keys.some((key) =>
-            String(item[key]).toLowerCase().includes(q)
-        )
+        return keys.some((key) => String(item[key]).toLowerCase().includes(q))
     })
 
     return { search, setSearch, filtered }

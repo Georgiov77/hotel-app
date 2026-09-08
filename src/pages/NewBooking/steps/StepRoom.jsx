@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import {Spinner, Stack, useToast} from '@georgevlachos/ui'
-import RoomCard            from '@components/RoomCard/RoomCard'
-import roomService         from '@services/roomService'
+import { Spinner, Stack, useToast } from '@georgevlachos/ui'
+import RoomCard from '@components/RoomCard/RoomCard'
+import roomService from '@services/roomService'
 import { getErrorMessage } from '@error/errorHandler'
 import './StepRoom.css'
 
@@ -14,7 +14,7 @@ const floorLabels = {
 function StepRoom({ booking, updateBooking }) {
     const { showToast } = useToast()
 
-    const [rooms,     setRooms]     = useState([])
+    const [rooms, setRooms] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
@@ -37,11 +37,12 @@ function StepRoom({ booking, updateBooking }) {
         updateBooking({ room, pricePerNight: 0 })
     }
 
-    if (isLoading) return (
-        <Stack align="center" style={{ padding: '2rem' }}>
-            <Spinner size="lg" />
-        </Stack>
-    )
+    if (isLoading)
+        return (
+            <Stack align="center" style={{ padding: '2rem' }}>
+                <Spinner size="lg" />
+            </Stack>
+        )
     return (
         <div className="step-room">
             {[0, 1, 2].map((floor) => {
@@ -58,10 +59,12 @@ function StepRoom({ booking, updateBooking }) {
                                     className={`step-room__card ${booking.room?.id === room.id ? 'step-room__card--selected' : ''}`}
                                     onClick={() => handleSelectRoom(room)}
                                 >
-                                    <RoomCard room={{
-                                        ...room,
-                                        hasKitchen: room.has_kitchen === 1,
-                                    }} />
+                                    <RoomCard
+                                        room={{
+                                            ...room,
+                                            hasKitchen: room.has_kitchen === 1,
+                                        }}
+                                    />
                                 </div>
                             ))}
                         </div>

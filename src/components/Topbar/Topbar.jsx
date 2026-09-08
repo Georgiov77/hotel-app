@@ -2,7 +2,6 @@ import useThemeStore from '@stores/useThemeStore'
 import PAGE_TITLES from '@config/pageTitles'
 import './Topbar.css'
 
-
 function Topbar({ activePage, onLock }) {
     const { theme, toggleTheme } = useThemeStore()
 

@@ -4,15 +4,15 @@ export const getInitialDates = (initialData = {}) => {
     // Guard για null
     const data = initialData || {}
 
-    const checkIn  = data.checkIn || todayISO()
-    let   checkOut = data.checkOut || ''
-    let   nights   = 0
+    const checkIn = data.checkIn || todayISO()
+    let checkOut = data.checkOut || ''
+    let nights = 0
 
     if (checkIn && !checkOut) {
         const nextDay = new Date(checkIn)
         nextDay.setDate(nextDay.getDate() + 1)
         checkOut = nextDay.toISOString().split('T')[0]
-        nights   = 1
+        nights = 1
     }
 
     return { checkIn, checkOut, nights }

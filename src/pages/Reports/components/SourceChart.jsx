@@ -1,7 +1,4 @@
-import {
-    PieChart, Pie, Cell, Tooltip,
-    Legend, ResponsiveContainer
-} from 'recharts'
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import './SourceChart.css'
 
 const COLORS = [
@@ -42,9 +39,11 @@ function SourceChart({ data }) {
                     <Tooltip content={<CustomTooltip />} />
                     <Legend
                         formatter={(value) => (
-                            <span style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>
-                {value}
-              </span>
+                            <span
+                                style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}
+                            >
+                                {value}
+                            </span>
                         )}
                     />
                 </PieChart>

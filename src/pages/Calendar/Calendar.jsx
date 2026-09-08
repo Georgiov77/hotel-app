@@ -1,19 +1,19 @@
-import { useState }      from 'react'
-import {useToast, Button, Modal, Stack, Spinner} from '@georgevlachos/ui'
-import CalendarHeader    from './components/CalendarHeader'
-import CalendarGrid      from './components/CalendarGrid'
-import BookingDetail     from '@pages/Bookings/BookingDetail'
-import useCalendar       from '@hooks/useCalendar'
-import useCalendarData   from '@hooks/useCalendarData'
-import bookingService    from '@services/bookingService'
+import { useState } from 'react'
+import { useToast, Button, Modal, Stack, Spinner } from '@georgevlachos/ui'
+import CalendarHeader from './components/CalendarHeader'
+import CalendarGrid from './components/CalendarGrid'
+import BookingDetail from '@pages/Bookings/BookingDetail'
+import useCalendar from '@hooks/useCalendar'
+import useCalendarData from '@hooks/useCalendarData'
+import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
 import './Calendar.css'
 
 function Calendar({ onNavigate }) {
     const { showToast } = useToast()
     const { days, goNext, goPrev, goToday, isToday } = useCalendar()
-    const { rooms, bookings, isLoading, reload }      = useCalendarData(days[0], days[days.length - 1])
-    const [selectedBooking, setSelectedBooking]       = useState(null)
+    const { rooms, bookings, isLoading, reload } = useCalendarData(days[0], days[days.length - 1])
+    const [selectedBooking, setSelectedBooking] = useState(null)
 
     const handleCellClick = (day, room) => {
         onNavigate('new-booking', { checkIn: day, room })
@@ -30,11 +30,12 @@ function Calendar({ onNavigate }) {
         }
     }
 
-    if (isLoading) return (
-        <Stack align="center" style={{ padding: '2rem' }}>
-            <Spinner size="lg" />
-        </Stack>
-    )
+    if (isLoading)
+        return (
+            <Stack align="center" style={{ padding: '2rem' }}>
+                <Spinner size="lg" />
+            </Stack>
+        )
 
     return (
         <div className="calendar">
@@ -70,10 +71,7 @@ function Calendar({ onNavigate }) {
                 }
             >
                 {selectedBooking && (
-                    <BookingDetail
-                        booking={selectedBooking}
-                        onStatusChange={handleStatusChange}
-                    />
+                    <BookingDetail booking={selectedBooking} onStatusChange={handleStatusChange} />
                 )}
             </Modal>
         </div>

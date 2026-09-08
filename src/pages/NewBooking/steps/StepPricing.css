@@ -35,8 +35,9 @@
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: border-color var(--transition-fast),
-    background-color var(--transition-fast);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
     text-align: center;
 }
 
@@ -74,8 +75,9 @@
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
     cursor: pointer;
-    transition: border-color var(--transition-fast),
-    background-color var(--transition-fast);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
 }
 
 .step-pricing__source:hover {
@@ -158,8 +160,9 @@
     border-radius: var(--radius-md);
     cursor: pointer;
     text-align: center;
-    transition: border-color var(--transition-fast),
-    background-color var(--transition-fast);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast);
 }
 
 .step-pricing__payment-option:hover {

@@ -5,7 +5,7 @@ function usePricing(booking, updateBooking) {
     const { pricing } = useSettingsStore()
 
     const extrasTotal = calcExtrasTotal(booking.extras)
-    const grandTotal  = calcGrandTotal(booking.totalAmount, extrasTotal)
+    const grandTotal = calcGrandTotal(booking.totalAmount, extrasTotal)
 
     const handleSeasonChange = (season) => {
         if (season.id === 'custom') {
@@ -24,11 +24,11 @@ function usePricing(booking, updateBooking) {
 
     const handleAddExtra = () => {
         const extra = {
-            id:          Date.now(),
+            id: Date.now(),
             description: '',
             pricePerDay: 0,
-            days:        booking.nights,
-            total:       0,
+            days: booking.nights,
+            total: 0,
         }
         updateBooking({ extras: [...booking.extras, extra] })
     }
@@ -49,14 +49,19 @@ function usePricing(booking, updateBooking) {
 
     const handleDepositOption = (option) => {
         if (option.pct === null) {
-            updateBooking({ paymentStatus: 'deposit', _customDeposit: true, depositAmount: 0, paidAmount: 0 })
+            updateBooking({
+                paymentStatus: 'deposit',
+                _customDeposit: true,
+                depositAmount: 0,
+                paidAmount: 0,
+            })
             return
         }
         const deposit = calcDeposit(grandTotal, option.pct)
         updateBooking({
-            paymentStatus:  option.pct === 0 ? 'unpaid' : option.pct === 1 ? 'paid' : 'deposit',
-            depositAmount:  deposit,
-            paidAmount:     deposit,
+            paymentStatus: option.pct === 0 ? 'unpaid' : option.pct === 1 ? 'paid' : 'deposit',
+            depositAmount: deposit,
+            paidAmount: deposit,
             _customDeposit: false,
         })
     }
@@ -65,14 +70,14 @@ function usePricing(booking, updateBooking) {
         const amount = Math.min(parseFloat(value) || 0, grandTotal)
         updateBooking({
             depositAmount: amount,
-            paidAmount:    amount,
+            paidAmount: amount,
             paymentStatus: amount >= grandTotal ? 'paid' : 'deposit',
         })
     }
 
     const isDepositActive = (option) => {
         if (option.id === 'unpaid') return booking.paymentStatus === 'unpaid'
-        if (option.id === 'paid')   return booking.paymentStatus === 'paid'
+        if (option.id === 'paid') return booking.paymentStatus === 'paid'
         if (option.id === 'custom') return booking._customDeposit
         return booking.depositAmount === calcDeposit(grandTotal, option.pct)
     }

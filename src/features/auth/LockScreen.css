@@ -75,8 +75,9 @@
     background-color: var(--color-bg-secondary);
     border: 1px solid var(--color-border);
     cursor: pointer;
-    transition: background-color var(--transition-fast),
-    border-color var(--transition-fast);
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
 }
 
 .lock-screen__key:hover {

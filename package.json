@@ -10,7 +10,9 @@
     "build:win": "vite build && electron-builder --win",
     "preview": "vite preview",
     "lint": "eslint src",
-    "lint:fix": "eslint src --fix"
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write src",
+    "format:check": "prettier --check src"
   },
   "build": {
     "appId": "com.hoteldesk.app",
@@ -50,8 +52,10 @@
     "electron-builder": "^24.13.0",
     "electron-rebuild": "^3.2.9",
     "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.0",
     "eslint-plugin-react-hooks": "^5.0.0",
+    "prettier": "^3.9.6",
     "vite": "^5.1.0",
     "wait-on": "^7.2.0"
   }

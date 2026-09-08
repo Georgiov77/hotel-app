@@ -8,7 +8,6 @@ import './Settings.css'
 function Settings() {
     return (
         <div className="settings">
-
             <div className="settings__section">
                 <div className="settings__section-title">Στοιχεία Ξενοδοχείου</div>
                 <Card>
@@ -36,7 +35,6 @@ function Settings() {
                     <AppearanceSettings />
                 </Card>
             </div>
-
         </div>
     )
 }

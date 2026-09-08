@@ -5,7 +5,7 @@ import './SecuritySettings.css'
 
 function SecuritySettings() {
     const { security, updateSecurity } = useSettingsStore()
-    const [form, setForm]   = useState({ pin: '', confirmPin: '' })
+    const [form, setForm] = useState({ pin: '', confirmPin: '' })
     const [error, setError] = useState('')
     const [saved, setSaved] = useState(false)
 
