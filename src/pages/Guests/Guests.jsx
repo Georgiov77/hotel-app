@@ -48,9 +48,7 @@ function Guests() {
             <Modal
                 isOpen={!!selectedGuest}
                 onClose={() => setSelectedGuest(null)}
-                title={
-                    selectedGuest ? `${selectedGuest.last_name} ${selectedGuest.first_name}` : ''
-                }
+                title={selectedGuest ? `${selectedGuest.lastName} ${selectedGuest.firstName}` : ''}
                 size="md"
                 footer={
                     <Row gap="sm">
@@ -89,7 +87,7 @@ function Guests() {
                             <strong>Υπηκοότητα:</strong> {selectedGuest.nationality}
                         </div>
                         <div>
-                            <strong>ΑΔΤ/Διαβατήριο:</strong> {selectedGuest.id_number || '—'}
+                            <strong>ΑΔΤ/Διαβατήριο:</strong> {selectedGuest.idNumber || '—'}
                         </div>
                         <div>
                             <strong>Σημειώσεις:</strong> {selectedGuest.notes || '—'}

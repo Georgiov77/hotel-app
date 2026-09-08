@@ -95,7 +95,7 @@ function StepGuest({ booking, updateBooking }) {
                                 onClick={() => handleSelectGuest(guest)}
                             >
                                 <div className="step-guest__item-name">
-                                    {guest.last_name} {guest.first_name}
+                                    {guest.lastName} {guest.firstName}
                                 </div>
                                 <div className="step-guest__item-details">
                                     {guest.email} · {guest.phone}
@@ -124,8 +124,7 @@ function StepGuest({ booking, updateBooking }) {
 
             {booking.guest && (
                 <div className="step-guest__selected">
-                    ✓ {booking.guest.last_name || booking.guest.lastName}{' '}
-                    {booking.guest.first_name || booking.guest.firstName}
+                    ✓ {booking.guest.lastName} {booking.guest.firstName}
                 </div>
             )}
         </Stack>

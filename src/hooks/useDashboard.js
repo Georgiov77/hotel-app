@@ -34,7 +34,7 @@ function useDashboard() {
     const totalRooms = 13
     const occupied = checkIns.filter((b) => b.status === 'checked_in').length
     const occupancyPct = Math.round((occupied / totalRooms) * 100)
-    const monthRevenue = checkIns.reduce((sum, b) => sum + b.total_amount, 0)
+    const monthRevenue = checkIns.reduce((sum, b) => sum + b.totalAmount, 0)
 
     return {
         checkIns,

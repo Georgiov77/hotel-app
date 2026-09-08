@@ -10,9 +10,9 @@ import {
 import './BookingDetail.css'
 
 function BookingDetail({ booking, onStatusChange }) {
-    const guestName = `${booking.last_name || ''} ${booking.first_name || ''}`.trim()
-    const roomNumber = booking.room_number
-    const remaining = (booking.total_amount || 0) - (booking.paid_amount || 0)
+    const guestName = `${booking.guestLastName || ''} ${booking.guestFirstName || ''}`.trim()
+    const roomNumber = booking.roomNumber
+    const remaining = (booking.totalAmount || 0) - (booking.paidAmount || 0)
 
     return (
         <div className="booking-detail">
@@ -29,14 +29,12 @@ function BookingDetail({ booking, onStatusChange }) {
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Check-in</span>
-                        <span className="booking-detail__value">
-                            {formatDate(booking.check_in)}
-                        </span>
+                        <span className="booking-detail__value">{formatDate(booking.checkIn)}</span>
                     </div>
                     <div className="booking-detail__field">
                         <span className="booking-detail__label">Check-out</span>
                         <span className="booking-detail__value">
-                            {formatDate(booking.check_out)}
+                            {formatDate(booking.checkOut)}
                         </span>
                     </div>
                     <div className="booking-detail__field">
@@ -72,14 +70,12 @@ function BookingDetail({ booking, onStatusChange }) {
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Σύνολο</span>
                         <span className="booking-detail__payment-value">
-                            {booking.total_amount}€
+                            {booking.totalAmount}€
                         </span>
                     </div>
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Έχει πληρωθεί</span>
-                        <span className="booking-detail__payment-value">
-                            {booking.paid_amount}€
-                        </span>
+                        <span className="booking-detail__payment-value">{booking.paidAmount}€</span>
                     </div>
                     <div className="booking-detail__payment-card">
                         <span className="booking-detail__payment-label">Υπόλοιπο</span>
@@ -92,8 +88,8 @@ function BookingDetail({ booking, onStatusChange }) {
                 </div>
                 <div style={{ marginTop: 'var(--space-2)' }}>
                     <Badge
-                        label={PAYMENT_STATUS_LABEL[booking.payment_status]}
-                        variant={PAYMENT_STATUS_VARIANT[booking.payment_status]}
+                        label={PAYMENT_STATUS_LABEL[booking.paymentStatus]}
+                        variant={PAYMENT_STATUS_VARIANT[booking.paymentStatus]}
                     />
                 </div>
             </div>

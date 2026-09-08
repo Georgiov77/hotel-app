@@ -30,8 +30,8 @@ function Dashboard({ onNavigate }) {
     }
 
     const checkInColumns = [
-        { key: 'guest', label: 'Πελάτης', render: (b) => `${b.last_name} ${b.first_name}` },
-        { key: 'room', label: 'Δωμάτιο', render: (b) => `Νο. ${b.room_number}` },
+        { key: 'guest', label: 'Πελάτης', render: (b) => `${b.guestLastName} ${b.guestFirstName}` },
+        { key: 'room', label: 'Δωμάτιο', render: (b) => `Νο. ${b.roomNumber}` },
         { key: 'nights', label: 'Νύχτες' },
         {
             key: 'status',
@@ -56,9 +56,9 @@ function Dashboard({ onNavigate }) {
     ]
 
     const checkOutColumns = [
-        { key: 'guest', label: 'Πελάτης', render: (b) => `${b.last_name} ${b.first_name}` },
-        { key: 'room', label: 'Δωμάτιο', render: (b) => `Νο. ${b.room_number}` },
-        { key: 'total', label: 'Σύνολο', render: (b) => `${b.total_amount}€` },
+        { key: 'guest', label: 'Πελάτης', render: (b) => `${b.guestLastName} ${b.guestFirstName}` },
+        { key: 'room', label: 'Δωμάτιο', render: (b) => `Νο. ${b.roomNumber}` },
+        { key: 'total', label: 'Σύνολο', render: (b) => `${b.totalAmount}€` },
         {
             key: 'status',
             label: 'Κατάσταση',

@@ -24,13 +24,7 @@ function Rooms() {
                         <div className="rooms__floor-title">{floorLabels[floor]}</div>
                         <div className="rooms__grid">
                             {floorRooms.map((room) => (
-                                <RoomCard
-                                    key={room.id}
-                                    room={{
-                                        ...room,
-                                        hasKitchen: room.has_kitchen === 1,
-                                    }}
-                                />
+                                <RoomCard key={room.id} room={room} />
                             ))}
                         </div>
                     </div>

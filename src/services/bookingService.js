@@ -1,31 +1,44 @@
 import { withErrorHandling } from '@error/errorHandler'
 import { ERROR_CODES } from '@error/AppError'
 import { stripUIFields } from '@utils/pricingUtils'
+import { normalizeBooking, normalizeBookingExtra } from '@utils/normalizers'
 import { todayISO } from '@georgevlachos/utils'
 
 const bookingService = {
-    getAll: () => withErrorHandling(() => window.api.bookings.getAll(), ERROR_CODES.DB_ERROR),
+    getAll: () =>
+        withErrorHandling(
+            async () => (await window.api.bookings.getAll()).map(normalizeBooking),
+            ERROR_CODES.DB_ERROR
+        ),
 
     getById: (id) =>
-        withErrorHandling(() => window.api.bookings.getById(id), ERROR_CODES.BOOKING_NOT_FOUND),
+        withErrorHandling(
+            async () => normalizeBooking(await window.api.bookings.getById(id)),
+            ERROR_CODES.BOOKING_NOT_FOUND
+        ),
 
     getByDateRange: (from, to) =>
-        withErrorHandling(() => window.api.bookings.getByDateRange(from, to), ERROR_CODES.DB_ERROR),
+        withErrorHandling(
+            async () => (await window.api.bookings.getByDateRange(from, to)).map(normalizeBooking),
+            ERROR_CODES.DB_ERROR
+        ),
 
     getTodayCheckIns: () =>
         withErrorHandling(
-            () => window.api.bookings.getTodayCheckIns(todayISO()),
+            async () =>
+                (await window.api.bookings.getTodayCheckIns(todayISO())).map(normalizeBooking),
             ERROR_CODES.DB_ERROR
         ),
 
     getTodayCheckOuts: () =>
         withErrorHandling(
-            () => window.api.bookings.getTodayCheckOuts(todayISO()),
+            async () =>
+                (await window.api.bookings.getTodayCheckOuts(todayISO())).map(normalizeBooking),
             ERROR_CODES.DB_ERROR
         ),
 
     create: (booking) =>
-        withErrorHandling(() => {
+        withErrorHandling(async () => {
             const clean = stripUIFields(booking)
             const extras = clean.extras || []
 
@@ -47,17 +60,23 @@ const bookingService = {
                 notes: clean.notes || '',
             }
 
-            return window.api.bookings.create(bookingData, extras)
+            return normalizeBooking(await window.api.bookings.create(bookingData, extras))
         }, ERROR_CODES.DB_ERROR),
 
     update: (id, booking) =>
-        withErrorHandling(() => window.api.bookings.update(id, booking), ERROR_CODES.DB_ERROR),
+        withErrorHandling(
+            async () => normalizeBooking(await window.api.bookings.update(id, booking)),
+            ERROR_CODES.DB_ERROR
+        ),
 
     updateStatus: (id, status) =>
         withErrorHandling(() => window.api.bookings.updateStatus(id, status), ERROR_CODES.DB_ERROR),
 
     getExtras: (bookingId) =>
-        withErrorHandling(() => window.api.bookings.getExtras(bookingId), ERROR_CODES.DB_ERROR),
+        withErrorHandling(
+            async () => (await window.api.bookings.getExtras(bookingId)).map(normalizeBookingExtra),
+            ERROR_CODES.DB_ERROR
+        ),
 
     delete: (id) => withErrorHandling(() => window.api.bookings.delete(id), ERROR_CODES.DB_ERROR),
 }

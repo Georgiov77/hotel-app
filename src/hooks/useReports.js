@@ -30,12 +30,12 @@ function useReports() {
 
     const revenueByMonth = Array.from({ length: 12 }, (_, i) => {
         const monthBookings = bookings.filter((b) => {
-            const date = new Date(b.check_in)
+            const date = new Date(b.checkIn)
             return date.getFullYear() === currentYear && date.getMonth() === i
         })
         return {
             month: new Date(currentYear, i).toLocaleDateString('el-GR', { month: 'short' }),
-            revenue: monthBookings.reduce((sum, b) => sum + b.total_amount, 0),
+            revenue: monthBookings.reduce((sum, b) => sum + b.totalAmount, 0),
             bookings: monthBookings.length,
         }
     })
@@ -43,10 +43,10 @@ function useReports() {
     const occupancyByRoom = (() => {
         const roomMap = {}
         bookings.forEach((b) => {
-            const key = `Νο. ${b.room_number}`
+            const key = `Νο. ${b.roomNumber}`
             if (!roomMap[key]) roomMap[key] = { room: key, nights: 0, revenue: 0 }
             roomMap[key].nights += b.nights
-            roomMap[key].revenue += b.total_amount
+            roomMap[key].revenue += b.totalAmount
         })
         return Object.values(roomMap).sort((a, b) => a.room.localeCompare(b.room))
     })()
@@ -63,7 +63,7 @@ function useReports() {
     })()
 
     const currentMonthData = revenueByMonth[currentMonth]
-    const totalRevenue = bookings.reduce((sum, b) => sum + b.total_amount, 0)
+    const totalRevenue = bookings.reduce((sum, b) => sum + b.totalAmount, 0)
     const totalBookings = bookings.length
     const avgNights = totalBookings
         ? (bookings.reduce((sum, b) => sum + b.nights, 0) / totalBookings).toFixed(1)

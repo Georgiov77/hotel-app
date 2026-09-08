@@ -49,7 +49,7 @@ function Calendar({ onNavigate }) {
 
             <CalendarGrid
                 days={days}
-                rooms={rooms.map((r) => ({ ...r, hasKitchen: r.has_kitchen === 1 }))}
+                rooms={rooms}
                 bookings={bookings}
                 isToday={isToday}
                 onBookingClick={setSelectedBooking}

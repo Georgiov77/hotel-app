@@ -2,12 +2,12 @@ import './Guests.css'
 
 const guestColumns = [
     {
-        key: 'last_name',
+        key: 'lastName',
         label: 'Πελάτης',
         render: (row) => (
             <div className="guests__name">
                 <span className="guests__name-full">
-                    {row.last_name} {row.first_name}
+                    {row.lastName} {row.firstName}
                 </span>
                 <span className="guests__name-email">{row.email}</span>
             </div>
@@ -15,7 +15,7 @@ const guestColumns = [
     },
     { key: 'phone', label: 'Τηλέφωνο' },
     { key: 'nationality', label: 'Υπηκοότητα' },
-    { key: 'id_number', label: 'ΑΔΤ / Διαβατήριο' },
+    { key: 'idNumber', label: 'ΑΔΤ / Διαβατήριο' },
     { key: 'notes', label: 'Σημειώσεις', render: (row) => row.notes || '—' },
 ]
 

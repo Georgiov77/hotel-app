@@ -8,12 +8,12 @@ function EditGuestModal({ guest, onSave, onClose }) {
     const { showToast } = useToast()
 
     const [form, setForm] = useState({
-        first_name: guest?.first_name || '',
-        last_name: guest?.last_name || '',
+        firstName: guest?.firstName || '',
+        lastName: guest?.lastName || '',
         email: guest?.email || '',
         phone: guest?.phone || '',
         nationality: guest?.nationality || 'GR',
-        id_number: guest?.id_number || '',
+        idNumber: guest?.idNumber || '',
         notes: guest?.notes || '',
     })
     const [isLoading, setIsLoading] = useState(false)
@@ -23,7 +23,7 @@ function EditGuestModal({ guest, onSave, onClose }) {
     }
 
     const handleSave = async () => {
-        if (!form.last_name || !form.first_name) {
+        if (!form.lastName || !form.firstName) {
             showToast({ message: 'Επώνυμο και Όνομα είναι υποχρεωτικά', variant: 'danger' })
             return
         }
@@ -31,23 +31,23 @@ function EditGuestModal({ guest, onSave, onClose }) {
             setIsLoading(true)
             if (guest?.id) {
                 await guestService.update(guest.id, {
-                    firstName: form.first_name,
-                    lastName: form.last_name,
+                    firstName: form.firstName,
+                    lastName: form.lastName,
                     email: form.email,
                     phone: form.phone,
                     nationality: form.nationality,
-                    idNumber: form.id_number,
+                    idNumber: form.idNumber,
                     notes: form.notes,
                 })
                 showToast({ message: 'Ο πελάτης ενημερώθηκε!', variant: 'success' })
             } else {
                 await guestService.create({
-                    firstName: form.first_name,
-                    lastName: form.last_name,
+                    firstName: form.firstName,
+                    lastName: form.lastName,
                     email: form.email,
                     phone: form.phone,
                     nationality: form.nationality,
-                    idNumber: form.id_number,
+                    idNumber: form.idNumber,
                     notes: form.notes,
                 })
                 showToast({ message: 'Ο πελάτης αποθηκεύτηκε!', variant: 'success' })
@@ -65,14 +65,14 @@ function EditGuestModal({ guest, onSave, onClose }) {
             <div className="edit-guest__grid">
                 <Input
                     label="Επώνυμο *"
-                    value={form.last_name}
-                    onChange={(e) => handleChange('last_name', e.target.value)}
+                    value={form.lastName}
+                    onChange={(e) => handleChange('lastName', e.target.value)}
                     fullWidth
                 />
                 <Input
                     label="Όνομα *"
-                    value={form.first_name}
-                    onChange={(e) => handleChange('first_name', e.target.value)}
+                    value={form.firstName}
+                    onChange={(e) => handleChange('firstName', e.target.value)}
                     fullWidth
                 />
                 <Input
@@ -96,8 +96,8 @@ function EditGuestModal({ guest, onSave, onClose }) {
                 />
                 <Input
                     label="ΑΔΤ / Διαβατήριο"
-                    value={form.id_number}
-                    onChange={(e) => handleChange('id_number', e.target.value)}
+                    value={form.idNumber}
+                    onChange={(e) => handleChange('idNumber', e.target.value)}
                     fullWidth
                 />
                 <div style={{ gridColumn: '1 / -1' }}>

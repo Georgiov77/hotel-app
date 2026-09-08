@@ -1,20 +1,37 @@
 import { withErrorHandling } from '@error/errorHandler'
 import { ERROR_CODES } from '@error/AppError'
+import { normalizeGuest } from '@utils/normalizers'
 
 const guestService = {
-    getAll: () => withErrorHandling(() => window.api.guests.getAll(), ERROR_CODES.DB_ERROR),
+    getAll: () =>
+        withErrorHandling(
+            async () => (await window.api.guests.getAll()).map(normalizeGuest),
+            ERROR_CODES.DB_ERROR
+        ),
 
     getById: (id) =>
-        withErrorHandling(() => window.api.guests.getById(id), ERROR_CODES.GUEST_NOT_FOUND),
+        withErrorHandling(
+            async () => normalizeGuest(await window.api.guests.getById(id)),
+            ERROR_CODES.GUEST_NOT_FOUND
+        ),
 
     search: (query) =>
-        withErrorHandling(() => window.api.guests.search(query), ERROR_CODES.DB_ERROR),
+        withErrorHandling(
+            async () => (await window.api.guests.search(query)).map(normalizeGuest),
+            ERROR_CODES.DB_ERROR
+        ),
 
     create: (guest) =>
-        withErrorHandling(() => window.api.guests.create(guest), ERROR_CODES.DB_ERROR),
+        withErrorHandling(
+            async () => normalizeGuest(await window.api.guests.create(guest)),
+            ERROR_CODES.DB_ERROR
+        ),
 
     update: (id, guest) =>
-        withErrorHandling(() => window.api.guests.update(id, guest), ERROR_CODES.DB_ERROR),
+        withErrorHandling(
+            async () => normalizeGuest(await window.api.guests.update(id, guest)),
+            ERROR_CODES.DB_ERROR
+        ),
 
     delete: (id) => withErrorHandling(() => window.api.guests.delete(id), ERROR_CODES.DB_ERROR),
 }

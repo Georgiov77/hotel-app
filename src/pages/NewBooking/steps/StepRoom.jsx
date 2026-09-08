@@ -59,12 +59,7 @@ function StepRoom({ booking, updateBooking }) {
                                     className={`step-room__card ${booking.room?.id === room.id ? 'step-room__card--selected' : ''}`}
                                     onClick={() => handleSelectRoom(room)}
                                 >
-                                    <RoomCard
-                                        room={{
-                                            ...room,
-                                            hasKitchen: room.has_kitchen === 1,
-                                        }}
-                                    />
+                                    <RoomCard room={room} />
                                 </div>
                             ))}
                         </div>

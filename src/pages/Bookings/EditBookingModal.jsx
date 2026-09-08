@@ -10,15 +10,15 @@ function EditBookingModal({ booking, onSave, onClose }) {
     const { showToast } = useToast()
 
     const [form, setForm] = useState({
-        check_in: booking.check_in,
-        check_out: booking.check_out,
+        checkIn: booking.checkIn,
+        checkOut: booking.checkOut,
         adults: booking.adults,
         children: booking.children,
-        price_per_night: booking.price_per_night,
-        total_amount: booking.total_amount,
-        deposit_amount: booking.deposit_amount,
-        paid_amount: booking.paid_amount,
-        payment_status: booking.payment_status,
+        pricePerNight: booking.pricePerNight,
+        totalAmount: booking.totalAmount,
+        depositAmount: booking.depositAmount,
+        paidAmount: booking.paidAmount,
+        paymentStatus: booking.paymentStatus,
         source: booking.source,
         notes: booking.notes || '',
     })
@@ -28,17 +28,17 @@ function EditBookingModal({ booking, onSave, onClose }) {
         setForm((prev) => {
             const updated = { ...prev, [field]: value }
 
-            if (field === 'check_in' || field === 'check_out') {
-                if (updated.check_in && updated.check_out) {
-                    const nights = calcNights(updated.check_in, updated.check_out)
+            if (field === 'checkIn' || field === 'checkOut') {
+                if (updated.checkIn && updated.checkOut) {
+                    const nights = calcNights(updated.checkIn, updated.checkOut)
                     updated.nights = nights > 0 ? nights : 1
-                    updated.total_amount = nights * updated.price_per_night
+                    updated.totalAmount = nights * updated.pricePerNight
                 }
             }
 
-            if (field === 'price_per_night') {
-                const nights = calcNights(updated.check_in, updated.check_out)
-                updated.total_amount = nights * parseFloat(value)
+            if (field === 'pricePerNight') {
+                const nights = calcNights(updated.checkIn, updated.checkOut)
+                updated.totalAmount = nights * parseFloat(value)
             }
 
             return updated
@@ -49,20 +49,20 @@ function EditBookingModal({ booking, onSave, onClose }) {
         try {
             setIsLoading(true)
             await bookingService.update(booking.id, {
-                roomId: booking.room_id,
-                guestId: booking.guest_id,
-                checkIn: form.check_in,
-                checkOut: form.check_out,
-                nights: calcNights(form.check_in, form.check_out),
+                roomId: booking.roomId,
+                guestId: booking.guestId,
+                checkIn: form.checkIn,
+                checkOut: form.checkOut,
+                nights: calcNights(form.checkIn, form.checkOut),
                 adults: parseInt(form.adults),
                 children: parseInt(form.children),
                 status: booking.status,
                 source: form.source,
-                pricePerNight: parseFloat(form.price_per_night),
-                totalAmount: parseFloat(form.total_amount),
-                depositAmount: parseFloat(form.deposit_amount),
-                paidAmount: parseFloat(form.paid_amount),
-                paymentStatus: form.payment_status,
+                pricePerNight: parseFloat(form.pricePerNight),
+                totalAmount: parseFloat(form.totalAmount),
+                depositAmount: parseFloat(form.depositAmount),
+                paidAmount: parseFloat(form.paidAmount),
+                paymentStatus: form.paymentStatus,
                 notes: form.notes,
             })
             showToast({ message: 'Η κράτηση ενημερώθηκε!', variant: 'success' })
@@ -93,16 +93,16 @@ function EditBookingModal({ booking, onSave, onClose }) {
                     <Input
                         label="Check-in"
                         type="date"
-                        value={form.check_in}
-                        onChange={(e) => handleChange('check_in', e.target.value)}
+                        value={form.checkIn}
+                        onChange={(e) => handleChange('checkIn', e.target.value)}
                         fullWidth
                     />
                     <Input
                         label="Check-out"
                         type="date"
-                        value={form.check_out}
-                        min={form.check_in}
-                        onChange={(e) => handleChange('check_out', e.target.value)}
+                        value={form.checkOut}
+                        min={form.checkIn}
+                        onChange={(e) => handleChange('checkOut', e.target.value)}
                         fullWidth
                     />
                 </div>
@@ -138,36 +138,36 @@ function EditBookingModal({ booking, onSave, onClose }) {
                     <Input
                         label="Τιμή/νύχτα (€)"
                         type="number"
-                        value={form.price_per_night}
-                        onChange={(e) => handleChange('price_per_night', e.target.value)}
+                        value={form.pricePerNight}
+                        onChange={(e) => handleChange('pricePerNight', e.target.value)}
                         fullWidth
                     />
                     <Input
                         label="Σύνολο (€)"
                         type="number"
-                        value={form.total_amount}
-                        onChange={(e) => handleChange('total_amount', e.target.value)}
+                        value={form.totalAmount}
+                        onChange={(e) => handleChange('totalAmount', e.target.value)}
                         fullWidth
                     />
                     <Input
                         label="Προκαταβολή (€)"
                         type="number"
-                        value={form.deposit_amount}
-                        onChange={(e) => handleChange('deposit_amount', e.target.value)}
+                        value={form.depositAmount}
+                        onChange={(e) => handleChange('depositAmount', e.target.value)}
                         fullWidth
                     />
                     <Input
                         label="Πληρωμένο (€)"
                         type="number"
-                        value={form.paid_amount}
-                        onChange={(e) => handleChange('paid_amount', e.target.value)}
+                        value={form.paidAmount}
+                        onChange={(e) => handleChange('paidAmount', e.target.value)}
                         fullWidth
                     />
                     <Select
                         label="Κατάσταση Πληρωμής"
-                        value={form.payment_status}
+                        value={form.paymentStatus}
                         options={paymentOptions}
-                        onChange={(e) => handleChange('payment_status', e.target.value)}
+                        onChange={(e) => handleChange('paymentStatus', e.target.value)}
                         fullWidth
                     />
                     <Select
