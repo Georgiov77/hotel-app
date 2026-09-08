@@ -1,4 +1,4 @@
-import { withErrorHandling } from '@error/errorHandler'
+import { withErrorHandling, rethrowIpcError } from '@error/errorHandler'
 import { ERROR_CODES } from '@error/AppError'
 import { normalizeGuest } from '@utils/normalizers'
 
@@ -22,16 +22,22 @@ const guestService = {
         ),
 
     create: (guest) =>
-        withErrorHandling(
-            async () => normalizeGuest(await window.api.guests.create(guest)),
-            ERROR_CODES.DB_ERROR
-        ),
+        withErrorHandling(async () => {
+            try {
+                return normalizeGuest(await window.api.guests.create(guest))
+            } catch (err) {
+                rethrowIpcError(err)
+            }
+        }, ERROR_CODES.DB_ERROR),
 
     update: (id, guest) =>
-        withErrorHandling(
-            async () => normalizeGuest(await window.api.guests.update(id, guest)),
-            ERROR_CODES.DB_ERROR
-        ),
+        withErrorHandling(async () => {
+            try {
+                return normalizeGuest(await window.api.guests.update(id, guest))
+            } catch (err) {
+                rethrowIpcError(err)
+            }
+        }, ERROR_CODES.DB_ERROR),
 
     delete: (id) => withErrorHandling(() => window.api.guests.delete(id), ERROR_CODES.DB_ERROR),
 }

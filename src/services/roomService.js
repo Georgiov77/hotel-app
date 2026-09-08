@@ -1,4 +1,4 @@
-import { withErrorHandling } from '@error/errorHandler'
+import { withErrorHandling, rethrowIpcError } from '@error/errorHandler'
 import { ERROR_CODES } from '@error/AppError'
 import { normalizeRoom } from '@utils/normalizers'
 
@@ -16,7 +16,13 @@ const roomService = {
         ),
 
     updateStatus: (id, status) =>
-        withErrorHandling(() => window.api.rooms.updateStatus(id, status), ERROR_CODES.DB_ERROR),
+        withErrorHandling(async () => {
+            try {
+                return await window.api.rooms.updateStatus(id, status)
+            } catch (err) {
+                rethrowIpcError(err)
+            }
+        }, ERROR_CODES.DB_ERROR),
 }
 
 export default roomService

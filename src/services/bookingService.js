@@ -1,18 +1,8 @@
-import { withErrorHandling } from '@error/errorHandler'
-import AppError, { ERROR_CODES } from '@error/AppError'
+import { withErrorHandling, rethrowIpcError } from '@error/errorHandler'
+import { ERROR_CODES } from '@error/AppError'
 import { stripUIFields } from '@utils/pricingUtils'
 import { normalizeBooking, normalizeBookingExtra } from '@utils/normalizers'
 import { todayISO } from '@georgevlachos/utils'
-
-const rethrowConflict = (err) => {
-    if (err.message?.includes('BOOKING_CONFLICT')) {
-        throw new AppError(
-            ERROR_CODES.BOOKING_CONFLICT,
-            'Το δωμάτιο δεν είναι διαθέσιμο για αυτές τις ημερομηνίες'
-        )
-    }
-    throw err
-}
 
 const bookingService = {
     getAll: () =>
@@ -73,7 +63,7 @@ const bookingService = {
             try {
                 return normalizeBooking(await window.api.bookings.create(bookingData, extras))
             } catch (err) {
-                rethrowConflict(err)
+                rethrowIpcError(err)
             }
         }, ERROR_CODES.DB_ERROR),
 
@@ -82,12 +72,18 @@ const bookingService = {
             try {
                 return normalizeBooking(await window.api.bookings.update(id, booking))
             } catch (err) {
-                rethrowConflict(err)
+                rethrowIpcError(err)
             }
         }, ERROR_CODES.DB_ERROR),
 
     updateStatus: (id, status) =>
-        withErrorHandling(() => window.api.bookings.updateStatus(id, status), ERROR_CODES.DB_ERROR),
+        withErrorHandling(async () => {
+            try {
+                return await window.api.bookings.updateStatus(id, status)
+            } catch (err) {
+                rethrowIpcError(err)
+            }
+        }, ERROR_CODES.DB_ERROR),
 
     getExtras: (bookingId) =>
         withErrorHandling(

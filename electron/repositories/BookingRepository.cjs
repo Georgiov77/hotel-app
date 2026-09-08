@@ -99,7 +99,7 @@ const BookingRepository = {
     create: (booking, extras = []) => {
         return db.transaction(() => {
             if (BookingRepository.hasConflict(booking.roomId, booking.checkIn, booking.checkOut)) {
-                throw new Error('BOOKING_CONFLICT')
+                throw new Error('BOOKING_CONFLICT:Το δωμάτιο δεν είναι διαθέσιμο για αυτές τις ημερομηνίες')
             }
 
             const result = db.run(`
@@ -143,7 +143,7 @@ const BookingRepository = {
 
     update: (id, booking) => {
         if (BookingRepository.hasConflict(booking.roomId, booking.checkIn, booking.checkOut, id)) {
-            throw new Error('BOOKING_CONFLICT')
+            throw new Error('BOOKING_CONFLICT:Το δωμάτιο δεν είναι διαθέσιμο για αυτές τις ημερομηνίες')
         }
 
         return db.run(`

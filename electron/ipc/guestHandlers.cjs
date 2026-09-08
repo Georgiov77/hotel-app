@@ -1,5 +1,6 @@
 const { ipcMain }      = require('electron')
 const GuestRepository  = require('../repositories/GuestRepository.cjs')
+const { validateGuest } = require('../validation.cjs')
 
 ipcMain.handle('guests:getAll', () => {
     return GuestRepository.findAll()
@@ -14,11 +15,13 @@ ipcMain.handle('guests:search', (_, query) => {
 })
 
 ipcMain.handle('guests:create', (_, guest) => {
+    validateGuest(guest)
     const id = GuestRepository.create(guest)
     return GuestRepository.findById(id)
 })
 
 ipcMain.handle('guests:update', (_, { id, guest }) => {
+    validateGuest(guest)
     GuestRepository.update(id, guest)
     return GuestRepository.findById(id)
 })

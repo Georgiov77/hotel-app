@@ -1,5 +1,6 @@
 const { ipcMain }      = require('electron')
 const RoomRepository   = require('../repositories/RoomRepository.cjs')
+const { validateRoomStatus } = require('../validation.cjs')
 
 ipcMain.handle('rooms:getAll', () => {
     return RoomRepository.findAll()
@@ -10,5 +11,6 @@ ipcMain.handle('rooms:getAvailable', (_, { checkIn, checkOut }) => {
 })
 
 ipcMain.handle('rooms:updateStatus', (_, { id, status }) => {
+    validateRoomStatus(status)
     return RoomRepository.updateStatus(id, status)
 })

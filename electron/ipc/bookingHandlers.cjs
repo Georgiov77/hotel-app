@@ -1,5 +1,6 @@
 const { ipcMain }        = require('electron')
 const BookingRepository  = require('../repositories/BookingRepository.cjs')
+const { validateBooking, validateBookingStatus } = require('../validation.cjs')
 
 ipcMain.handle('bookings:getAll', () => {
     return BookingRepository.findAll()
@@ -22,16 +23,19 @@ ipcMain.handle('bookings:getTodayCheckOuts', (_, today) => {
 })
 
 ipcMain.handle('bookings:create', (_, { booking, extras }) => {
+    validateBooking(booking)
     const id = BookingRepository.create(booking, extras)
     return BookingRepository.findById(id)
 })
 
 ipcMain.handle('bookings:update', (_, { id, booking }) => {
+    validateBooking(booking)
     BookingRepository.update(id, booking)
     return BookingRepository.findById(id)
 })
 
 ipcMain.handle('bookings:updateStatus', (_, { id, status }) => {
+    validateBookingStatus(status)
     return BookingRepository.updateStatus(id, status)
 })
 
