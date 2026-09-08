@@ -25,7 +25,7 @@ module.exports = [
         },
         rules: {
             'react/prop-types': 'off',
-            'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
         },
     },
     prettier,

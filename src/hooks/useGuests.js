@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@georgevlachos/ui'
 import guestService from '@services/guestService'
 import { getErrorMessage } from '@error/errorHandler'
@@ -9,7 +9,7 @@ function useGuests() {
     const [guests, setGuests] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const load = async () => {
+    const load = useCallback(async () => {
         try {
             setIsLoading(true)
             const data = await guestService.getAll()
@@ -19,7 +19,7 @@ function useGuests() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [showToast])
 
     const search = async (query) => {
         try {
@@ -63,7 +63,7 @@ function useGuests() {
 
     useEffect(() => {
         load()
-    }, [])
+    }, [load])
 
     return { guests, isLoading, search, create, update, remove, reload: load }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@georgevlachos/ui'
 import roomService from '@services/roomService'
 import bookingService from '@services/bookingService'
@@ -11,7 +11,7 @@ function useCalendarData(startDate, endDate) {
     const [bookings, setBookings] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const load = async () => {
+    const load = useCallback(async () => {
         try {
             setIsLoading(true)
             const [roomData, bookingData] = await Promise.all([
@@ -25,11 +25,11 @@ function useCalendarData(startDate, endDate) {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [startDate, endDate, showToast])
 
     useEffect(() => {
         if (startDate && endDate) load()
-    }, [startDate, endDate])
+    }, [startDate, endDate, load])
 
     return { rooms, bookings, isLoading, reload: load }
 }

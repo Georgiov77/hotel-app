@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@georgevlachos/ui'
 import roomService from '@services/roomService'
 import { getErrorMessage } from '@error/errorHandler'
@@ -9,7 +9,7 @@ function useRooms() {
     const [rooms, setRooms] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const load = async () => {
+    const load = useCallback(async () => {
         try {
             setIsLoading(true)
             const data = await roomService.getAll()
@@ -19,11 +19,11 @@ function useRooms() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [showToast])
 
     useEffect(() => {
         load()
-    }, [])
+    }, [load])
 
     return { rooms, isLoading, reload: load }
 }

@@ -29,6 +29,6 @@ export const calcRemaining = (grandTotal, depositAmount) => {
 }
 
 export const stripUIFields = (booking) => {
-    const { _customDeposit, season, ...rest } = booking
+    const { _customDeposit, season: _season, ...rest } = booking
     return rest
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@georgevlachos/ui'
 import bookingService from '@services/bookingService'
 import { getErrorMessage } from '@error/errorHandler'
@@ -9,7 +9,7 @@ function useBookings() {
     const [bookings, setBookings] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    const load = async () => {
+    const load = useCallback(async () => {
         try {
             setIsLoading(true)
             const data = await bookingService.getAll()
@@ -19,7 +19,7 @@ function useBookings() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [showToast])
 
     const updateStatus = async (id, status) => {
         try {
@@ -43,7 +43,7 @@ function useBookings() {
 
     useEffect(() => {
         load()
-    }, [])
+    }, [load])
 
     return { bookings, isLoading, updateStatus, remove, reload: load }
 }
