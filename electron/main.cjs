@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 const path     = require('path')
 const database = require('./database.cjs')
-const seeder   = require('./seeder.cjs')
+const seeder   = require('../backend/seeder.cjs')
 
 // IPC Handlers
 require('./ipc/roomHandlers.cjs')

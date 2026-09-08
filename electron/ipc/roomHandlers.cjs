@@ -1,6 +1,6 @@
 const { ipcMain }      = require('electron')
-const RoomRepository   = require('../repositories/RoomRepository.cjs')
-const { validateRoomStatus } = require('../validation.cjs')
+const RoomRepository   = require('../../backend/repositories/RoomRepository.cjs')
+const { validateRoomStatus } = require('../../backend/validation.cjs')
 
 ipcMain.handle('rooms:getAll', () => {
     return RoomRepository.findAll()

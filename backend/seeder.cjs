@@ -1,4 +1,4 @@
-const { getDb } = require('./database.cjs')
+const { getDb } = require('../electron/database.cjs')
 
 const ROOMS = [
     // Ισόγειο

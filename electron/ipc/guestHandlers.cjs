@@ -1,6 +1,6 @@
 const { ipcMain }      = require('electron')
-const GuestRepository  = require('../repositories/GuestRepository.cjs')
-const { validateGuest } = require('../validation.cjs')
+const GuestRepository  = require('../../backend/repositories/GuestRepository.cjs')
+const { validateGuest } = require('../../backend/validation.cjs')
 
 ipcMain.handle('guests:getAll', () => {
     return GuestRepository.findAll()

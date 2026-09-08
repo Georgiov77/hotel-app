@@ -1,4 +1,4 @@
-const db = require('../repositories/adapters/sqliteAdapter.cjs')
+const db = require('./adapters/sqliteAdapter.cjs')
 
 const RoomRepository = {
     findAll: () => {

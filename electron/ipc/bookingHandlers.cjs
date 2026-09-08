@@ -1,6 +1,6 @@
 const { ipcMain }        = require('electron')
-const BookingRepository  = require('../repositories/BookingRepository.cjs')
-const { validateBooking, validateBookingStatus } = require('../validation.cjs')
+const BookingRepository  = require('../../backend/repositories/BookingRepository.cjs')
+const { validateBooking, validateBookingStatus } = require('../../backend/validation.cjs')
 
 ipcMain.handle('bookings:getAll', () => {
     return BookingRepository.findAll()

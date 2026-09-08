@@ -1,5 +1,5 @@
 const { ipcMain }          = require('electron')
-const SettingsRepository   = require('../repositories/SettingsRepository.cjs')
+const SettingsRepository   = require('../../backend/repositories/SettingsRepository.cjs')
 
 ipcMain.handle('settings:getAll', () => {
     return SettingsRepository.findAll()
