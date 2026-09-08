@@ -32,16 +32,32 @@ function createWindow() {
     }
 }
 
-app.whenReady().then(() => {
-    database.init()
-    seeder.seed()
-    createWindow()
+// Αποτρέπει διπλό άνοιγμα του app πάνω στο ίδιο SQLite αρχείο
+// (π.χ. διπλό κλικ στο icon) — δεύτερη προσπάθεια απλά φέρνει το υπάρχον window μπροστά.
+const gotTheLock = app.requestSingleInstanceLock()
 
-    app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
+if (!gotTheLock) {
+    app.quit()
+} else {
+    app.on('second-instance', () => {
+        const win = BrowserWindow.getAllWindows()[0]
+        if (win) {
+            if (win.isMinimized()) win.restore()
+            win.focus()
+        }
     })
-})
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') app.quit()
-})
+    app.whenReady().then(() => {
+        database.init()
+        seeder.seed()
+        createWindow()
+
+        app.on('activate', () => {
+            if (BrowserWindow.getAllWindows().length === 0) createWindow()
+        })
+    })
+
+    app.on('window-all-closed', () => {
+        if (process.platform !== 'darwin') app.quit()
+    })
+}

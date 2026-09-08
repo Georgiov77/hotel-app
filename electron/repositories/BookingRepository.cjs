@@ -81,8 +81,27 @@ const BookingRepository = {
     `, [today])
     },
 
+    // Ελέγχει αν υπάρχει άλλη ενεργή κράτηση για το ίδιο δωμάτιο που
+    // επικαλύπτεται με το εύρος ημερομηνιών (excludeBookingId εξαιρεί
+    // την ίδια την κράτηση όταν γίνεται update).
+    hasConflict: (roomId, checkIn, checkOut, excludeBookingId = null) => {
+        const rows = db.findAll(`
+      SELECT id FROM bookings
+      WHERE room_id  = ?
+      AND   status   NOT IN ('cancelled', 'checked_out')
+      AND   check_in  < ?
+      AND   check_out > ?
+      AND   id       != ?
+    `, [roomId, checkOut, checkIn, excludeBookingId ?? -1])
+        return rows.length > 0
+    },
+
     create: (booking, extras = []) => {
         return db.transaction(() => {
+            if (BookingRepository.hasConflict(booking.roomId, booking.checkIn, booking.checkOut)) {
+                throw new Error('BOOKING_CONFLICT')
+            }
+
             const result = db.run(`
         INSERT INTO bookings (
           room_id, guest_id, check_in, check_out, nights,
@@ -123,6 +142,10 @@ const BookingRepository = {
     },
 
     update: (id, booking) => {
+        if (BookingRepository.hasConflict(booking.roomId, booking.checkIn, booking.checkOut, id)) {
+            throw new Error('BOOKING_CONFLICT')
+        }
+
         return db.run(`
       UPDATE bookings
       SET room_id         = ?,
